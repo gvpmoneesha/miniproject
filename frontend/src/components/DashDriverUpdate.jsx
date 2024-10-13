@@ -24,6 +24,8 @@ export const DashDriverUpdate = () => {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [searchId, setSearchId] = useState(null);
+  const [user, setUser] = useState(null);
 
   const navigate = useNavigate();
 
@@ -67,7 +69,29 @@ export const DashDriverUpdate = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSearchId = (e) => {
+    setSearchId(e.target.value);
+  };
+
+  const handleSearchUser = async (req, res) => {
+    try {
+      const res = await fetch(`/api/v1/user/getuser/${searchId}`);
+
+      if (!res.ok) {
+        return;
+      } else {
+        const data = await res.json();
+
+        if (data.role == "driver") {
+          setUser(data);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /*const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch("/api/v1/auth/signup", {
@@ -84,9 +108,9 @@ export const DashDriverUpdate = () => {
     } catch (error) {
       console.log(error);
     }
-  };
+  };*/
 
-  console.log(formData);
+  //console.log(user);
 
   return (
     <div className="  max-w-lg p-3 mx-auto">
@@ -98,38 +122,48 @@ export const DashDriverUpdate = () => {
         </div>
       </div>
 
+      <div className="flex items-center gap-10 pt-24 px-10">
+        <div className="mb-2 block">
+          <Label
+            value="
+                 Id-:"
+          />
+        </div>
+
+        <div>
+          <TextInput
+            id="id"
+            type="text"
+            required
+            shadow
+            onChange={handleSearchId}
+          />
+        </div>
+
+        <div>
+          <Button
+            type="button"
+            gradientDuoTone="purpleToBlue"
+            size="sm"
+            outline
+            onClick={handleSearchUser}
+          >
+            Search
+          </Button>
+        </div>
+      </div>
+
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            <div className="flex items-center gap-10 mb-14 px-10">
+          <form className="gap-4  ">
+            {user && (
               <div className="mb-2 block">
-                <Label
-                  value="
-                 Id-:"
+                <img
+                  className="rounded-full ms-auto h-28 max-w-28"
+                  src={user.profilePicture}
                 />
               </div>
-
-              <div>
-                <TextInput
-                  id="id"
-                  type="text"
-                  required
-                  shadow
-                  onChange={handleTextboxDataChange}
-                />
-              </div>
-
-              <div>
-                <Button
-                  type="button"
-                  gradientDuoTone="purpleToBlue"
-                  size="sm"
-                  outline
-                >
-                  Search
-                </Button>
-              </div>
-            </div>
+            )}
 
             <div>
               <div className="mb-2 block">
@@ -144,6 +178,7 @@ export const DashDriverUpdate = () => {
                 placeholder="moneeshakavindi"
                 required
                 shadow
+                value={user?.name || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -176,6 +211,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
+                value={user?.id || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -189,6 +225,7 @@ export const DashDriverUpdate = () => {
               </div>
               <div>
                 <Datepicker
+                  value={user?.dob || ""}
                   onSelectedDateChanged={(date) => {
                     const dob =
                       date.getFullYear() +
@@ -215,6 +252,7 @@ export const DashDriverUpdate = () => {
                 placeholder="name@flowbite.com"
                 required
                 shadow
+                value={user?.email || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -231,6 +269,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
+                value={user?.nic || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -247,6 +286,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
+                value={user?.phoneNumber || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -263,6 +303,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
+                value={user?.address || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -272,7 +313,7 @@ export const DashDriverUpdate = () => {
                 <Label value="Vehicle Type" />
               </div>
               <Select id="vType" required onChange={handleTextboxDataChange}>
-                <option>Select Vehicle Type</option>
+                <option> {user?.vType || "Select Vehicle Type"}</option>
                 <option>Large</option>
                 <option>Small</option>
                 <option>Medium</option>
@@ -284,7 +325,7 @@ export const DashDriverUpdate = () => {
                 <Label value="Vehicle model" />
               </div>
               <Select id="model" required onChange={handleTextboxDataChange}>
-                <option>Select Vehicle Model</option>
+                <option>{user?.model || "Select Vehicle Model"}</option>
                 <option>Car</option>
                 <option>Van</option>
                 <option>Bus</option>

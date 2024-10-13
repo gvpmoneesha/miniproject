@@ -24,6 +24,9 @@ const DashOfficerUpdate = () => {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
+  const [searchId, setSearchId] = useState(null);
+  const [user, setUser] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const navigate = useNavigate();
 
@@ -51,6 +54,7 @@ const DashOfficerUpdate = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageUrl(downloadURL);
             setImageUploadProgress(0);
             setImageUploadError(null);
             setFormData({ ...formData, profilePicture: downloadURL });
@@ -67,24 +71,59 @@ const DashOfficerUpdate = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  console.log(formData);
+  const handleSearchId = (e) => {
+    setSearchId(e.target.value);
+  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSearchUser = async (req, res) => {
     try {
-      const res = await fetch("/api/v1/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (res.ok) {
-        navigate("/dashboard");
+      const res = await fetch(`/api/v1/user/getuser/${searchId}`);
+
+      if (!res.ok) {
+        return;
+      } else {
+        const data = await res.json();
+
+        if (data.role == "officer") {
+          setUser(data);
+        }
       }
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (Object.keys(formData).length === 0) {
+      console.log("There are no changes");
+      return;
+    }
+
+    if (imageUploadProgress) {
+      console.log("Please wait for uploading image");
+      return;
+    }
+    try {
+      const res = await fetch(`/api/v1/user/update/${searchId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        console.log("error");
+      } else {
+        console.log("Update is success");
+      }
+    } catch (error) {
+      console.log("error here");
+    }
+  };
+  console.log("user", user);
+  console.log("form", formData);
 
   return (
     <div className="   max-w-lg p-3 mx-auto ">
@@ -96,38 +135,48 @@ const DashOfficerUpdate = () => {
         </div>
       </div>
 
+      <div className="flex items-center gap-10 pt-24 px-10">
+        <div className="mb-2 block">
+          <Label
+            value="
+                 Id-:"
+          />
+        </div>
+
+        <div>
+          <TextInput
+            id="id"
+            type="text"
+            required
+            shadow
+            onChange={handleSearchId}
+          />
+        </div>
+
+        <div>
+          <Button
+            type="button"
+            gradientDuoTone="purpleToBlue"
+            size="sm"
+            outline
+            onClick={handleSearchUser}
+          >
+            Search
+          </Button>
+        </div>
+      </div>
+
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            <div className="flex items-center gap-10 mb-14 px-10">
+          <form className="gap-4" onSubmit={handleSubmit}>
+            {user && (
               <div className="mb-2 block">
-                <Label
-                  value="
-                 Id-:"
+                <img
+                  className="rounded-full ms-auto h-28 max-w-28"
+                  src={imageUrl || user.profilePicture}
                 />
               </div>
-
-              <div>
-                <TextInput
-                  id="id"
-                  type="text"
-                  required
-                  shadow
-                  onChange={handleTextboxDataChange}
-                />
-              </div>
-
-              <div>
-                <Button
-                  type="button"
-                  gradientDuoTone="purpleToBlue"
-                  size="sm"
-                  outline
-                >
-                  Search
-                </Button>
-              </div>
-            </div>
+            )}
 
             <div>
               <div className="mb-2 block">
@@ -139,6 +188,7 @@ const DashOfficerUpdate = () => {
                 placeholder="moneeshakavindi"
                 required
                 shadow
+                defaultValue={user?.name || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -150,7 +200,6 @@ const DashOfficerUpdate = () => {
               <TextInput
                 id="password"
                 type="password"
-                required
                 shadow
                 onChange={handleTextboxDataChange}
               />
@@ -165,6 +214,7 @@ const DashOfficerUpdate = () => {
                 type="text"
                 required
                 shadow
+                defaultValue={user?.id || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -175,6 +225,7 @@ const DashOfficerUpdate = () => {
               </div>
               <div>
                 <Datepicker
+                  defaultValue={user?.dob || ""}
                   onSelectedDateChanged={(date) => {
                     const dob =
                       date.getFullYear() +
@@ -201,6 +252,7 @@ const DashOfficerUpdate = () => {
                 placeholder="name@flowbite.com"
                 required
                 shadow
+                defaultValue={user?.email || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -217,6 +269,7 @@ const DashOfficerUpdate = () => {
                 type="text"
                 required
                 shadow
+                defaultValue={user?.nic || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -235,6 +288,7 @@ const DashOfficerUpdate = () => {
                 required
                 shadow
                 onChange={handleTextboxDataChange}
+                defaultValue={user?.phoneNumber || ""}
               />
             </div>
 
@@ -251,6 +305,7 @@ const DashOfficerUpdate = () => {
                 type="text"
                 required
                 shadow
+                defaultValue={user?.address || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -260,10 +315,10 @@ const DashOfficerUpdate = () => {
                 <Label htmlFor="pStation" value="Police Station" />
               </div>
               <Select id="pStation" required onChange={handleTextboxDataChange}>
-                <option>Select Police Station</option>
-                <option>Matara</option>
-                <option>Galle</option>
-                <option>Colombo</option>
+                <option>{user?.pStation || "Select the police station"}</option>
+                <option value="Matara">Matara</option>
+                <option value="Galle">Galle</option>
+                <option value="Colombo">Colombo</option>
               </Select>
             </div>
 
