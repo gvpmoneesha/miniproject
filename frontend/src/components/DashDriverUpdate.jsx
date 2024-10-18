@@ -19,13 +19,14 @@ import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
 export const DashDriverUpdate = () => {
-  const [formData, setFormData] = useState({ role: "driver" });
+  const [formData, setFormData] = useState();
 
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [searchId, setSearchId] = useState(null);
   const [user, setUser] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
 
   const navigate = useNavigate();
 
@@ -53,6 +54,7 @@ export const DashDriverUpdate = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setImageUrl(downloadURL);
             setImageUploadProgress(0);
             setImageUploadError(null);
             setFormData({ ...formData, profilePicture: downloadURL });
@@ -91,26 +93,38 @@ export const DashDriverUpdate = () => {
     }
   };
 
-  /*const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (Object.keys(formData).length === 0) {
+      console.log("There are no changes");
+      return;
+    }
+
+    if (imageUploadProgress) {
+      console.log("Please wait for uploading image");
+      return;
+    }
     try {
-      const res = await fetch("/api/v1/auth/signup", {
-        method: "POST",
+      const res = await fetch(`/api/v1/user/update/${searchId}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-      const data = await res.json();
       console.log(res);
-
-      if (res.ok) {
-        navigate("/dashboard");
+      const data = await res.json();
+      console.log(data);
+      if (!res.ok) {
+        console.log("error");
+      } else {
+        console.log("Update is success");
       }
     } catch (error) {
-      console.log(error);
+      console.log("error here");
     }
-  };*/
+  };
 
-  //console.log(user);
+  console.log(user);
+  console.log(formData);
 
   return (
     <div className="  max-w-lg p-3 mx-auto">
@@ -155,12 +169,12 @@ export const DashDriverUpdate = () => {
 
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  ">
+          <form className="gap-4  " onSubmit={handleSubmit}>
             {user && (
               <div className="mb-2 block">
                 <img
                   className="rounded-full ms-auto h-28 max-w-28"
-                  src={user.profilePicture}
+                  src={imageUrl || user.profilePicture}
                 />
               </div>
             )}
@@ -178,7 +192,7 @@ export const DashDriverUpdate = () => {
                 placeholder="moneeshakavindi"
                 required
                 shadow
-                value={user?.name || ""}
+                defaultValue={user?.name || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -193,7 +207,6 @@ export const DashDriverUpdate = () => {
               <TextInput
                 id="password"
                 type="password"
-                required
                 shadow
                 onChange={handleTextboxDataChange}
               />
@@ -211,7 +224,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
-                value={user?.id || ""}
+                defaultValue={user?.id || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -225,7 +238,7 @@ export const DashDriverUpdate = () => {
               </div>
               <div>
                 <Datepicker
-                  value={user?.dob || ""}
+                  defaultValue={user?.dob || ""}
                   onSelectedDateChanged={(date) => {
                     const dob =
                       date.getFullYear() +
@@ -252,7 +265,7 @@ export const DashDriverUpdate = () => {
                 placeholder="name@flowbite.com"
                 required
                 shadow
-                value={user?.email || ""}
+                defaultValue={user?.email || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -269,7 +282,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
-                value={user?.nic || ""}
+                defaultValue={user?.nic || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -286,7 +299,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
-                value={user?.phoneNumber || ""}
+                defaultValue={user?.phoneNumber || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
@@ -303,7 +316,7 @@ export const DashDriverUpdate = () => {
                 type="text"
                 required
                 shadow
-                value={user?.address || ""}
+                defaultValue={user?.address || ""}
                 onChange={handleTextboxDataChange}
               />
             </div>
