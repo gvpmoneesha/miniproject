@@ -92,3 +92,33 @@ export const getUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllOfficers = async (req, res, next) => {
+  try {
+    const officers = await User.find({ role: "officer" });
+    if (officers) {
+      res.status(200).json(officers);
+    } else {
+      return next(400, "User not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteUser = async (req, res, next) => {
+  try {
+    console.log(req.params.id);
+    const user = await User.findById(req.params.id);
+    console.log(user);
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+    if (user.role === "officer") {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("User delete completed");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
