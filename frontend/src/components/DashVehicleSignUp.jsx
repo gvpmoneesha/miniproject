@@ -15,6 +15,24 @@ export const DashVehicleSignUp = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const handleSubmit = async (e) => {
+    try {
+      const res = await fetch("/api/v1/vehicle/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(res);
+
+      if (res.ok) {
+        Navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   console.log(formData);
   return (
     <div className="  max-w-lg p-3 mx-auto">
@@ -28,7 +46,7 @@ export const DashVehicleSignUp = () => {
 
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  ">
+          <form className="gap-4  " onSubmit={handleSubmit}>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="no" value="Vehicle Number" />
