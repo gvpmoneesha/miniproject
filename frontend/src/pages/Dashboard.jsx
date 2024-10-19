@@ -9,6 +9,9 @@ import { DashDriverSignUp } from "../components/DashDriverSignUp";
 import DashOfficerUpdate from "../components/DashOfficerUpdate";
 import { DashDriverUpdate } from "../components/DashDriverUpdate";
 import { DashVehicleUpdate } from "../components/DashVehicleUpdate";
+import { DashOfficerDelete } from "../components/DashOfficerDelete";
+import { DashDriverDelete } from "../components/DashDriverDelete";
+import { DashVehicleDelete } from "../components/DashVehicleDelete";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -38,7 +41,11 @@ export const Dashboard = () => {
                         Update Traffic Officer
                       </Sidebar.Item>
                     </Link>
-                    <Sidebar.Item href="#">Delete Traffic officer</Sidebar.Item>
+                    <Link to="/dashboard?dash=officer-delete">
+                      <Sidebar.Item href="#">
+                        Delete Traffic officer
+                      </Sidebar.Item>
+                    </Link>
                   </Sidebar.Collapse>
 
                   <Sidebar.Collapse icon={HiShoppingBag} label="Manage Driver">
@@ -48,7 +55,9 @@ export const Dashboard = () => {
                     <Link to="/dashboard?dash=driver-update">
                       <Sidebar.Item href="#">Update Driver</Sidebar.Item>
                     </Link>
-                    <Sidebar.Item href="#">Delete Driver</Sidebar.Item>
+                    <Link to="/dashboard?dash=driver-delete">
+                      <Sidebar.Item href="#">Delete Driver</Sidebar.Item>
+                    </Link>
                   </Sidebar.Collapse>
 
                   <Sidebar.Collapse icon={HiShoppingBag} label="Manage Vehicle">
@@ -58,7 +67,9 @@ export const Dashboard = () => {
                     <Link to="/dashboard?dash=vehicle-update">
                       <Sidebar.Item href="#">Update Vehicle</Sidebar.Item>
                     </Link>
-                    <Sidebar.Item href="#">Delete Vehicle</Sidebar.Item>
+                    <Link to="/dashboard?dash=vehicle-delete">
+                      <Sidebar.Item href="#">Delete Vehicle</Sidebar.Item>
+                    </Link>
                   </Sidebar.Collapse>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
@@ -72,17 +83,26 @@ export const Dashboard = () => {
                 (searchParams.get("dash") === "officer-update" && (
                   <DashOfficerUpdate />
                 )) ||
+                (searchParams.get("dash") === "officer-delete" && (
+                  <DashOfficerDelete />
+                )) ||
                 (searchParams.get("dash") === "vehicle-create" && (
                   <DashVehicleSignUp />
                 )) ||
                 (searchParams.get("dash") === "vehicle-update" && (
                   <DashVehicleUpdate />
                 )) ||
+                (searchParams.get("dash") === "vehicle-delete" && (
+                  <DashVehicleDelete />
+                )) ||
                 (searchParams.get("dash") === "driver-create" && (
                   <DashDriverSignUp />
                 )) ||
                 (searchParams.get("dash") === "driver-update" && (
                   <DashDriverUpdate />
+                )) ||
+                (searchParams.get("dash") === "driver-delete" && (
+                  <DashDriverDelete />
                 ))}
             </div>
           </div>
