@@ -83,13 +83,13 @@ export const DashVehicleSignUp = () => {
               <div>
                 <Datepicker
                   onSelectedDateChanged={(date) => {
-                    const dob =
+                    const dateBrought =
                       date.getFullYear() +
                       "-" +
                       date.getMonth() +
                       "-" +
                       date.getDate();
-                    setFormData({ ...formData, dob });
+                    setFormData({ ...formData, dateBrought });
                   }}
                 />
               </div>

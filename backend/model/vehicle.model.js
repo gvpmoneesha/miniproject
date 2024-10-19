@@ -13,7 +13,7 @@ const vehicleShema = new mongoose.Schema({
     unique: true,
   },
 
-  dob: {
+  dateBrought: {
     type: Date,
     required: true,
   },
