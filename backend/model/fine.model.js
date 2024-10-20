@@ -56,6 +56,11 @@ const fineShema = new mongoose.Schema({
     required: true,
   },
 
+  charge: {
+    type: Number,
+    required: true,
+  },
+
   state: {
     type: String,
     required: true,

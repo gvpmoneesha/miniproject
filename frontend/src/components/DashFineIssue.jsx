@@ -107,9 +107,21 @@ export const DashFineIssue = () => {
 
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="state" value="State" />
+                <Label htmlFor="state" value="Amount of Fine" />
               </div>
               <Select id="state" required>
+                <option>Select Price</option>
+                <option>Rs.1000</option>
+                <option>Rs.2000</option>
+              </Select>
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="state" value="State of Fine Payment" />
+              </div>
+              <Select id="state" required>
+                <option>Select State</option>
                 <option>False</option>
                 <option>True</option>
               </Select>
