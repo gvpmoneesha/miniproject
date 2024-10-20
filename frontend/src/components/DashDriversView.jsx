@@ -4,6 +4,48 @@ import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export const DashDriversView = () => {
+  const [users, setUsers] = useState([]);
+  const [error, setError] = useState(null);
+  const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await fetch("/api/v1/user/getalldrivers");
+        const data = await res.json();
+
+        if (res.ok) {
+          setUsers(data);
+        }
+      } catch (error) {
+        setError(error);
+      }
+    };
+    if (userIdToDelete === "") {
+      fetchUsers();
+    }
+  }, [userIdToDelete]);
+
+  const getUser = async () => {
+    try {
+      if (userIdToDelete === "") {
+        return setError("Fill Serach field");
+      }
+      const res = await fetch(`/api/v1/user/getuser/${userIdToDelete}`);
+      const data = await res.json();
+      if (data.success == false) {
+        return setError(data.messaage);
+      }
+      if (res.ok) {
+        setUsers([data]);
+        setError("");
+      }
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return (
     <div className="min-h-screen">
       <div>
@@ -15,11 +57,19 @@ export const DashDriversView = () => {
       <div className="flex justify-center">
         <div className="flex items-center gap-10 mb-14 px-5 pt-10">
           <div className="mb-2 block">
-            <Label value="id-:" />
+            <Label value="id" />
           </div>
 
           <div>
-            <TextInput id="id" type="text" required shawod />
+            <TextInput
+              id="id"
+              type="text"
+              required
+              shawod
+              onChange={(e) => {
+                setUserIdToDelete(e.target.value);
+              }}
+            />
           </div>
 
           <div>
@@ -28,6 +78,7 @@ export const DashDriversView = () => {
               gradientDuoTone="purpleToBlue"
               size="sm"
               outline
+              onClick={getUser}
             >
               Search
             </Button>
@@ -35,24 +86,59 @@ export const DashDriversView = () => {
         </div>
       </div>
 
-      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500"></div>
-      <>
-        <Table hoverable className="shadow-md ">
-          <Table.Head>
-            <Table.HeadCell>ID</Table.HeadCell>
-            <Table.HeadCell>Profile Picture</Table.HeadCell>
-            <Table.HeadCell>User Name</Table.HeadCell>
-            <Table.HeadCell>Vehicle Type</Table.HeadCell>
-            <Table.HeadCell>Model</Table.HeadCell>
-            <Table.HeadCell>Email</Table.HeadCell>
-            <Table.HeadCell>NIC</Table.HeadCell>
-            <Table.HeadCell>Date of Birth</Table.HeadCell>
-            <Table.HeadCell>Address</Table.HeadCell>
-            <Table.HeadCell>Phone Number</Table.HeadCell>
-            <Table.HeadCell>Delete</Table.HeadCell>
-          </Table.Head>
-        </Table>
-      </>
+      {error && (
+        <Alert color="failure" className="m-4">
+          {error}
+        </Alert>
+      )}
+
+      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+        {users.length > 0 ? (
+          <>
+            <Table hoverable className="shadow-md ">
+              <Table.Head>
+                <Table.HeadCell>ID</Table.HeadCell>
+                <Table.HeadCell>Profile Picture</Table.HeadCell>
+                <Table.HeadCell>User Name</Table.HeadCell>
+                <Table.HeadCell>Vehicle Type</Table.HeadCell>
+                <Table.HeadCell>Vehicle Model</Table.HeadCell>
+                <Table.HeadCell>Email</Table.HeadCell>
+                <Table.HeadCell>NIC</Table.HeadCell>
+                <Table.HeadCell>Date of Birth</Table.HeadCell>
+                <Table.HeadCell>Address</Table.HeadCell>
+                <Table.HeadCell>Phone Number</Table.HeadCell>
+              </Table.Head>
+
+              {users.map((user) => (
+                <Table.Body key={user._id} className="divide-y">
+                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                    <Table.Cell>{user.id}</Table.Cell>
+                    <Table.Cell>
+                      <img
+                        src={user.profilePicture}
+                        alt={user.name}
+                        className="w-10 h-10 object-cover rounded-full bg-gray-500"
+                      />
+                    </Table.Cell>
+                    <Table.Cell>{user.name}</Table.Cell>
+                    <Table.Cell>{user.vType}</Table.Cell>
+                    <Table.Cell>{user.model}</Table.Cell>
+                    <Table.Cell>{user.email}</Table.Cell>
+                    <Table.Cell>{user.nic}</Table.Cell>
+                    <Table.Cell>
+                      {new Date(user.dob).toLocaleDateString()}
+                    </Table.Cell>
+                    <Table.Cell>{user.address}</Table.Cell>
+                    <Table.Cell>{user.phoneNumber}</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              ))}
+            </Table>
+          </>
+        ) : (
+          <p>No officers</p>
+        )}
+      </div>
     </div>
   );
 };

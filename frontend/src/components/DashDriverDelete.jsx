@@ -124,7 +124,7 @@ export const DashDriverDelete = () => {
                 <Table.HeadCell>Profile Picture</Table.HeadCell>
                 <Table.HeadCell>User Name</Table.HeadCell>
                 <Table.HeadCell>Vehicle Type</Table.HeadCell>
-                <Table.HeadCell>Model</Table.HeadCell>
+                <Table.HeadCell>Vehicle Model</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>
                 <Table.HeadCell>NIC</Table.HeadCell>
                 <Table.HeadCell>Date of Birth</Table.HeadCell>
