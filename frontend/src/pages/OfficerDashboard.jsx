@@ -6,6 +6,7 @@ import { HiShoppingBag } from "react-icons/hi";
 import { DashFineIssue } from "../components/DashFineIssue";
 import { DashDriversView } from "../components/DashDriversView";
 import { DashVehiclesView } from "../components/DashVehiclesView";
+import { DashFineView } from "../components/DashFineView";
 
 export const OfficerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -32,7 +33,7 @@ export const OfficerDashboard = () => {
                   </Sidebar.Collapse>
 
                   <Sidebar.Collapse icon={HiShoppingBag} label="Information">
-                    <Link to="/">
+                    <Link to="/officerdashboard?dash=fine-view">
                       <Sidebar.Item href="#">View Fines</Sidebar.Item>
                     </Link>
                     <Link to="/officerdashboard?dash=driver-view">
@@ -58,6 +59,9 @@ export const OfficerDashboard = () => {
               {(searchParams.get("dash") === "fine-issue" && (
                 <DashFineIssue />
               )) ||
+                (searchParams.get("dash") === "fine-view" && (
+                  <DashFineView />
+                )) ||
                 (searchParams.get("dash") === "driver-view" && (
                   <DashDriversView />
                 )) ||
