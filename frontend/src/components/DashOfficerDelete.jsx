@@ -123,8 +123,8 @@ export const DashOfficerDelete = () => {
             <Table hoverable className="shadow-md ">
               <Table.Head>
                 <Table.HeadCell>ID</Table.HeadCell>
-                <Table.HeadCell>User image</Table.HeadCell>
-                <Table.HeadCell>Username</Table.HeadCell>
+                <Table.HeadCell>Profile Picture</Table.HeadCell>
+                <Table.HeadCell>User Name</Table.HeadCell>
                 <Table.HeadCell>Station</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>
                 <Table.HeadCell>NIC</Table.HeadCell>

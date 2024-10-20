@@ -121,8 +121,8 @@ export const DashDriverDelete = () => {
             <Table hoverable className="shadow-md ">
               <Table.Head>
                 <Table.HeadCell>ID</Table.HeadCell>
-                <Table.HeadCell>User image</Table.HeadCell>
-                <Table.HeadCell>Username</Table.HeadCell>
+                <Table.HeadCell>Profile Picture</Table.HeadCell>
+                <Table.HeadCell>User Name</Table.HeadCell>
                 <Table.HeadCell>Vehicle Type</Table.HeadCell>
                 <Table.HeadCell>Model</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>

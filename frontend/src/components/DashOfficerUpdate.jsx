@@ -332,7 +332,7 @@ const DashOfficerUpdate = () => {
 
               <div>
                 <div className="mb-2 block">
-                  <Label value="Upload file" />
+                  <Label value="Profile Picture" />
                 </div>
                 <div className="flex  gap-5 items-center justify-between ">
                   <FileInput

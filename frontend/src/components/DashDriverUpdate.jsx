@@ -127,7 +127,7 @@ export const DashDriverUpdate = () => {
   console.log(formData);
 
   return (
-    <div className="  max-w-lg p-3 mx-auto">
+    <div className="min-h-screen  max-w-lg p-3 mx-auto">
       <div>
         <div className="text-center text-teal-700 ">
           <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
@@ -348,7 +348,7 @@ export const DashDriverUpdate = () => {
 
               <div>
                 <div className="mb-2 block">
-                  <Label value="Upload file" />
+                  <Label value="Profile Picture" />
                 </div>
                 <div className="flex  gap-5 items-center justify-between ">
                   <FileInput
