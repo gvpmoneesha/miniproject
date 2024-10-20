@@ -19,8 +19,13 @@ export const Login = () => {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      console.log(data.role);
       if (res.ok) {
-        navigate("/dashboard");
+        if (data.role === "admin") {
+          navigate("/dashboard");
+        } else if (data.role === "officer") {
+          navigate("/officerDashboard");
+        }
       }
     } catch (error) {
       console.log(error);

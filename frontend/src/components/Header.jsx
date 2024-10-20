@@ -19,9 +19,11 @@ export default function Header() {
           <Navbar.Link className="text-lg text-white">Admin</Navbar.Link>
         </Link>
 
-        <Navbar.Link href="#" className="text-lg text-white">
-          Traffic Officer
-        </Navbar.Link>
+        <Link to="/login">
+          <Navbar.Link href="#" className="text-lg text-white">
+            Traffic Officer
+          </Navbar.Link>
+        </Link>
 
         <Navbar.Link href="#" className="text-lg  text-white">
           Driver
