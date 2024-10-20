@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import { DashFineIssue } from "../components/DashFineIssue";
+import { DashDriversView } from "../components/DashDriversView";
 
 export const OfficerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +34,7 @@ export const OfficerDashboard = () => {
                     <Link to="/">
                       <Sidebar.Item href="#">View Fines</Sidebar.Item>
                     </Link>
-                    <Link to="/">
+                    <Link to="/officerdashboard?dash=driver-view">
                       <Sidebar.Item href="#">View Drivers</Sidebar.Item>
                     </Link>
                     <Link to="/">
@@ -53,7 +54,12 @@ export const OfficerDashboard = () => {
 
           <div className=" w-full sm:max-w-8xl bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\police.png')]  ">
             <div className="bg-slate-200 bg-opacity-80">
-              {searchParams.get("dash") === "fine-issue" && <DashFineIssue />}
+              {(searchParams.get("dash") === "fine-issue" && (
+                <DashFineIssue />
+              )) ||
+                (searchParams.get("dash") === "driver-view" && (
+                  <DashDriversView />
+                ))}
             </div>
           </div>
         </div>

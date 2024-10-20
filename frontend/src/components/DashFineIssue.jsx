@@ -46,39 +46,29 @@ export const DashFineIssue = () => {
               <TextInput id="vNo" type="text" required shadow />
             </div>
 
-            <div className="flex  gap-2 items-center justify-between ">
-              <div>
-                <div className="mb-2 block">
-                  <Label value=" Issue Date" />
-                </div>
-                <div>
-                  <Datepicker />
-                </div>
+            <div className="flex sm:flex-row flex-col gap-2 items-center justify-center ">
+              <div className="mb-2 block">
+                <Label value=" Issue Date" />
+
+                <Datepicker />
               </div>
 
-              <div>
-                <div className="mb-2 block">
-                  <Label value=" Time" />
-                </div>
-                <div>
-                  <Datepicker />
-                </div>
+              <div className="mb-2 block">
+                <Label value=" Time" />
+
+                <Datepicker />
               </div>
 
-              <div>
-                <div className="mb-2 block">
-                  <Label value="Place" />
-                </div>
+              <div className="mb-2 block">
+                <Label value="Place" />
+
                 <TextInput id="place" type="text" required shadow />
               </div>
 
-              <div>
-                <div className="mb-2 block">
-                  <Label value="Expire Date" />
-                </div>
-                <div>
-                  <Datepicker />
-                </div>
+              <div className="mb-2 block">
+                <Label value="Expire Date" />
+
+                <Datepicker />
               </div>
             </div>
 
