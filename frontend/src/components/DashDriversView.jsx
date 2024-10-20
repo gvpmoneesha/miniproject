@@ -1,13 +1,11 @@
 import React from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export const DashDriversView = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const [userIdToDelete, setUserIdToDelete] = useState("");
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     const fetchUsers = async () => {
