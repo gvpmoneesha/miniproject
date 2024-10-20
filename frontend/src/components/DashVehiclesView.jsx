@@ -3,23 +3,25 @@ import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 
-export const DashDriversView = () => {
+export const DashVehiclesView = () => {
   return (
     <div className="min-h-screen">
       <div>
         <div className="text-center text-teal-700">
-          <h2 className="font-bold text-3xl sm:text-5xl pt-10">View Drivers</h2>
+          <h2 className="font-bold text-3xl sm:text-5xl pt-10">
+            View Vehicles
+          </h2>
         </div>
       </div>
 
       <div className="flex justify-center">
         <div className="flex items-center gap-10 mb-14 px-5 pt-10">
           <div className="mb-2 block">
-            <Label value="id-:" />
+            <Label value="Vehicle Chassie Number-:" />
           </div>
 
           <div>
-            <TextInput id="id" type="text" required shawod />
+            <TextInput id="cNumber" type="text" required shawod />
           </div>
 
           <div>
