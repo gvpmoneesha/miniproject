@@ -107,3 +107,29 @@ export const getVehicle = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllVehicles = async (req, res, next) => {
+  try {
+    const vehicles = await Vehicle.find();
+    if (vehicles) {
+      res.status(200).json(vehicles);
+    } else {
+      return next(400, "Vehicle not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteVehicle = async (req, res, next) => {
+  try {
+    const user = await Vehicle.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+    await Vehicle.findByIdAndDelete(req.params.id);
+    res.status(200).json("User delete is completed");
+  } catch (error) {
+    next(error);
+  }
+};
