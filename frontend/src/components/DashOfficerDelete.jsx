@@ -127,6 +127,10 @@ export const DashOfficerDelete = () => {
                 <Table.HeadCell>Username</Table.HeadCell>
                 <Table.HeadCell>Station</Table.HeadCell>
                 <Table.HeadCell>Email</Table.HeadCell>
+                <Table.HeadCell>NIC</Table.HeadCell>
+                <Table.HeadCell>Date of Birth</Table.HeadCell>
+                <Table.HeadCell>Address</Table.HeadCell>
+                <Table.HeadCell>Phone Number</Table.HeadCell>
                 <Table.HeadCell>Delete</Table.HeadCell>
               </Table.Head>
 
@@ -144,6 +148,12 @@ export const DashOfficerDelete = () => {
                     <Table.Cell>{user.name}</Table.Cell>
                     <Table.Cell>{user.pStation}</Table.Cell>
                     <Table.Cell>{user.email}</Table.Cell>
+                    <Table.Cell>{user.nic}</Table.Cell>
+                    <Table.Cell>
+                      {new Date(user.dob).toLocaleDateString()}
+                    </Table.Cell>
+                    <Table.Cell>{user.address}</Table.Cell>
+                    <Table.Cell>{user.phoneNumber}</Table.Cell>
                     <Table.Cell>
                       <span
                         onClick={() => {

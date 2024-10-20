@@ -106,6 +106,19 @@ export const getAllOfficers = async (req, res, next) => {
   }
 };
 
+export const getAllDrivers = async (req, res, next) => {
+  try {
+    const drivers = await User.find({ role: "driver" });
+    if (drivers) {
+      res.status(200).json(drivers);
+    } else {
+      return next(400, "User not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteUser = async (req, res, next) => {
   try {
     console.log(req.params.id);
@@ -116,7 +129,10 @@ export const deleteUser = async (req, res, next) => {
     }
     if (user.role === "officer") {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("User delete completed");
+      res.status(200).json("User delete is completed");
+    } else if (user.role == "driver") {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("User delete is completed");
     }
   } catch (error) {
     next(error);

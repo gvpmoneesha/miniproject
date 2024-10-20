@@ -169,219 +169,221 @@ export const DashDriverUpdate = () => {
 
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            {user && (
-              <div className="mb-2 block">
-                <img
-                  className="rounded-full ms-auto h-28 max-w-28"
-                  src={imageUrl || user.profilePicture}
-                />
-              </div>
-            )}
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Name"
-                />
-              </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="moneeshakavindi"
-                required
-                shadow
-                defaultValue={user?.name || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Password"
-                />
-              </div>
-              <TextInput
-                id="password"
-                type="password"
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 ID"
-                />
-              </div>
-              <TextInput
-                id="id"
-                type="text"
-                required
-                shadow
-                defaultValue={user?.id || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Date of Birth"
-                />
-              </div>
-              <div>
-                <Datepicker
-                  defaultValue={user?.dob || ""}
-                  onSelectedDateChanged={(date) => {
-                    const dob =
-                      date.getFullYear() +
-                      "-" +
-                      date.getMonth() +
-                      "-" +
-                      date.getDate();
-                    setFormData({ ...formData, dob });
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Email"
-                />
-              </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="name@flowbite.com"
-                required
-                shadow
-                defaultValue={user?.email || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 NIC Number"
-                />
-              </div>
-              <TextInput
-                id="nic"
-                type="text"
-                required
-                shadow
-                defaultValue={user?.nic || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Phone Number"
-                />
-              </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                required
-                shadow
-                defaultValue={user?.phoneNumber || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Address"
-                />
-              </div>
-              <TextInput
-                id="address"
-                type="text"
-                required
-                shadow
-                defaultValue={user?.address || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Vehicle Type" />
-              </div>
-              <Select id="vType" required onChange={handleTextboxDataChange}>
-                <option> {user?.vType || "Select Vehicle Type"}</option>
-                <option>Large</option>
-                <option>Small</option>
-                <option>Medium</option>
-              </Select>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Vehicle model" />
-              </div>
-              <Select id="model" required onChange={handleTextboxDataChange}>
-                <option>{user?.model || "Select Vehicle Model"}</option>
-                <option>Car</option>
-                <option>Van</option>
-                <option>Bus</option>
-              </Select>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Upload file" />
-              </div>
-              <div className="flex  gap-5 items-center justify-between ">
-                <FileInput
-                  id="file-upload-helper-text"
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <Button
-                  type="button"
-                  gradientDuoTone="purpleToBlue"
-                  size="sm"
-                  outline
-                  onClick={handleUploadImage}
-                >
-                  Upload Image
-                </Button>
-              </div>
-            </div>
-            {imageUploadError && (
-              <Alert color="failure">{imageUploadError}</Alert>
-            )}
-
-            <div className="pt-4 ">
-              {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
-                <Button type="submit" disabled className="w-full">
-                  Loading....
-                </Button>
-              ) : (
-                <Button type="submit" className="w-full">
-                  Update Driver
-                </Button>
+          {user && (
+            <form className="gap-4  " onSubmit={handleSubmit}>
+              {user && (
+                <div className="mb-2 block">
+                  <img
+                    className="rounded-full ms-auto h-28 max-w-28"
+                    src={imageUrl || user.profilePicture}
+                  />
+                </div>
               )}
-            </div>
-          </form>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Name"
+                  />
+                </div>
+                <TextInput
+                  id="name"
+                  type="text"
+                  placeholder="moneeshakavindi"
+                  required
+                  shadow
+                  defaultValue={user?.name || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Password"
+                  />
+                </div>
+                <TextInput
+                  id="password"
+                  type="password"
+                  shadow
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 ID"
+                  />
+                </div>
+                <TextInput
+                  id="id"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={user?.id || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Date of Birth"
+                  />
+                </div>
+                <div>
+                  <Datepicker
+                    defaultDate={new Date(user.dob)}
+                    onSelectedDateChanged={(date) => {
+                      const dob =
+                        date.getFullYear() +
+                        "-" +
+                        (date.getMonth() + 1) +
+                        "-" +
+                        date.getDate();
+                      setFormData({ ...formData, dob });
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Email"
+                  />
+                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="name@flowbite.com"
+                  required
+                  shadow
+                  defaultValue={user?.email || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 NIC Number"
+                  />
+                </div>
+                <TextInput
+                  id="nic"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={user?.nic || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Phone Number"
+                  />
+                </div>
+                <TextInput
+                  id="phoneNumber"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={user?.phoneNumber || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="
+                 Address"
+                  />
+                </div>
+                <TextInput
+                  id="address"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={user?.address || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Vehicle Type" />
+                </div>
+                <Select id="vType" required onChange={handleTextboxDataChange}>
+                  <option> {user?.vType || "Select Vehicle Type"}</option>
+                  <option>Large</option>
+                  <option>Small</option>
+                  <option>Medium</option>
+                </Select>
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Vehicle model" />
+                </div>
+                <Select id="model" required onChange={handleTextboxDataChange}>
+                  <option>{user?.model || "Select Vehicle Model"}</option>
+                  <option>Car</option>
+                  <option>Van</option>
+                  <option>Bus</option>
+                </Select>
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Upload file" />
+                </div>
+                <div className="flex  gap-5 items-center justify-between ">
+                  <FileInput
+                    id="file-upload-helper-text"
+                    type="file"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <Button
+                    type="button"
+                    gradientDuoTone="purpleToBlue"
+                    size="sm"
+                    outline
+                    onClick={handleUploadImage}
+                  >
+                    Upload Image
+                  </Button>
+                </div>
+              </div>
+              {imageUploadError && (
+                <Alert color="failure">{imageUploadError}</Alert>
+              )}
+
+              <div className="pt-4 ">
+                {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
+                  <Button type="submit" disabled className="w-full">
+                    Loading....
+                  </Button>
+                ) : (
+                  <Button type="submit" className="w-full">
+                    Update Driver
+                  </Button>
+                )}
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

@@ -86,7 +86,7 @@ export const DashVehicleSignUp = () => {
                     const dateBrought =
                       date.getFullYear() +
                       "-" +
-                      date.getMonth() +
+                      (date.getMonth() + 1) +
                       "-" +
                       date.getDate();
                     setFormData({ ...formData, dateBrought });

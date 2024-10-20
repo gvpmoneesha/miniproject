@@ -112,134 +112,136 @@ export const DashVehicleUpdate = () => {
 
       <div className=" pt-14 ">
         <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="no" value="Vehicle Number" />
-              </div>
-              <TextInput
-                id="no"
-                type="text"
-                required
-                shadow
-                defaultValue={vehicle?.no || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="cNumber" value="Vehicle Chassie Number" />
-              </div>
-              <TextInput
-                id="cNumber"
-                type="text"
-                required
-                shadow
-                defaultValue={vehicle?.cNumber || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="date"
-                  value="Date of Current Owner Brought Vehicle"
-                />
-              </div>
+          {vehicle && (
+            <form className="gap-4  " onSubmit={handleSubmit}>
               <div>
-                <Datepicker
-                  defaultValue={vehicle?.dateBrought || ""}
-                  onSelectedDateChanged={(date) => {
-                    const dateBrought =
-                      date.getFullYear() +
-                      "-" +
-                      date.getMonth() +
-                      "-" +
-                      date.getDate();
-                    setFormData({ ...formData, dateBrought });
-                  }}
+                <div className="mb-2 block">
+                  <Label htmlFor="no" value="Vehicle Number" />
+                </div>
+                <TextInput
+                  id="no"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={vehicle?.no || ""}
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="name" value="Owner Name" />
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="cNumber" value="Vehicle Chassie Number" />
+                </div>
+                <TextInput
+                  id="cNumber"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={vehicle?.cNumber || ""}
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="moneeshakavindi"
-                required
-                shadow
-                defaultValue={vehicle?.name || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="nic" value="Owner's NIC Number" />
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    htmlFor="date"
+                    value="Date of Current Owner Brought Vehicle"
+                  />
+                </div>
+                <div>
+                  <Datepicker
+                    defaultDate={new Date(vehicle.dateBrought)}
+                    onSelectedDateChanged={(date) => {
+                      const dateBrought =
+                        date.getFullYear() +
+                        "-" +
+                        (date.getMonth() + 1) +
+                        "-" +
+                        date.getDate();
+                      setFormData({ ...formData, dateBrought });
+                    }}
+                  />
+                </div>
               </div>
-              <TextInput
-                id="nic"
-                type="text"
-                required
-                shadow
-                defaultValue={vehicle?.nic || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="phoneNumber" value="Owner's Phone Number" />
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="name" value="Owner Name" />
+                </div>
+                <TextInput
+                  id="name"
+                  type="text"
+                  placeholder="moneeshakavindi"
+                  required
+                  shadow
+                  defaultValue={vehicle?.name || ""}
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                required
-                shadow
-                defaultValue={vehicle?.phoneNumber}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Owner's email" />
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="nic" value="Owner's NIC Number" />
+                </div>
+                <TextInput
+                  id="nic"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={vehicle?.nic || ""}
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="moneesha@gmail"
-                required
-                shadow
-                defaultValue={vehicle?.email || ""}
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="model" value="Vehicle model" />
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="phoneNumber" value="Owner's Phone Number" />
+                </div>
+                <TextInput
+                  id="phoneNumber"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={vehicle?.phoneNumber}
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <Select id="model" required onChange={handleTextboxDataChange}>
-                <option>{vehicle?.model || "Select Vehicle Model"}</option>
-                <option>Car</option>
-                <option>Van</option>
-                <option>Bus</option>
-              </Select>
-            </div>
 
-            <div className="pt-4 ">
-              <Button type="submit" className="w-full">
-                Update Vehicle
-              </Button>
-            </div>
-          </form>
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="email" value="Owner's email" />
+                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="moneesha@gmail"
+                  required
+                  shadow
+                  defaultValue={vehicle?.email || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label htmlFor="model" value="Vehicle model" />
+                </div>
+                <Select id="model" required onChange={handleTextboxDataChange}>
+                  <option>{vehicle?.model || "Select Vehicle Model"}</option>
+                  <option>Car</option>
+                  <option>Van</option>
+                  <option>Bus</option>
+                </Select>
+              </div>
+
+              <div className="pt-4 ">
+                <Button type="submit" className="w-full">
+                  Update Vehicle
+                </Button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </div>

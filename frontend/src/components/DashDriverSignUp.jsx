@@ -163,7 +163,7 @@ export const DashDriverSignUp = () => {
                     const dob =
                       date.getFullYear() +
                       "-" +
-                      date.getMonth() +
+                      (date.getMonth() + 1) +
                       "-" +
                       date.getDate();
                     setFormData({ ...formData, dob });
