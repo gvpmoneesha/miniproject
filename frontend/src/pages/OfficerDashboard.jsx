@@ -51,7 +51,7 @@ export const OfficerDashboard = () => {
             </Sidebar>
           </div>
 
-          <div className=" w-full sm:max-w-8xl bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
+          <div className=" w-full sm:max-w-8xl bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\police.png')]  ">
             <div className="bg-slate-200 bg-opacity-80">
               {searchParams.get("dash") === "fine-issue" && <DashFineIssue />}
             </div>
