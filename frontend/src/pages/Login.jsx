@@ -22,6 +22,7 @@ export const Login = () => {
       console.log(data.role);
       if (res.ok) {
         if (data.role === "admin") {
+          localStorage.setItem("user", JSON.stringify(data));
           navigate("/dashboard");
         } else if (data.role === "officer") {
           navigate("/officerDashboard");
