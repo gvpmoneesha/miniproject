@@ -16,11 +16,20 @@ export default function Header() {
       <Navbar.Toggle />
       <Navbar.Collapse>
         <Link to="/login">
-          <Navbar.Link className="text-lg text-white">Admin</Navbar.Link>
+          <Navbar.Link
+            active={location.pathname == "/login"}
+            className="text-lg text-white"
+          >
+            Admin
+          </Navbar.Link>
         </Link>
 
-        <Link to="/login">
-          <Navbar.Link href="#" className="text-lg text-white">
+        <Link to="/login-officer">
+          <Navbar.Link
+            active={location.pathname == "/login-officer"}
+            href="#"
+            className="text-lg text-white"
+          >
             Traffic Officer
           </Navbar.Link>
         </Link>

@@ -4,7 +4,7 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import login from "../assets/login.png";
 
-export const Login = () => {
+export const LoginOfficer = () => {
   const [formData, setFormData] = useState({});
   const navigate = useNavigate();
 

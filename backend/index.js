@@ -5,7 +5,9 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from "./routes/user.route.js";
 import vehicleRoutes from "./routes/vehicle.route.js";
 import fineRoutes from "./routes/fine.route.js";
+import messageRoutes from "./routes/message.route.js";
 dotenv.config();
+import { app, server } from "./socket/socket.js";
 
 mongoose
   .connect(process.env.MONGOURL, {
@@ -18,7 +20,7 @@ mongoose
     console.log(error);
   });
 
-const app = express();
+//const app = express();
 
 app.use(express.json());
 
@@ -27,8 +29,9 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/vehicle", vehicleRoutes);
 app.use("/api/v1/fine", fineRoutes);
+app.use("/api/v1/message", messageRoutes);
 
-app.listen(3000, () => {
+server.listen(3000, () => {
   console.log("Server is running on port 3000!");
 });
 

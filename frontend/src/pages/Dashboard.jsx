@@ -75,7 +75,7 @@ export const Dashboard = () => {
               </Sidebar.Items>
             </Sidebar>
           </div>
-          <div className="   w-full sm:max-w-8xl bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
+          <div className="   w-full sm:max-w-8xl bg-cover h-screen bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
             <div className="bg-slate-200 bg-opacity-80">
               {(searchParams.get("dash") === "officer-create" && (
                 <DashOfficerSignUp />

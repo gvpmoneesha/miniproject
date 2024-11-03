@@ -8,6 +8,8 @@ import { DashDriversView } from "../components/DashDriversView";
 import { DashVehiclesView } from "../components/DashVehiclesView";
 import { DashFineView } from "../components/DashFineView";
 
+import { DashGroupMessage } from "../components/DashGroupMessage";
+
 export const OfficerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -45,8 +47,11 @@ export const OfficerDashboard = () => {
                   </Sidebar.Collapse>
 
                   <Sidebar.Collapse icon={HiShoppingBag} label="Message">
-                    <Link to="/">
-                      <Sidebar.Item href="#">Officer Chat</Sidebar.Item>
+                    <Link to="/officerdashboard?dash=all">
+                      <Sidebar.Item>All Chat</Sidebar.Item>
+                    </Link>
+                    <Link to="/officerdashboard?dash=message-group">
+                      <Sidebar.Item>Group Chat</Sidebar.Item>
                     </Link>
                   </Sidebar.Collapse>
                 </Sidebar.ItemGroup>
@@ -54,7 +59,7 @@ export const OfficerDashboard = () => {
             </Sidebar>
           </div>
 
-          <div className=" w-full sm:max-w-8xl bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\police.png')]  ">
+          <div className=" w-full sm:max-w-8xl h-screen bg-cover bg-no-repeat bg-center relative  bg-[url('G:\miniproject\frontend\src\assets\police.png')]  ">
             <div className="bg-slate-200 bg-opacity-80">
               {(searchParams.get("dash") === "fine-issue" && (
                 <DashFineIssue />
@@ -67,6 +72,10 @@ export const OfficerDashboard = () => {
                 )) ||
                 (searchParams.get("dash") === "vehicle-view" && (
                   <DashVehiclesView />
+                )) ||
+                (searchParams.get("dash") === "all" && <DashGroupMessage />) ||
+                (searchParams.get("dash") === "message-group" && (
+                  <DashGroupMessage />
                 ))}
             </div>
           </div>
