@@ -6,6 +6,7 @@ import userRoutes from "./routes/user.route.js";
 import vehicleRoutes from "./routes/vehicle.route.js";
 import fineRoutes from "./routes/fine.route.js";
 import messageRoutes from "./routes/message.route.js";
+import violatioRoute from "./routes/violation.route.js";
 dotenv.config();
 import { app, server } from "./socket/socket.js";
 
@@ -30,6 +31,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/vehicle", vehicleRoutes);
 app.use("/api/v1/fine", fineRoutes);
 app.use("/api/v1/message", messageRoutes);
+app.use("/api/v1/violation", violatioRoute);
 
 server.listen(3000, () => {
   console.log("Server is running on port 3000!");

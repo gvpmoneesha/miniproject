@@ -60,7 +60,7 @@ export const OfficerDashboard = () => {
           </div>
 
           <div className=" w-full sm:max-w-8xl h-screen bg-cover bg-no-repeat bg-center relative  bg-[url('G:\miniproject\frontend\src\assets\police.png')]  ">
-            <div className="bg-slate-200 bg-opacity-80">
+            <div className="bg-slate-200 bg-opacity-80 ">
               {(searchParams.get("dash") === "fine-issue" && (
                 <DashFineIssue />
               )) ||

@@ -12,6 +12,7 @@ import { DashVehicleUpdate } from "../components/DashVehicleUpdate";
 import { DashOfficerDelete } from "../components/DashOfficerDelete";
 import { DashDriverDelete } from "../components/DashDriverDelete";
 import { DashVehicleDelete } from "../components/DashVehicleDelete";
+import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,12 +72,31 @@ export const Dashboard = () => {
                       <Sidebar.Item href="#">Delete Vehicle</Sidebar.Item>
                     </Link>
                   </Sidebar.Collapse>
+
+                  <Sidebar.Collapse
+                    icon={HiShoppingBag}
+                    label="Manage Violation Type"
+                  >
+                    <Link to="/dashboard?dash=violationType-create">
+                      <Sidebar.Item href="#">Add Violation Type</Sidebar.Item>
+                    </Link>
+                    <Link to="/dashboard?dash=driver-update">
+                      <Sidebar.Item href="#">
+                        Update Violation Type
+                      </Sidebar.Item>
+                    </Link>
+                    <Link to="/dashboard?dash=driver-delete">
+                      <Sidebar.Item href="#">
+                        Delete Violation Type
+                      </Sidebar.Item>
+                    </Link>
+                  </Sidebar.Collapse>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </Sidebar>
           </div>
-          <div className="   w-full sm:max-w-8xl bg-cover h-screen bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
-            <div className="bg-slate-200 bg-opacity-80">
+          <div className="   w-full sm:max-w-8xl bg-cover  bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
+            <div className="bg-slate-200  bg-opacity-80">
               {(searchParams.get("dash") === "officer-create" && (
                 <DashOfficerSignUp />
               )) ||
@@ -103,6 +123,15 @@ export const Dashboard = () => {
                 )) ||
                 (searchParams.get("dash") === "driver-delete" && (
                   <DashDriverDelete />
+                )) ||
+                (searchParams.get("dash") === "violationType-create" && (
+                  <DashViolationTypeCreate />
+                )) ||
+                (searchParams.get("dash") === "violationType-update" && (
+                  <DashDriverUpdate />
+                )) ||
+                (searchParams.get("dash") === "violationType-delete" && (
+                  <DashDriverUpdate />
                 ))}
             </div>
           </div>
