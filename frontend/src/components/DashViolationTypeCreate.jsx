@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Checkbox,
@@ -11,6 +11,32 @@ import {
 } from "flowbite-react";
 
 export const DashViolationTypeCreate = () => {
+  const [formData, setFormData] = useState({});
+
+  const handleTextboxDataChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    try {
+      const res = await fetch("/api/v1/violation/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      console.log(res);
+
+      if (res.ok) {
+        Navigate("/dashboard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(formData);
+
   return (
     <div className="  max-w-lg p-3 mx-auto">
       <div>
@@ -23,7 +49,7 @@ export const DashViolationTypeCreate = () => {
 
       <div className=" pt-20 ">
         <div>
-          <form className="gap-4  ">
+          <form className="gap-4" onSubmit={handleSubmit}>
             <div>
               <div className="mb-2 block">
                 <Label
@@ -31,7 +57,13 @@ export const DashViolationTypeCreate = () => {
                      Type"
                 />
               </div>
-              <TextInput id="type" type="text" required shadow />
+              <TextInput
+                id="type"
+                type="text"
+                required
+                shadow
+                onChange={handleTextboxDataChange}
+              />
             </div>
 
             <label
@@ -44,7 +76,8 @@ export const DashViolationTypeCreate = () => {
               id="description"
               rows="5"
               class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Write your thoughts here..."
+              placeholder="Discription of rule..."
+              onChange={handleTextboxDataChange}
             ></textarea>
 
             <div>
@@ -54,7 +87,13 @@ export const DashViolationTypeCreate = () => {
                      Price"
                 />
               </div>
-              <TextInput id="price" type="text" required shadow />
+              <TextInput
+                id="price"
+                type="text"
+                required
+                shadow
+                onChange={handleTextboxDataChange}
+              />
             </div>
 
             <div className="pt-4 ">
