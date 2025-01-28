@@ -13,6 +13,7 @@ import { DashOfficerDelete } from "../components/DashOfficerDelete";
 import { DashDriverDelete } from "../components/DashDriverDelete";
 import { DashVehicleDelete } from "../components/DashVehicleDelete";
 import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
+import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -80,7 +81,7 @@ export const Dashboard = () => {
                     <Link to="/dashboard?dash=violationType-create">
                       <Sidebar.Item href="#">Add Violation Type</Sidebar.Item>
                     </Link>
-                    <Link to="/dashboard?dash=driver-update">
+                    <Link to="/dashboard?dash=violationType-update">
                       <Sidebar.Item href="#">
                         Update Violation Type
                       </Sidebar.Item>
@@ -128,7 +129,7 @@ export const Dashboard = () => {
                   <DashViolationTypeCreate />
                 )) ||
                 (searchParams.get("dash") === "violationType-update" && (
-                  <DashDriverUpdate />
+                  <DashViolationTypeUpdate />
                 )) ||
                 (searchParams.get("dash") === "violationType-delete" && (
                   <DashDriverUpdate />

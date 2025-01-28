@@ -54,7 +54,7 @@ export const DashViolationTypeCreate = () => {
               <div className="mb-2 block">
                 <Label
                   value="
-                     Type"
+                     Violation Type"
                 />
               </div>
               <TextInput

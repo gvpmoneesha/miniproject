@@ -40,3 +40,48 @@ export const getAllRule = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getRule = async (req, res, next) => {
+  try {
+    const ruleId = req.params._id;
+    const rule = await Violation.findOne({ _id: ruleId });
+
+    if (rule) {
+      res.status(200).json(rule);
+    } else {
+      return next(404, "Rule not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const violaionUpdate = async (req, res, next) => {
+  try {
+    const violation = await Violation.findOne({ _id: req.params._id });
+
+    if (req.body.type) {
+      if (violation.type !== req.body.type) {
+        const existType = await Violation.findOne({ type: req.body.type });
+        if (existType) {
+          return next(errorHandler(409, "Violation Type is already exist"));
+        }
+      }
+    }
+
+    const updateViolation = await Violation.findByIdAndUpdate(
+      violation._id,
+      {
+        $set: {
+          type: req.body.type,
+          description: req.body.description,
+          price: req.body.price,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updateViolation);
+  } catch (error) {
+    next(error);
+  }
+};

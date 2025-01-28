@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Header";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
-import login from "../assets/login.png";
+import police1 from "../assets/police1.png";
 
 export const LoginOfficer = () => {
   const [formData, setFormData] = useState({});
@@ -43,7 +43,7 @@ export const LoginOfficer = () => {
       <div className="min-h-screen  bg-teal-50">
         <div className="flex max-w-5xl md:flex-row flex-col mx-auto p-3 px-10 gap-10 md:items-center">
           <div className="flex-1">
-            <img src={login} className="" />
+            <img src={police1} className="max-w-xs" />
           </div>
           <div className="flex-1 pt-5">
             <form
