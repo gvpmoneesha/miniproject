@@ -42,7 +42,7 @@ export const DashViolationTypeCreate = () => {
       <div>
         <div className="text-center text-teal-700 ">
           <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Violation Rule<br></br>And<br></br> Information
+            Violation Rule And Information
           </h2>
         </div>
       </div>
@@ -51,13 +51,14 @@ export const DashViolationTypeCreate = () => {
         <div>
           <form className="gap-4" onSubmit={handleSubmit}>
             <div>
-              <div className="mb-2 block">
+              <div className="mb-4 block">
                 <Label
                   value="
                      Violation Type"
                 />
               </div>
               <TextInput
+                className="mb-4"
                 id="type"
                 type="text"
                 required
@@ -68,26 +69,27 @@ export const DashViolationTypeCreate = () => {
 
             <label
               for="message"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              class="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
             >
               Description
             </label>
             <textarea
               id="description"
               rows="5"
-              class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              class="block mb-4 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Discription of rule..."
               onChange={handleTextboxDataChange}
             ></textarea>
 
             <div>
-              <div className="mb-2 block">
+              <div className="mb-4 block">
                 <Label
                   value="
                      Price"
                 />
               </div>
               <TextInput
+                className="mb-4"
                 id="price"
                 type="text"
                 required

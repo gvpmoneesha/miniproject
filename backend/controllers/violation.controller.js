@@ -85,3 +85,16 @@ export const violaionUpdate = async (req, res, next) => {
     next(error);
   }
 };
+
+export const deleteViolation = async (req, res, next) => {
+  try {
+    const violation = await Violation.findById(req.params._id);
+    if (!violation) {
+      return next(errorHandler(404, "Violation not found"));
+    }
+    await Violation.findByIdAndDelete(req.params._id);
+    res.status(200).json("Violation delete is completed");
+  } catch (error) {
+    next(error);
+  }
+};
