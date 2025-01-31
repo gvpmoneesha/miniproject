@@ -134,7 +134,7 @@ export const DashDriversView = () => {
             </Table>
           </>
         ) : (
-          <p>No officers</p>
+          <p>No drivers</p>
         )}
       </div>
     </div>

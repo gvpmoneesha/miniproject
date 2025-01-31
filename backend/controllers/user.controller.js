@@ -83,10 +83,34 @@ export const getUser = async (req, res, next) => {
 
     const user = await User.findOne({ id: userId });
 
-    if (user) {
-      res.status(200).json(user);
-    } else {
-      return next(404, "User not found");
+    if (user.role === "driver")
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        return next(404, "User not found");
+      }
+    else {
+      console.log("This user can't find.");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOfficer = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findOne({ id: userId });
+
+    if (user.role === "officer")
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        return next(404, "User not found");
+      }
+    else {
+      console.log("This user can't find.");
     }
   } catch (error) {
     next(error);
