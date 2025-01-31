@@ -5,9 +5,13 @@ import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import { DashOfficersView } from "../components/DashOfficersView";
 import { DashFineView } from "../components/DashFineView";
+import { Payment } from "./Payment";
+import { useNavigate } from "react-router-dom";
 
 export const DriverDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -31,9 +35,11 @@ export const DriverDashboard = () => {
                       Police officer information
                     </Sidebar.Item>
                   </Link>
-                  <Sidebar.Item href="#" icon={HiShoppingBag}>
-                    Pay Payment
-                  </Sidebar.Item>
+                  <Link to="/driverdashboard?dash=payment">
+                    <Sidebar.Item href="#" icon={HiShoppingBag}>
+                      Pay Payment
+                    </Sidebar.Item>
+                  </Link>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </Sidebar>
@@ -44,7 +50,9 @@ export const DriverDashboard = () => {
               {(searchParams.get("dash") === "fine-view" && <DashFineView />) ||
                 (searchParams.get("dash") === "officer-view" && (
                   <DashOfficersView />
-                ))}
+                )) ||
+                (searchParams.get("dash") === "payment" &&
+                  navigate("/payment"))}
             </div>
           </div>
         </div>

@@ -44,9 +44,16 @@ export default function Header() {
           </Navbar.Link>
         </Link>
 
-        <Navbar.Link href="#" className="text-lg  text-white">
-          Payment
-        </Navbar.Link>
+        <Link to="/payment">
+          <Navbar.Link
+            active={location.pathname == "/payment"}
+            href="#"
+            className="text-lg text-white"
+          >
+            Payment
+          </Navbar.Link>
+        </Link>
+
         <Navbar.Link href="#" className="text-lg  text-white">
           About Us
         </Navbar.Link>

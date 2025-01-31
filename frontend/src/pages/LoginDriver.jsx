@@ -6,6 +6,7 @@ import login from "../assets/login.png";
 
 export const LoginDriver = () => {
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   console.log(formData);
@@ -89,7 +90,7 @@ export const LoginDriver = () => {
                 </div>
                 <TextInput
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   onChange={(e) => {
                     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -97,7 +98,10 @@ export const LoginDriver = () => {
                 />
               </div>
               <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
+                <Checkbox
+                  id="remember"
+                  onChange={() => setShowPassword(!showPassword)}
+                />
                 <Label>Show me</Label>
               </div>
               <Button type="submit">Submit</Button>

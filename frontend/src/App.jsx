@@ -6,6 +6,7 @@ import { OfficerDashboard } from "./pages/OfficerDashboard";
 import { LoginOfficer } from "./pages/LoginOfficer";
 import { LoginDriver } from "./pages/LoginDriver";
 import { DriverDashboard } from "./pages/DriverDashboard";
+import { Payment } from "./pages/Payment";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/officerDashboard" element={<OfficerDashboard />} />
         <Route path="/driverDashboard" element={<DriverDashboard />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </BrowserRouter>
   );

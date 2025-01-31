@@ -6,6 +6,7 @@ import police1 from "../assets/police1.png";
 
 export const LoginOfficer = () => {
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   console.log(formData);
@@ -86,7 +87,7 @@ export const LoginOfficer = () => {
                 </div>
                 <TextInput
                   id="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   required
                   onChange={(e) => {
                     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -94,7 +95,10 @@ export const LoginOfficer = () => {
                 />
               </div>
               <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
+                <Checkbox
+                  id="remember"
+                  onChange={() => setShowPassword(!showPassword)}
+                />
                 <Label>Show me</Label>
               </div>
               <Button type="submit">Submit</Button>
