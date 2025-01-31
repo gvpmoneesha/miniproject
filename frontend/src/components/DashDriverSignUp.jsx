@@ -111,7 +111,7 @@ export const DashDriverSignUp = () => {
               <TextInput
                 id="name"
                 type="text"
-                placeholder="moneeshakavindi"
+                placeholder="moneesha kavindi"
                 required
                 shadow
                 onChange={handleTextboxDataChange}
@@ -293,7 +293,7 @@ export const DashDriverSignUp = () => {
                 </Button>
               ) : (
                 <Button type="submit" className="w-full">
-                  Register new account
+                  Add Driver
                 </Button>
               )}
             </div>

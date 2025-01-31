@@ -102,7 +102,7 @@ export const DashVehicleSignUp = () => {
               <TextInput
                 id="name"
                 type="text"
-                placeholder="moneeshakavindi"
+                placeholder="moneesha kavindi"
                 required
                 shadow
                 onChange={handleTextboxDataChange}
@@ -163,7 +163,7 @@ export const DashVehicleSignUp = () => {
 
             <div className="pt-4 ">
               <Button type="submit" className="w-full">
-                Register new account
+                Add Vehicle
               </Button>
             </div>
           </form>

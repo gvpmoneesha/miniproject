@@ -95,7 +95,7 @@ export const DashViolationTypeUpdate = () => {
       <div>
         <div className="text-center text-teal-700 ">
           <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Update Violation and Rule Information
+            Update Violation Rule And Information
           </h2>
         </div>
       </div>

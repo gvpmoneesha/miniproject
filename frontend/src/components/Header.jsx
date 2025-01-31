@@ -34,9 +34,16 @@ export default function Header() {
           </Navbar.Link>
         </Link>
 
-        <Navbar.Link href="#" className="text-lg  text-white">
-          Driver
-        </Navbar.Link>
+        <Link to="/login-driver">
+          <Navbar.Link
+            active={location.pathname == "/login-driver"}
+            href="#"
+            className="text-lg text-white"
+          >
+            Driver
+          </Navbar.Link>
+        </Link>
+
         <Navbar.Link href="#" className="text-lg  text-white">
           Payment
         </Navbar.Link>

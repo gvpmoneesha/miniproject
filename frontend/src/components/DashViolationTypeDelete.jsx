@@ -79,7 +79,7 @@ export const DashViolationTypeDelete = () => {
       <div>
         <div className="text-center text-teal-700 ">
           <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Delete Violation and Rule Information
+            Delete Violation Rule And Information
           </h2>
         </div>
       </div>

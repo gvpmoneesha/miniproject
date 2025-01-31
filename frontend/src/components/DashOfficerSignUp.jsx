@@ -106,7 +106,7 @@ const DashOfficerSignUp = () => {
               <TextInput
                 id="name"
                 type="text"
-                placeholder="moneeshakavindi"
+                placeholder="moneesha kavindi"
                 required
                 shadow
                 onChange={handleTextboxDataChange}
@@ -269,7 +269,7 @@ const DashOfficerSignUp = () => {
                 </Button>
               ) : (
                 <Button type="submit" className="w-full">
-                  Register new account
+                  Add New Officer
                 </Button>
               )}
             </div>
