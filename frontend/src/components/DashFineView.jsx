@@ -1,15 +1,11 @@
 import React from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
 
 export const DashFineView = () => {
   const [fine, setFine] = useState([]);
   const [error, setError] = useState(null);
   const [fineIdToView, setFineIdToView] = useState("");
-
-  console.log(fineIdToView);
-  console.log(fine.length);
 
   useEffect(() => {
     const fetchFines = async () => {

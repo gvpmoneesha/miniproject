@@ -4,9 +4,9 @@ import Header from "../components/Header";
 import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import { DashOfficersView } from "../components/DashOfficersView";
-import { DashFineView } from "../components/DashFineView";
 import { Payment } from "./Payment";
 import { useNavigate } from "react-router-dom";
+import { DashDriverFineView } from "../components/DashDriverFineView";
 
 export const DriverDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,7 +47,9 @@ export const DriverDashboard = () => {
 
           <div className="   w-full sm:max-w-8xl bg-cover  bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
             <div className="bg-slate-200  bg-opacity-80">
-              {(searchParams.get("dash") === "fine-view" && <DashFineView />) ||
+              {(searchParams.get("dash") === "fine-view" && (
+                <DashDriverFineView />
+              )) ||
                 (searchParams.get("dash") === "officer-view" && (
                   <DashOfficersView />
                 )) ||
