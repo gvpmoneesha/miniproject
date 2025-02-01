@@ -47,20 +47,26 @@ export const DashViolationTypeUpdate = () => {
     setSearchId(e.target.value);
   };
 
-  const handleSearchVehicle = async (req, res) => {
+  const handleSearchVehicle = async (vId) => {
     try {
-      const res = await fetch(`/api/v1/violation/getrule/${searchId}`);
+      setSearchId(vId);
+      await fetch(`/api/v1/violation/getrule/${vId}`).then(async (res) => {
+        if (!res.ok) {
+          return;
+        } else {
+          await res.json().then((data) => {
+            setViolation(data);
 
-      if (!res.ok) {
-        return;
-      } else {
-        const data = await res.json();
-        setViolation(data);
-      }
+            setShowModal(true);
+          });
+        }
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(violationIdToUpdate);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,8 +93,6 @@ export const DashViolationTypeUpdate = () => {
       console.log("error here");
     }
   };
-
-  console.log(violations);
 
   return (
     <div className="min-h-screen   p-3 ">
@@ -128,8 +132,7 @@ export const DashViolationTypeUpdate = () => {
                     <Table.Cell>
                       <span
                         onClick={() => {
-                          setShowModal(true);
-                          setViolationIdToUpdate(violation._id);
+                          handleSearchVehicle(violation._id);
                         }}
                         className="font-medium text-red-500 hover:underline cursor-pointer"
                       >
@@ -154,7 +157,7 @@ export const DashViolationTypeUpdate = () => {
           <Modal.Header />
 
           <Modal.Body>
-            {!showForm ? (
+            {/* {!showForm ? (
               <div className="text-center">
                 <HiOutlineExclamationCircle className="mx-auto h-14 w-14 text-gray-400 dark:text-gray-200 mb-4" />
                 <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
@@ -169,13 +172,14 @@ export const DashViolationTypeUpdate = () => {
                   </Button>
                 </div>
               </div>
-            ) : (
+            ) : ( */}
+            {violation && (
               <div className="mt-4">
                 <h2 className="text-xl font-bold mb-4">
                   Update Information of Violation
                 </h2>
 
-                <div className="flex items-center gap-5  px-3 pt-6">
+                {/* <div className="flex items-center gap-5  px-3 pt-6">
                   <div className="mb-2 block">
                     <Label value="ID-:" />
                   </div>
@@ -186,11 +190,12 @@ export const DashViolationTypeUpdate = () => {
                       type="text"
                       required
                       shadow
-                      onChange={handleSearchId}
+                      defaultValue={violation?._id || ""}
+                      // onChange={handleSearchId}
                     />
                   </div>
 
-                  <div>
+                  {/* <div>
                     <Button
                       type="button"
                       gradientDuoTone="purpleToBlue"
@@ -200,10 +205,24 @@ export const DashViolationTypeUpdate = () => {
                     >
                       Search
                     </Button>
-                  </div>
-                </div>
+                  </div> }
+                </div> */}
 
                 <form className="space-y-4  mt-8">
+                  <div>
+                    <div className="mb-2 block">
+                      <Label value="ID-:" />
+                    </div>
+                    <TextInput
+                      id="_id"
+                      type="text"
+                      required
+                      shadow
+                      readOnly
+                      defaultValue={violation?._id || ""}
+                      // onChange={handleSearchId}
+                    />
+                  </div>
                   <div>
                     <div className="mb-2 block">
                       <Label value=" Violation Type" />
@@ -258,6 +277,7 @@ export const DashViolationTypeUpdate = () => {
                 </form>
               </div>
             )}
+            {/* )} */}
           </Modal.Body>
         </Modal>
       </div>

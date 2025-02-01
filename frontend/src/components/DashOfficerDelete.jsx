@@ -32,7 +32,7 @@ export const DashOfficerDelete = () => {
       if (userIdToDelete === "") {
         return setError("Fill Serach field");
       }
-      const res = await fetch(`/api/v1/user/getuser/${userIdToDelete}`);
+      const res = await fetch(`/api/v1/user/getofficer/${userIdToDelete}`);
       const data = await res.json();
       if (data.success == false) {
         return setError(data.messaage);
@@ -51,7 +51,7 @@ export const DashOfficerDelete = () => {
     try {
       console.log(userIdToDelete);
 
-      const res = await fetch(`/api/v1/user/delete/${userIdToDelete}`, {
+      const res = await fetch(`/api/v1/user/delete-officer/${userIdToDelete}`, {
         method: "DELETE",
       });
 

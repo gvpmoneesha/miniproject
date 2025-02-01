@@ -75,9 +75,9 @@ const DashOfficerUpdate = () => {
     setSearchId(e.target.value);
   };
 
-  const handleSearchUser = async (req, res) => {
+  const handleSearchUser = async () => {
     try {
-      const res = await fetch(`/api/v1/user/getuser/${searchId}`);
+      const res = await fetch(`/api/v1/user/getofficer/${searchId}`);
 
       if (!res.ok) {
         return;

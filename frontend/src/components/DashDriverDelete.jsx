@@ -51,7 +51,7 @@ export const DashDriverDelete = () => {
     try {
       console.log(userIdToDelete);
 
-      const res = await fetch(`/api/v1/user/delete/${userIdToDelete}`, {
+      const res = await fetch(`/api/v1/user/delete-driver/${userIdToDelete}`, {
         method: "DELETE",
       });
 
