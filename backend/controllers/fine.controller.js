@@ -55,3 +55,32 @@ export const fineIssue = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllFines = async (req, res, next) => {
+  try {
+    const fines = await Fine.find();
+    if (fines) {
+      res.status(200).json(fines);
+    } else {
+      return next(400, "User not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFine = async (req, res, next) => {
+  try {
+    const fineId = req.params.dId;
+
+    const fine = await Fine.find({ dId: fineId });
+
+    if (fine) {
+      res.status(200).json(fine);
+    } else {
+      return next(404, "Fine not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};

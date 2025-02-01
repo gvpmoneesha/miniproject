@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const DashDriversView = () => {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  const [userIdToDelete, setUserIdToDelete] = useState("");
+  const [userIdToView, setUserIdToView] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -20,17 +20,17 @@ export const DashDriversView = () => {
         setError(error);
       }
     };
-    if (userIdToDelete === "") {
+    if (userIdToView === "") {
       fetchUsers();
     }
-  }, [userIdToDelete]);
+  }, [userIdToView]);
 
   const getUser = async () => {
     try {
-      if (userIdToDelete === "") {
+      if (userIdToView === "") {
         return setError("Fill Serach field");
       }
-      const res = await fetch(`/api/v1/user/getuser/${userIdToDelete}`);
+      const res = await fetch(`/api/v1/user/getuser/${userIdToView}`);
       const data = await res.json();
       if (data.success == false) {
         return setError(data.messaage);
@@ -65,7 +65,7 @@ export const DashDriversView = () => {
               required
               shawod
               onChange={(e) => {
-                setUserIdToDelete(e.target.value);
+                setUserIdToView(e.target.value);
               }}
             />
           </div>
