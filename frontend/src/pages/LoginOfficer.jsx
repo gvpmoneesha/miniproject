@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import police1 from "../assets/police1.png";
+import { FooterPage } from "../components/FooterPage";
 
 export const LoginOfficer = () => {
   const [formData, setFormData] = useState({});
@@ -105,6 +106,10 @@ export const LoginOfficer = () => {
             </form>
           </div>
         </div>
+      </div>
+
+      <div>
+        <FooterPage />
       </div>
     </>
   );

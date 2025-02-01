@@ -7,6 +7,7 @@ import { DashOfficersView } from "../components/DashOfficersView";
 import { Payment } from "./Payment";
 import { useNavigate } from "react-router-dom";
 import { DashDriverFineView } from "../components/DashDriverFineView";
+import { FooterPage } from "../components/FooterPage";
 
 export const DriverDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -58,6 +59,10 @@ export const DriverDashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <FooterPage />
       </div>
     </div>
   );

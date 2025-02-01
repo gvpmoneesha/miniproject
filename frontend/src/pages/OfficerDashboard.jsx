@@ -7,6 +7,7 @@ import { DashFineIssue } from "../components/DashFineIssue";
 import { DashDriversView } from "../components/DashDriversView";
 import { DashVehiclesView } from "../components/DashVehiclesView";
 import { DashFineView } from "../components/DashFineView";
+import { FooterPage } from "../components/FooterPage";
 
 import { DashGroupMessage } from "../components/DashGroupMessage";
 
@@ -81,6 +82,8 @@ export const OfficerDashboard = () => {
           </div>
         </div>
       </div>
+
+      <FooterPage />
     </div>
   );
 };

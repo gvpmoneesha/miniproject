@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import driver3 from "../assets/driver3.jpg";
+import { FooterPage } from "../components/FooterPage";
 
 export const LoginDriver = () => {
   const [formData, setFormData] = useState({});
@@ -108,6 +109,10 @@ export const LoginDriver = () => {
             </form>
           </div>
         </div>
+      </div>
+
+      <div>
+        <FooterPage />
       </div>
     </div>
   );

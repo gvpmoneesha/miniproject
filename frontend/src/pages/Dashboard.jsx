@@ -15,6 +15,7 @@ import { DashVehicleDelete } from "../components/DashVehicleDelete";
 import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
 import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 import { DashViolationTypeDelete } from "../components/DashViolationTypeDelete";
+import { FooterPage } from "../components/FooterPage";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -138,6 +139,10 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div>
+        <FooterPage />
       </div>
     </div>
   );
