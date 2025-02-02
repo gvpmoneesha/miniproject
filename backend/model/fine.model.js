@@ -68,6 +68,7 @@ const fineShema = new mongoose.Schema(
       type: Boolean,
       required: true,
     },
+
     block: {
       type: Boolean,
       required: true,
