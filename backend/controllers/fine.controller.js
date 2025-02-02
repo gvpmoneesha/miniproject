@@ -1,5 +1,6 @@
 import Fine from "../model/fine.model.js";
 import { errorHandler } from "../utils/error.js";
+import { sendEmail } from "./email.controller.js";
 
 export const fineIssue = async (req, res, next) => {
   const now = new Date();
@@ -8,12 +9,23 @@ export const fineIssue = async (req, res, next) => {
   now.setDate(now.getDate() + 14);
   const formattedExpireDate = now.toISOString().split("T")[0];
 
-  const { dId, dName, vNo, place, violation, pId, pName, pStation, charge } =
-    req.body;
+  const {
+    dId,
+    dName,
+    email,
+    vNo,
+    place,
+    violation,
+    pId,
+    pName,
+    pStation,
+    charge,
+  } = req.body;
 
   if (
     !dId ||
     !dName ||
+    !email ||
     !vNo ||
     !place ||
     !violation ||
@@ -22,6 +34,8 @@ export const fineIssue = async (req, res, next) => {
     !pStation ||
     !charge ||
     dId == "" ||
+    dName == "" ||
+    email == "" ||
     vNo == "" ||
     place == "" ||
     violation == "" ||
@@ -37,6 +51,7 @@ export const fineIssue = async (req, res, next) => {
     const createFine = Fine({
       dId,
       dName,
+      email,
       vNo,
       issueDate,
       time,
@@ -49,7 +64,10 @@ export const fineIssue = async (req, res, next) => {
       charge,
       state: false,
     });
+
+    // const bodydd = ` sefjeslij sejfesij fij`
     await createFine.save();
+    //await sendEmail(dName, "Reminder: Unpaid Traffic Fine", emailBody);
     res.json("Fine registration is successfull");
   } catch (error) {
     next(error);

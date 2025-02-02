@@ -7,10 +7,18 @@ import { LoginOfficer } from "./pages/LoginOfficer";
 import { LoginDriver } from "./pages/LoginDriver";
 import { DriverDashboard } from "./pages/DriverDashboard";
 import { Payment } from "./pages/Payment";
+import { About } from "./pages/About";
+import { Contact } from "./pages/Contact";
+import { Footer } from "flowbite-react";
+import { FooterPage } from "./components/FooterPage";
+
+import { Header } from "./components/Header";
 
 export default function App() {
   return (
     <BrowserRouter>
+      {/* <Header className="" bg-teal-400 /> */}
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -20,7 +28,10 @@ export default function App() {
         <Route path="/officerDashboard" element={<OfficerDashboard />} />
         <Route path="/driverDashboard" element={<DriverDashboard />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
+      <FooterPage />
     </BrowserRouter>
   );
 }

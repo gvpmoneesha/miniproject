@@ -7,19 +7,32 @@ import vehicleRoutes from "./routes/vehicle.route.js";
 import fineRoutes from "./routes/fine.route.js";
 import messageRoutes from "./routes/message.route.js";
 import violatioRoute from "./routes/violation.route.js";
-dotenv.config();
-import { app, server } from "./socket/socket.js";
 
-mongoose
-  .connect(process.env.MONGOURL, {
-    serverSelectionTimeoutMS: 5000,
-  })
-  .then(() => {
-    console.log("MongoDB is connected");
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+import { app, server } from "./socket/socket.js";
+import cron from "node-cron";
+import { checkFinesAndSendEmails } from "./controllers/email.controller.js";
+
+dotenv.config();
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGOURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("MongoDB Connected!");
+  } catch (error) {
+    console.error("MongoDB Connection Failed!", error);
+    process.exit(1);
+  }
+};
+
+connectDB();
+
+cron.schedule("*/1 * * * *", async () => {
+  console.log("Running cron job every 1 minutes...");
+  await checkFinesAndSendEmails();
+});
 
 //const app = express();
 

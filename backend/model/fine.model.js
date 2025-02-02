@@ -12,6 +12,11 @@ const fineShema = new mongoose.Schema(
       required: true,
     },
 
+    email: {
+      type: String,
+      required: true,
+    },
+
     vNo: {
       type: String,
       required: true,
@@ -60,8 +65,13 @@ const fineShema = new mongoose.Schema(
     charge: { type: String, required: true },
 
     state: {
-      type: String,
+      type: Boolean,
       required: true,
+    },
+    block: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   { timestamps: true }

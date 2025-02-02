@@ -47,7 +47,7 @@ export const DashFineView = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen md:max-w-5xl">
       <div>
         <div className="text-center text-teal-700">
           <h2 className="font-bold text-3xl sm:text-5xl pt-10">View Fines</h2>
@@ -92,7 +92,7 @@ export const DashFineView = () => {
         </Alert>
       )}
 
-      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 md:max-h-[68vh] overflow-y-scroll">
         {fine.length > 0 ? (
           <>
             <Table hoverable className="shadow-md ">

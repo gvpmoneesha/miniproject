@@ -1,13 +1,12 @@
 import { Link, useSearchParams } from "react-router-dom";
 import React, { useState } from "react";
-import Header from "../components/Header";
+
 import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import { DashFineIssue } from "../components/DashFineIssue";
 import { DashDriversView } from "../components/DashDriversView";
 import { DashVehiclesView } from "../components/DashVehiclesView";
 import { DashFineView } from "../components/DashFineView";
-import { FooterPage } from "../components/FooterPage";
 
 import { DashGroupMessage } from "../components/DashGroupMessage";
 
@@ -17,10 +16,6 @@ export const OfficerDashboard = () => {
   return (
     <div>
       <div>
-        <div className="bg-teal-400 ">
-          <Header />
-        </div>
-
         <div className="flex flex-col  sm:flex-row">
           <div>
             <Sidebar
@@ -82,8 +77,6 @@ export const OfficerDashboard = () => {
           </div>
         </div>
       </div>
-
-      <FooterPage />
     </div>
   );
 };

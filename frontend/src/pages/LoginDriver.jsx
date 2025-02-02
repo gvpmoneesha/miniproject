@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
+
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import driver3 from "../assets/driver3.jpg";
-import { FooterPage } from "../components/FooterPage";
 
 export const LoginDriver = () => {
   const [formData, setFormData] = useState({});
@@ -41,10 +40,6 @@ export const LoginDriver = () => {
 
   return (
     <div>
-      <div className="bg-teal-400">
-        <Header />
-      </div>
-
       <div className="min-h-screen  bg-teal-50">
         <div className="flex max-w-5xl md:flex-row flex-col mx-auto p-3 px-10 gap-10 md:items-center">
           <div className="flex-1">
@@ -109,10 +104,6 @@ export const LoginDriver = () => {
             </form>
           </div>
         </div>
-      </div>
-
-      <div>
-        <FooterPage />
       </div>
     </div>
   );

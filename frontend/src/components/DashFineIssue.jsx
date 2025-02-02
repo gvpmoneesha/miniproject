@@ -21,6 +21,7 @@ export const DashFineIssue = () => {
   const [selectedRule, setSelectedRule] = useState(null);
   const [driverId, setDriverId] = useState(null);
   const [driver, setDriver] = useState(null);
+
   const [formData, setFormData] = useState({
     pId: officer.id,
     pName: officer.name,
@@ -42,7 +43,7 @@ export const DashFineIssue = () => {
         .then((res) => res.json())
         .then((data) => {
           setDriver(data);
-          setFormData({ ...formData, dName: data.name });
+          setFormData({ ...formData, dName: data.name, email: data.email });
         });
     };
     getDriver();
@@ -115,6 +116,20 @@ export const DashFineIssue = () => {
                 type="text"
                 readOnly
                 value={driver?.name || ""}
+                required
+                shadow
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Driver Email" />
+              </div>
+              <TextInput
+                id="email"
+                type="text"
+                readOnly
+                value={driver?.email || ""}
                 required
                 shadow
               />

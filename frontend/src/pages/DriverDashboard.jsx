@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import Header from "../components/Header";
+
 import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import { DashOfficersView } from "../components/DashOfficersView";
 import { Payment } from "./Payment";
 import { useNavigate } from "react-router-dom";
 import { DashDriverFineView } from "../components/DashDriverFineView";
-import { FooterPage } from "../components/FooterPage";
 
 export const DriverDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -17,10 +16,6 @@ export const DriverDashboard = () => {
   return (
     <div>
       <div>
-        <div className="bg-teal-400 ">
-          <Header />
-        </div>
-
         <div className="flex flex-col  sm:flex-row">
           <div>
             <Sidebar aria-label="Sidebar with logo branding example">
@@ -59,10 +54,6 @@ export const DriverDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div>
-        <FooterPage />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
 import React, { useState } from "react";
-import Header from "../components/Header";
+
 import { Sidebar } from "flowbite-react";
 import { HiShoppingBag } from "react-icons/hi";
 import DashOfficerSignUp from "../components/DashOfficerSignUp";
@@ -15,16 +15,12 @@ import { DashVehicleDelete } from "../components/DashVehicleDelete";
 import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
 import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 import { DashViolationTypeDelete } from "../components/DashViolationTypeDelete";
-import { FooterPage } from "../components/FooterPage";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div>
       <div>
-        <div className="bg-teal-400 ">
-          <Header />
-        </div>
         <div className="flex flex-col  sm:flex-row">
           <div>
             <Sidebar
@@ -139,10 +135,6 @@ export const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div>
-        <FooterPage />
       </div>
     </div>
   );

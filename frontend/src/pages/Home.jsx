@@ -1,6 +1,3 @@
-import Header from "../components/Header";
-import { FooterPage } from "../components/FooterPage";
-
 export default function Home() {
   return (
     <>
@@ -11,10 +8,6 @@ export default function Home() {
       >*/}
       {/* bg-[url('https://static.vecteezy.com/system/resources/previews/001/222/760/non_2x/police-officer-writing-a-ticket-vector.jpg')] */}
       <div>
-        <div className="bg-teal-400">
-          <Header />
-        </div>
-
         <div>
           <div className="  h-screen  bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('https://firebasestorage.googleapis.com/v0/b/mini-project-de0b4.appspot.com/o/output-onlinepngtools%20(1).png?alt=media&token=6df64111-e6be-4b0e-bcd8-818e342b023b')] after:absolute ">
             <h4 className="text-center text-5xl text-purple-950 pt-32">
@@ -38,12 +31,6 @@ export default function Home() {
 
       <div>
         <div></div>
-      </div>
-
-      <div>
-        <div>
-          <FooterPage />
-        </div>
       </div>
     </>
   );

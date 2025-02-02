@@ -1,9 +1,9 @@
 import { Navbar } from "flowbite-react";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export function Header() {
   return (
-    <Navbar fluid rounded className=" bg-opacity-0">
+    <Navbar fluid rounded className="top-0 z-10  bg-teal-400 ">
       <Navbar.Brand href="https://flowbite-react.com">
         <Link to="/">
           <img
@@ -54,12 +54,25 @@ export default function Header() {
           </Navbar.Link>
         </Link>
 
-        <Navbar.Link href="#" className="text-lg  text-white">
-          About Us
-        </Navbar.Link>
-        <Navbar.Link href="#" className="text-lg  text-white">
-          Contact Us
-        </Navbar.Link>
+        <Link to="/about">
+          <Navbar.Link
+            active={location.pathname == "/about"}
+            href="#"
+            className="text-lg text-white"
+          >
+            About Us
+          </Navbar.Link>
+        </Link>
+
+        <Link to="/contact">
+          <Navbar.Link
+            active={location.pathname == "/contact"}
+            href="#"
+            className="text-lg text-white"
+          >
+            Contact Us
+          </Navbar.Link>
+        </Link>
       </Navbar.Collapse>
     </Navbar>
   );
