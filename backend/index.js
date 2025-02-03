@@ -12,6 +12,7 @@ import { app, server } from "./socket/socket.js";
 import cron from "node-cron";
 import { checkFinesAndSendEmails } from "./controllers/email.controller.js";
 import payRoutes from "./routes/payment.route.js";
+import { updateBlockedFines } from "./controllers/email.controller.js";
 
 dotenv.config();
 
@@ -31,8 +32,9 @@ const connectDB = async () => {
 connectDB();
 
 //cron.schedule("*/1 * * * *", async () => {
-//console.log("Running cron job every 1 minutes...");
-//await checkFinesAndSendEmails();
+// console.log("Running cron job every 1 minutes...");
+// await checkFinesAndSendEmails();
+// await updateBlockedFines();
 //});
 
 //const app = express();

@@ -29,12 +29,24 @@ export const checkFinesAndSendEmails = async () => {
   const now = new Date();
   const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
   const today = offsetDate.toISOString().split("T")[0];
-  console.log(`Checking fines issued before today: ${today}`);
+  //console.log(`Checking fines issued before today: ${today}`);
+
+  // calculate 'yesterday'
+  const yesterdayDate = new Date(offsetDate);
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterdayStr = yesterdayDate.toISOString().split("T")[0];
 
   try {
+    //const fines = await Fine.find({
+    // expireDate: { $lt: new Date(today) }, // Find fines where issueDate is before today
+    //state: false, // Assuming 'state' is false for unpaid fines
+    //});
+
+    console.log(`Checking fines issued before today: ${yesterdayStr}`);
+
     const fines = await Fine.find({
-      expireDate: { $lt: new Date(today) }, // Find fines where issueDate is before today
-      state: false, // Assuming 'state' is false for unpaid fines
+      expireDate: yesterdayStr, // Match only exact date
+      state: false, // Only unpaid fines
     });
 
     console.log(fines);
@@ -151,4 +163,20 @@ export const checkFinesAndSendEmails = async () => {
   }
 };
 
-//export
+export const updateBlockedFines = async () => {
+  const now = new Date();
+  const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  const today = offsetDate.toISOString().split("T")[0];
+  try {
+    console.log(`Updating block state for fines expiring today: ${today}`);
+
+    const result = await Fine.updateMany(
+      { expireDate: today, block: false },
+      { $set: { block: true } }
+    );
+
+    console.log(`${result.modifiedCount} fines updated to blocked.`);
+  } catch (error) {
+    console.error("Error updating fines:", error);
+  }
+};
