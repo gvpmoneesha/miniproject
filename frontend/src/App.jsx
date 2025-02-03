@@ -13,6 +13,7 @@ import { Footer } from "flowbite-react";
 import { FooterPage } from "./components/FooterPage";
 
 import { Header } from "./components/Header";
+import Success from "./pages/Success";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/login-officer" element={<LoginOfficer />} />
         <Route path="/login-driver" element={<LoginDriver />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/payment/success" element={<Success />} />
         <Route path="/officerDashboard" element={<OfficerDashboard />} />
         <Route path="/driverDashboard" element={<DriverDashboard />} />
         <Route path="/payment" element={<Payment />} />

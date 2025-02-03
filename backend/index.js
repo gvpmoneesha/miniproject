@@ -11,6 +11,7 @@ import violatioRoute from "./routes/violation.route.js";
 import { app, server } from "./socket/socket.js";
 import cron from "node-cron";
 import { checkFinesAndSendEmails } from "./controllers/email.controller.js";
+import payRoutes from "./routes/payment.route.js";
 
 dotenv.config();
 
@@ -45,6 +46,7 @@ app.use("/api/v1/vehicle", vehicleRoutes);
 app.use("/api/v1/fine", fineRoutes);
 app.use("/api/v1/message", messageRoutes);
 app.use("/api/v1/violation", violatioRoute);
+app.use("/api/pay", payRoutes);
 
 server.listen(3000, () => {
   console.log("Server is running on port 3000!");

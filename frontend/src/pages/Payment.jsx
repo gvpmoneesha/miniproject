@@ -11,8 +11,10 @@ export const Payment = () => {
     await fetch(`/api/v1/fine/getfinebyobjectid/${fineId}`)
       .then((res) => res.json())
       .then(async (data) => {
+        console.log(data);
+
         const stripe = await loadStripe(
-          "pk_test_51QDSHeHb7zo8fEZFbxxkIwWyjKctjLwBEKBgMy4qfwiIqonZaYvKPbo3iLPzyRt2JQPeHVXp2oYejLH2CXwDQ90H00ZZcndNl2"
+          "pk_test_51QoKkWQ3LBNqJhduylwlLzPbiYCnBIpcfZMlmG5sWktjqNkt6UQqOzRuiBF31D9g6U83zgqbV4nm63zDHLVVvYlV00QHtT4bG4"
         );
         const response = await fetch("/api/pay/checkout", {
           method: "POST",
@@ -35,7 +37,7 @@ export const Payment = () => {
   return (
     <form
       className="flex max-w-md flex-col gap-4"
-      onSubmit={makepayment(fineId)}
+      // onSubmit={makepayment(fineId)}
     >
       <div>
         <div className="mb-2 block">
@@ -54,7 +56,9 @@ export const Payment = () => {
         />
       </div>
 
-      <Button type="submit">Register new account</Button>
+      <Button type="button" onClick={() => makepayment(fineId)}>
+        Register new account
+      </Button>
     </form>
   );
 };
