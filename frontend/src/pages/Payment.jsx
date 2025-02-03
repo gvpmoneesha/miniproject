@@ -41,13 +41,12 @@ export const Payment = () => {
     >
       <div>
         <div className="mb-2 block">
-          <Label htmlFor="email2" value="Your email" />
+          <Label htmlFor="email2" value="Your payment Id" />
         </div>
         <TextInput
           id="_id"
           type="text"
           value={fineId}
-          placeholder="name@flowbite.com"
           onChange={(e) => {
             setFineId(e.target.value);
           }}

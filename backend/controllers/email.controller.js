@@ -29,7 +29,6 @@ export const checkFinesAndSendEmails = async () => {
   const now = new Date();
   const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
   const today = offsetDate.toISOString().split("T")[0];
-  //console.log(`Checking fines issued before today: ${today}`);
 
   // calculate 'yesterday'
   const yesterdayDate = new Date(offsetDate);
@@ -120,7 +119,7 @@ export const checkFinesAndSendEmails = async () => {
   <body>
     <div class="container">
       <div class="header">
-        🚨 Traffic Fine Payment Reminder <br />Driver Id-: ${fine.dId}🚨
+        🚨 Fine Payment Reminder <br />Driver Id-: ${fine.dId}🚨
       </div>
       <div class="content">
         <p>Dear <strong>${fine.dName}</strong>,</p>
@@ -155,7 +154,7 @@ export const checkFinesAndSendEmails = async () => {
   </html>
 `;
 
-      await sendEmail(fine.email, "Reminder: Unpaid Traffic Fine", emailBody);
+      await sendEmail(fine.email, "Reminder: Unpaid Fine Payment", emailBody);
       //  await sendEmail(fine.dName, "Reminder: Unpaid Traffic Fine", emailBody);
     }
   } catch (error) {
@@ -178,5 +177,144 @@ export const updateBlockedFines = async () => {
     console.log(`${result.modifiedCount} fines updated to blocked.`);
   } catch (error) {
     console.error("Error updating fines:", error);
+  }
+};
+
+export const checkFinesAndSendReminder = async () => {
+  const now = new Date();
+  const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  const today = offsetDate.toISOString().split("T")[0];
+
+  try {
+    //console.log(`Checking fines issued before today: ${reminderStr}`);
+
+    const fines = await Fine.find({
+      state: false, // Only unpaid fines
+    });
+
+    fines.forEach(async (fine) => {
+      const issueDateNew = new Date(fine.issueDate);
+      //const dueDate = new Date(issueDate);
+      //dueDate.setDate(issueDate.getDate() + 10);
+      issueDateNew.setDate(issueDateNew.getDate() + 3);
+      const formattedIssueDate = issueDateNew.toISOString().split("T")[0];
+
+      if (formattedIssueDate === today) {
+        const emailBody = `
+  <html>
+  <head>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+      }
+      .container {
+        max-width: 600px;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background: #d32f2f;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        border-radius: 8px 8px 0 0;
+      }
+      .content {
+        padding: 20px;
+        color: #333333;
+      }
+      .content p {
+        font-size: 16px;
+      }
+      .details {
+        background: #ffebee;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 10px 0;
+      }
+      .details p {
+        margin: 5px 0;
+      }
+      .footer {
+        text-align: center;
+        font-size: 14px;
+        color: #777777;
+        margin-top: 20px;
+      }
+      .button {
+        display: inline-block;
+        padding: 10px 20px;
+        color: #ffffff;
+        background: #d32f2f;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+      .button:hover {
+        background: #b71c1c;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h2 style="color: white;">🚨 Fine Payment Reminder. <br /> Driver Id-: ${
+          fine.dId
+        } 🚨</h2>
+      </div>
+      <div class="content">
+        <p>Dear <strong>${fine.dName}</strong>,</p>
+        <p><strong>You have not paid the fine. Your fine will expire after four days. 
+        Please make sure to pay your fine before it expires.
+          
+        </strong></p>
+        
+        <div class="details">
+          <p><strong>Violation:</strong> ${fine.violation}</p>
+          <p><strong>Charge:</strong> ${fine.charge}</p>
+          <p><strong>Issue Date:</strong> ${
+            fine.issueDate.toISOString().split("T")[0]
+          }</p>
+          <p><strong>Time:</strong> ${fine.time}</p>
+          <p><strong>Location:</strong> ${fine.place}</p>
+          
+          <p><strong>Expiry Date:</strong> ${
+            fine.expireDate.toISOString().split("T")[0]
+          }</p>
+          <p><strong>Vehicle No:</strong> ${fine.vNo}</p>
+          <p><strong>Police Officer Id:</strong> ${fine.pId}</p>
+          <p><strong>Police Officer name:</strong> ${fine.pName}</p>
+          <p><strong>Police Officer Station:</strong> ${fine.pStation}</p><br>
+          <p><strong>Your Payment Id:</strong> <span style="color: blue; font-weight: bold;">${
+            fine._id
+          }</span></p>
+
+        </div>
+        
+        <p>Please pay your fine before the due date to avoid further penalties.</p>
+        
+        <p style="text-align: center;">
+          <a href="https://yourpaymentportal.com" class="button">Pay Fine Now</a>
+        </p>
+      </div>
+      <div class="footer">
+        🚔 Traffic Fine Management System | Contact Us: kavindimoneesha@gmail.com.com
+      </div>
+    </div>
+  </body>
+  </html>
+`;
+
+        await sendEmail(fine.email, "Reminder: Unpaid Fine Payment", emailBody);
+        //  await sendEmail(fine.dName, "Reminder: Unpaid Traffic Fine", emailBody);
+      }
+    });
+  } catch (error) {
+    console.error("Error fetching fines:", error);
   }
 };

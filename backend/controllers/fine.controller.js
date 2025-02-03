@@ -7,10 +7,14 @@ export const fineIssue = async (req, res, next) => {
   const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
   const issueDate = offsetDate.toISOString().split("T")[0];
   const time = now.toTimeString().split(" ")[0].slice(0, 5);
-  now.setDate(now.getDate() + 14);
-  const formattedExpireDate = now.toISOString().split("T")[0];
+  //now.setDate(now.getDate() + 14);
+  //const formattedExpireDate = now.toISOString().split("T")[0];
+  const yesterdayDate = new Date(offsetDate);
+  yesterdayDate.setDate(yesterdayDate.getDate() + 14);
+  const formattedExpireDate = yesterdayDate.toISOString().split("T")[0];
 
   const {
+    _id,
     dId,
     dName,
     email,
@@ -23,6 +27,7 @@ export const fineIssue = async (req, res, next) => {
     charge,
   } = req.body;
 
+  console.log(_id);
   if (
     !dId ||
     !dName ||
@@ -65,6 +70,8 @@ export const fineIssue = async (req, res, next) => {
       charge,
       state: false,
     });
+
+    const savedFine = await createFine.save();
 
     const emailBodyFine = `
   <html>
@@ -148,7 +155,9 @@ export const fineIssue = async (req, res, next) => {
           <p><strong>Vehicle No:</strong> ${vNo}</p>
           <p><strong>Police Officer Id:</strong> ${pId}</p>
           <p><strong>Police Officer name:</strong> ${pName}</p>
-          <p><strong>Police Officer Station:</strong> ${pStation}</p>
+          <p><strong>Police Officer Station:</strong> ${pStation}</p><br>
+          <p><strong>Your Payment Id:</strong> <span style="color: blue; font-weight: bold;">${savedFine._id}</span></p>
+
         </div>
         
         <p>Please pay your fine before the due date to avoid further penalties.</p>
@@ -164,7 +173,6 @@ export const fineIssue = async (req, res, next) => {
   </body>
   </html>
 `;
-    await createFine.save();
     await sendEmail(email, "Notice: Traffic Fine", emailBodyFine);
     res.json("Fine registration is successfull");
   } catch (error) {
@@ -201,16 +209,39 @@ export const getFine = async (req, res, next) => {
   }
 };
 
+//export const getFineByOid = async (req, res, next) => {
+// try {
+//  const fineId = req.params._id;
+
+// const fine = await Fine.findById(fineId);
+
+// if (fine) {
+//  res.status(200).json(fine);
+//} else {
+// return next(404, "Fine not found");
+// }
+//} catch (error) {
+// next(error);
+//}
+//};
+
 export const getFineByOid = async (req, res, next) => {
   try {
     const fineId = req.params._id;
 
     const fine = await Fine.findById(fineId);
 
-    if (fine) {
-      res.status(200).json(fine);
-    } else {
+    if (!fine) {
       return next(404, "Fine not found");
+    }
+
+    // Check conditions: block === false && state === false
+    if (!fine.block && !fine.state) {
+      return res.status(200).json(fine);
+    } else {
+      return res
+        .status(403)
+        .json({ message: "Fine cannot be processed for payment" });
     }
   } catch (error) {
     next(error);
