@@ -127,217 +127,229 @@ const DashOfficerUpdate = () => {
   console.log("form", formData);
 
   return (
-    <div className=" min-h-screen  max-w-lg p-3 mx-auto ">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Officer Update
-          </h2>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-10 pt-24 px-10">
-        <div className="mb-2 block">
-          <Label
-            value="
-                 Id-:"
-          />
+    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 flex items-center justify-center p-6">
+      <div className="max-w-lg w-full bg-white rounded-2xl shadow-2xl overflow-hidden p-6">
+        {/* Page Heading */}
+        <div className="text-center text-teal-700 py-6">
+          <h2 className="font-bold text-3xl sm:text-4xl">Officer Update</h2>
         </div>
 
-        <div>
+        {/* Search Section */}
+        <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm mt-6">
+          <div className="mb-2 block">
+            <Label value="ID" className="text-cyan-600 font-medium" />
+          </div>
           <TextInput
             id="id"
             type="text"
             required
-            shadow
+            className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
             onChange={handleSearchId}
           />
-        </div>
-
-        <div>
           <Button
             type="button"
             gradientDuoTone="purpleToBlue"
             size="sm"
             outline
             onClick={handleSearchUser}
+            className="transition-all duration-300 transform hover:scale-105"
           >
             Search
           </Button>
         </div>
-      </div>
 
-      <div className=" pt-14 ">
-        <div>
+        {/* Update Form */}
+        <div className="pt-6">
           {user && (
-            <form className="gap-4" onSubmit={handleSubmit}>
-              {user && (
-                <div className="mb-2 block">
-                  <img
-                    className="rounded-full ms-auto h-28 max-w-28"
-                    src={imageUrl || user.profilePicture}
-                  />
-                </div>
-              )}
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+              {/* Profile Picture */}
+              <div className="mb-2 block">
+                <img
+                  className="rounded-full h-28 w-28 mx-auto object-cover bg-gray-500"
+                  src={imageUrl || user.profilePicture}
+                  alt="Profile"
+                />
+              </div>
 
+              {/* Name Input */}
               <div>
                 <div className="mb-2 block">
-                  <Label value="Name" />
+                  <Label value="Name" className="text-cyan-600 font-medium" />
                 </div>
                 <TextInput
                   id="name"
                   type="text"
-                  placeholder="moneeshakavindi"
+                  placeholder="Enter your name"
                   required
-                  shadow
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.name || ""}
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* Password Input */}
               <div>
                 <div className="mb-2 block">
-                  <Label value=" Password" />
+                  <Label
+                    value="Password"
+                    className="text-cyan-600 font-medium"
+                  />
                 </div>
                 <TextInput
                   id="password"
                   type="password"
-                  shadow
+                  placeholder="Enter your password"
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* ID Input */}
               <div>
                 <div className="mb-2 block">
-                  <Label value=" ID" />
+                  <Label value="ID" className="text-cyan-600 font-medium" />
                 </div>
                 <TextInput
                   id="id"
                   type="text"
+                  placeholder="Enter your ID"
                   required
-                  shadow
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.id || ""}
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
-              <div>
-                <div className="mb-2 block">
-                  <Label value=" Date of Birth" />
-                </div>
-                <div>
-                  <Datepicker
-                    defaultDate={new Date(user.dob)}
-                    onSelectedDateChanged={(date) => {
-                      const dob =
-                        date.getFullYear() +
-                        "-" +
-                        (date.getMonth() + 1) +
-                        "-" +
-                        date.getDate();
-                      setFormData({ ...formData, dob });
-                    }}
-                  />
-                </div>
-              </div>
-
+              {/* Date of Birth Input */}
               <div>
                 <div className="mb-2 block">
                   <Label
-                    value="
-                 Email"
+                    value="Date of Birth"
+                    className="text-cyan-600 font-medium"
                   />
+                </div>
+                <Datepicker
+                  defaultDate={new Date(user.dob)}
+                  onSelectedDateChanged={(date) => {
+                    const dob =
+                      date.getFullYear() +
+                      "-" +
+                      (date.getMonth() + 1) +
+                      "-" +
+                      date.getDate();
+                    setFormData({ ...formData, dob });
+                  }}
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                />
+              </div>
+
+              {/* Email Input */}
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Email" className="text-cyan-600 font-medium" />
                 </div>
                 <TextInput
                   id="email"
                   type="email"
-                  placeholder="name@flowbite.com"
+                  placeholder="name@example.com"
                   required
-                  shadow
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.email || ""}
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* NIC Number Input */}
               <div>
                 <div className="mb-2 block">
                   <Label
-                    value="
-                 NIC Number"
+                    value="NIC Number"
+                    className="text-cyan-600 font-medium"
                   />
                 </div>
                 <TextInput
                   id="nic"
                   type="text"
+                  placeholder="Enter your NIC number"
                   required
-                  shadow
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.nic || ""}
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* Phone Number Input */}
               <div>
                 <div className="mb-2 block">
                   <Label
-                    htmlFor="phoneNumber"
-                    value="
-                 Phone Number"
+                    value="Phone Number"
+                    className="text-cyan-600 font-medium"
                   />
                 </div>
                 <TextInput
                   id="phoneNumber"
                   type="text"
+                  placeholder="Enter your phone number"
                   required
-                  shadow
-                  onChange={handleTextboxDataChange}
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.phoneNumber || ""}
+                  onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* Address Input */}
               <div>
                 <div className="mb-2 block">
                   <Label
-                    htmlFor="address"
-                    value="
-                 Address"
+                    value="Address"
+                    className="text-cyan-600 font-medium"
                   />
                 </div>
                 <TextInput
                   id="address"
                   type="text"
+                  placeholder="Enter your address"
                   required
-                  shadow
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   defaultValue={user?.address || ""}
                   onChange={handleTextboxDataChange}
                 />
               </div>
 
+              {/* Police Station Select */}
               <div>
                 <div className="mb-2 block">
-                  <Label htmlFor="pStation" value="Police Station" />
+                  <Label
+                    value="Police Station"
+                    className="text-cyan-600 font-medium"
+                  />
                 </div>
                 <Select
                   id="pStation"
                   required
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                   onChange={handleTextboxDataChange}
                 >
-                  <option>
-                    {user?.pStation || "Select the police station"}
-                  </option>
+                  <option>{user?.pStation || "Select Police Station"}</option>
                   <option value="Matara">Matara</option>
                   <option value="Galle">Galle</option>
                   <option value="Colombo">Colombo</option>
                 </Select>
               </div>
 
+              {/* Profile Picture Upload */}
               <div>
                 <div className="mb-2 block">
-                  <Label value="Profile Picture" />
+                  <Label
+                    value="Profile Picture"
+                    className="text-cyan-600 font-medium"
+                  />
                 </div>
-                <div className="flex  gap-5 items-center justify-between ">
+                <div className="flex gap-5 items-center">
                   <FileInput
                     id="file-upload-helper-text"
                     type="file"
+                    className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                     onChange={(e) => setFile(e.target.files[0])}
                   />
                   <Button
@@ -346,22 +358,35 @@ const DashOfficerUpdate = () => {
                     size="sm"
                     outline
                     onClick={handleUploadImage}
+                    className="transition-all duration-300 transform hover:scale-105"
                   >
                     Upload Image
                   </Button>
                 </div>
               </div>
+
+              {/* Error Message */}
               {imageUploadError && (
-                <Alert color="failure">{imageUploadError}</Alert>
+                <Alert color="failure" className="mt-4">
+                  {imageUploadError}
+                </Alert>
               )}
 
-              <div className="pt-4 ">
+              {/* Submit Button */}
+              <div className="pt-4">
                 {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
-                  <Button type="submit" disabled className="w-full">
-                    Loading....
+                  <Button
+                    type="submit"
+                    disabled
+                    className="w-full bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    Loading...
                   </Button>
                 ) : (
-                  <Button type="submit" className="w-full">
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-600 hover:bg-cyan-700"
+                  >
                     Update Officer
                   </Button>
                 )}

@@ -39,70 +39,92 @@ export const LoginDriver = () => {
   };
 
   return (
-    <div>
-      <div className="min-h-screen  bg-teal-50">
-        <div className="flex max-w-5xl md:flex-row flex-col mx-auto p-3 px-10 gap-10 md:items-center">
-          <div className="flex-1">
-            <img src={driver3} />
-          </div>
-          <div className="flex-1 pt-5">
-            <form
-              className="flex max-w-md flex-col gap-6 mt-10 mx-auto pb-20"
-              onSubmit={handleSubmit}
+    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 flex items-center justify-center p-6">
+      <div className="flex max-w-5xl md:flex-row flex-col mx-auto gap-10 md:items-center bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Left Section - Image */}
+        <div className="flex-1 p-6">
+          <img
+            src={driver3} // Replace with your image path
+            alt="Driver Illustration"
+            className="w-full h-auto rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        {/* Right Section - Login Form */}
+        <div className="flex-1 p-8">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            {/* Form Header */}
+            <div className="text-center font-semibold text-3xl text-cyan-600">
+              <h3>Sign In</h3>
+            </div>
+
+            {/* Email Input */}
+            <div>
+              <div className="mb-2 block">
+                <Label value="Email" className="text-cyan-600 font-medium" />
+              </div>
+              <TextInput
+                id="email"
+                type="email"
+                placeholder="name@example.com"
+                required
+                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.id]: e.target.value });
+                }}
+              />
+            </div>
+
+            {/* ID Input */}
+            <div>
+              <div className="mb-2 block">
+                <Label value="ID" className="text-cyan-600 font-medium" />
+              </div>
+              <TextInput
+                id="id"
+                type="text"
+                required
+                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.id]: e.target.value });
+                }}
+              />
+            </div>
+
+            {/* Password Input */}
+            <div>
+              <div className="mb-2 block">
+                <Label value="Password" className="text-cyan-600 font-medium" />
+              </div>
+              <TextInput
+                id="password"
+                type={showPassword ? "text" : "password"}
+                required
+                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                onChange={(e) => {
+                  setFormData({ ...formData, [e.target.id]: e.target.value });
+                }}
+              />
+            </div>
+
+            {/* Show Password Checkbox */}
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="remember"
+                className="text-cyan-500 focus:ring-cyan-500"
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              <Label className="text-cyan-600">Show Password</Label>
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              type="submit"
+              className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
             >
-              <div className="text-center font-semibold text-3xl text-cyan-600">
-                <h3>Sign In</h3>
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label value="Email" />
-                </div>
-                <TextInput
-                  id="email"
-                  type="email"
-                  placeholder="name@flowbite.com"
-                  required
-                  onChange={(e) => {
-                    setFormData({ ...formData, [e.target.id]: e.target.value });
-                  }}
-                />
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label value="Id" />
-                </div>
-                <TextInput
-                  id="id"
-                  type="text"
-                  required
-                  onChange={(e) => {
-                    setFormData({ ...formData, [e.target.id]: e.target.value });
-                  }}
-                />
-              </div>
-              <div>
-                <div className="mb-2 block">
-                  <Label value="Password" />
-                </div>
-                <TextInput
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  required
-                  onChange={(e) => {
-                    setFormData({ ...formData, [e.target.id]: e.target.value });
-                  }}
-                />
-              </div>
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="remember"
-                  onChange={() => setShowPassword(!showPassword)}
-                />
-                <Label>Show me</Label>
-              </div>
-              <Button type="submit">Submit</Button>
-            </form>
-          </div>
+              Submit
+            </Button>
+          </form>
         </div>
       </div>
     </div>

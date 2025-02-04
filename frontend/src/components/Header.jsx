@@ -1,78 +1,90 @@
 import { Navbar } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export function Header() {
   return (
-    <Navbar fluid rounded className="top-0 z-10  bg-teal-400 ">
+    <Navbar
+      fluid
+      rounded
+      className="top-0 z-10 bg-gradient-to-r from-teal-500 to-cyan-500 shadow-lg"
+    >
       <Navbar.Brand href="https://flowbite-react.com">
-        <Link to="/">
+        <NavLink to="/">
           <img
             src="https://png.pngtree.com/png-vector/20220226/ourmid/pngtree-policeman-fine-icon-punish-concept-notification-vector-png-image_16152142.jpg"
-            className="mr-3 h-6 sm:h-9"
+            className="mr-3 h-8 sm:h-10 transition-transform duration-300 transform hover:scale-110"
             alt="Logo"
           />
-        </Link>
+        </NavLink>
       </Navbar.Brand>
-      <Navbar.Toggle />
+      <Navbar.Toggle className="text-white hover:text-teal-200 focus:ring-2 focus:ring-teal-300" />
       <Navbar.Collapse>
-        <Link to="/login">
-          <Navbar.Link
-            active={location.pathname == "/login"}
-            className="text-lg text-white"
-          >
-            Admin
-          </Navbar.Link>
-        </Link>
+        {/* Use NavLink instead of Link */}
+        <NavLink
+          to="/login"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Admin
+        </NavLink>
 
-        <Link to="/login-officer">
-          <Navbar.Link
-            active={location.pathname == "/login-officer"}
-            href="#"
-            className="text-lg text-white"
-          >
-            Traffic Officer
-          </Navbar.Link>
-        </Link>
+        <NavLink
+          to="/login-officer"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Traffic Officer
+        </NavLink>
 
-        <Link to="/login-driver">
-          <Navbar.Link
-            active={location.pathname == "/login-driver"}
-            href="#"
-            className="text-lg text-white"
-          >
-            Driver
-          </Navbar.Link>
-        </Link>
+        <NavLink
+          to="/login-driver"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Driver
+        </NavLink>
 
-        <Link to="/payment">
-          <Navbar.Link
-            active={location.pathname == "/payment"}
-            href="#"
-            className="text-lg text-white"
-          >
-            Payment
-          </Navbar.Link>
-        </Link>
+        <NavLink
+          to="/payment"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Payment
+        </NavLink>
 
-        <Link to="/search">
-          <Navbar.Link
-            active={location.pathname == "/search"}
-            href="#"
-            className="text-lg text-white"
-          >
-            Search
-          </Navbar.Link>
-        </Link>
+        <NavLink
+          to="/search"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Search
+        </NavLink>
 
-        <Link to="/contact">
-          <Navbar.Link
-            active={location.pathname == "/contact"}
-            href="#"
-            className="text-lg text-white"
-          >
-            Contact Us
-          </Navbar.Link>
-        </Link>
+        <NavLink
+          to="/contact"
+          className={({ isActive }) =>
+            `text-lg text-white hover:text-teal-200 transition-colors duration-300 ${
+              isActive ? "font-bold underline" : ""
+            }`
+          }
+        >
+          Contact Us
+        </NavLink>
       </Navbar.Collapse>
     </Navbar>
   );

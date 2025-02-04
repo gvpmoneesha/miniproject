@@ -111,164 +111,215 @@ export const Contact = () => {
   };
 
   return (
-    <div className="   p-10 mx-auto bg-teal-50">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">Complain</h2>
+    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 flex items-center justify-center p-6">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Main Heading */}
+        <div className="text-center text-teal-700 py-10">
+          <h2 className="font-bold text-3xl sm:text-5xl">
+            Complaint and Contact
+          </h2>
         </div>
-      </div>
 
-      <div className=" pt-14  md:flex gap-5">
-        <div className="flex-1">
-          <form className="gap-4 " onSubmit={handleSubmit}>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                     Name"
+        <div className="flex flex-col md:flex-row gap-10 p-8">
+          {/* Left Side - Complaint Form */}
+          <div className="flex-1">
+            <div className="text-center text-teal-700 mb-8">
+              <h2 className="font-bold text-2xl sm:text-4xl">Complaint Form</h2>
+            </div>
+
+            <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
+              {/* Name Input */}
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Name" className="text-cyan-600 font-medium" />
+                </div>
+                <TextInput
+                  id="name"
+                  type="text"
+                  placeholder="Enter your name"
+                  required
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="moneesha kavindi"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                     Phone Number"
+              {/* Phone Number Input */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Phone Number"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <TextInput
+                  id="phoneNumber"
+                  type="text"
+                  placeholder="Enter your phone number"
+                  required
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                     Email"
+              {/* Email Input */}
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Email" className="text-cyan-600 font-medium" />
+                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="name@example.com"
+                  required
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="name@flowbite.com"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
-                <label
-                  for="message"
-                  class="block mb-4 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Complain
-                </label>
+              {/* Complaint Textarea */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Complaint"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <textarea
+                  id="complain"
+                  rows="5"
+                  className="block w-full p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg border border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  placeholder="Describe your complaint..."
+                  onChange={handleTextboxDataChange}
+                ></textarea>
               </div>
 
-              <textarea
-                id="complain"
-                rows="5"
-                class="block mb-4 p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="complain..."
-                onChange={handleTextboxDataChange}
-              ></textarea>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Image" />
+              {/* Image Upload */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Upload Image"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <div className="flex gap-5 items-center">
+                  <FileInput
+                    id="file-upload-helper-text"
+                    type="file"
+                    className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <Button
+                    type="button"
+                    gradientDuoTone="purpleToBlue"
+                    size="sm"
+                    outline
+                    onClick={handleUploadImage}
+                    className="transition-all duration-300 transform hover:scale-105"
+                  >
+                    Upload Image
+                  </Button>
+                </div>
               </div>
-              <div className="flex  gap-5 items-center justify-between ">
-                <FileInput
-                  id="file-upload-helper-text"
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <Button
-                  type="button"
-                  gradientDuoTone="purpleToBlue"
-                  size="sm"
-                  outline
-                  onClick={handleUploadImage}
-                >
-                  Upload Image
-                </Button>
-              </div>
-            </div>
-            {imageUploadError && (
-              <Alert color="failure">{imageUploadError}</Alert>
-            )}
 
-            <div className="pt-4 ">
-              {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
-                <Button type="submit" disabled className="w-full">
-                  Loading....
-                </Button>
-              ) : (
-                <Button type="submit" className="w-full">
-                  Submit
-                </Button>
+              {/* Error Message */}
+              {imageUploadError && (
+                <Alert color="failure" className="mt-4">
+                  {imageUploadError}
+                </Alert>
               )}
+
+              {/* Submit Button */}
+              <div className="pt-4">
+                {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
+                  <Button
+                    type="submit"
+                    disabled
+                    className="w-full bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    Loading...
+                  </Button>
+                ) : (
+                  <Button
+                    type="submit"
+                    className="w-full bg-cyan-600 hover:bg-cyan-700"
+                  >
+                    Submit
+                  </Button>
+                )}
+              </div>
+            </form>
+          </div>
+
+          {/* Right Side - Contact Information */}
+          <div className="flex-1">
+            <div className="text-center text-teal-700 mb-8">
+              <h2 className="font-bold text-2xl sm:text-4xl">
+                Contact Information
+              </h2>
             </div>
-          </form>
-        </div>
 
-        <div className=" flex-1">
-          <div className="mb-2 block">
-            <Label htmlFor="station" value="Station" />
-          </div>
-          <Select
-            id="station"
-            required
-            onChange={(e) => handleStationSelect(e)}
-          >
-            <option>Stations</option>
-            {stations &&
-              stations.data?.value.map((s, index) => (
-                <option key={index}>{s.name}</option>
-              ))}
-          </Select>
-          <div className="mb-2 block">
-            <Label value="Email" />
-          </div>
+            <div className="flex flex-col gap-6">
+              {/* Police Station Select */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Police Station"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <Select
+                  id="station"
+                  required
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  onChange={(e) => handleStationSelect(e)}
+                >
+                  <option>Select Station</option>
+                  {stations &&
+                    stations.data?.value.map((s, index) => (
+                      <option key={index}>{s.name}</option>
+                    ))}
+                </Select>
+              </div>
 
-          <TextInput
-            id="email"
-            type="email"
-            placeholder="email"
-            required
-            readOnly
-            shadow
-            value={stationEmail || ""}
-          />
-          <div className="mb-2 block">
-            <Label value="Email" />
+              {/* Police Station Email */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Police Station Email"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="Email"
+                  required
+                  readOnly
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  value={stationEmail || ""}
+                />
+              </div>
+
+              {/* Police Station Phone Number */}
+              <div>
+                <div className="mb-2 block">
+                  <Label
+                    value="Police Station Phone Number"
+                    className="text-cyan-600 font-medium"
+                  />
+                </div>
+                <TextInput
+                  id="phone"
+                  type="number"
+                  placeholder="Phone"
+                  required
+                  readOnly
+                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+                  value={stationNumber || ""}
+                />
+              </div>
+            </div>
           </div>
-          <TextInput
-            id="phone"
-            type="number"
-            placeholder="Phone"
-            required
-            readOnly
-            shadow
-            value={stationNumber || ""}
-          />
         </div>
       </div>
     </div>

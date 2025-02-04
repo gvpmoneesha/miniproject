@@ -2,7 +2,13 @@ import { Link, useSearchParams } from "react-router-dom";
 import React, { useState } from "react";
 
 import { Sidebar } from "flowbite-react";
-import { HiShoppingBag } from "react-icons/hi";
+import {
+  HiUserGroup,
+  HiUsers,
+  HiTruck,
+  HiExclamationCircle,
+  HiDocumentText,
+} from "react-icons/hi";
 import DashOfficerSignUp from "../components/DashOfficerSignUp";
 import { DashVehicleSignUp } from "../components/DashVehicleSignUp";
 import { DashDriverSignUp } from "../components/DashDriverSignUp";
@@ -20,131 +26,206 @@ import { DashBlockFineUpdate } from "../components/DashBlockFineUpdate";
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   return (
-    <div>
-      <div>
-        <div className="flex flex-col  sm:flex-row">
-          <div>
-            <Sidebar
-              aria-label="Sidebar with multi-level dropdown example"
-              className="w-full sm:w-80 "
-            >
-              <Sidebar.Items className="sm:min-h-screen">
-                <Sidebar.ItemGroup className="p-0">
-                  <Sidebar.Collapse
-                    icon={HiShoppingBag}
-                    label="Manage Traffic Officer"
-                  >
-                    <Link to="/dashboard?dash=officer-create">
-                      <Sidebar.Item href="#">Add Traffic Officer</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=officer-update">
-                      <Sidebar.Item href="#">
-                        Update Traffic Officer
-                      </Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=officer-delete">
-                      <Sidebar.Item href="#">
-                        Delete Traffic officer
-                      </Sidebar.Item>
-                    </Link>
-                  </Sidebar.Collapse>
+    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50">
+      <div className="flex flex-col sm:flex-row">
+        {/* Sidebar */}
+        <div>
+          <Sidebar
+            aria-label="Sidebar with multi-level dropdown example"
+            className="w-full sm:w-64 bg-white shadow-lg"
+          >
+            <Sidebar.Items className="sm:min-h-screen">
+              <Sidebar.ItemGroup className="p-4">
+                {/* Manage Traffic Officer */}
+                <Sidebar.Collapse
+                  icon={() => <HiUserGroup className="w-6 h-6" />} // Pass icon as a function
+                  label="Manage Officer"
+                  className="text-cyan-600 hover:text-cyan-700"
+                >
+                  <Link to="/dashboard?dash=officer-create">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Add Traffic Officer
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=officer-update">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Update Traffic Officer
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=officer-delete">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Delete Traffic Officer
+                    </Sidebar.Item>
+                  </Link>
+                </Sidebar.Collapse>
 
-                  <Sidebar.Collapse icon={HiShoppingBag} label="Manage Driver">
-                    <Link to="/dashboard?dash=driver-create">
-                      <Sidebar.Item href="#">Add Driver</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=driver-update">
-                      <Sidebar.Item href="#">Update Driver</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=driver-delete">
-                      <Sidebar.Item href="#">Delete Driver</Sidebar.Item>
-                    </Link>
-                  </Sidebar.Collapse>
+                {/* Manage Driver */}
+                <Sidebar.Collapse
+                  icon={() => <HiUsers className="w-6 h-6" />} // Pass icon as a function
+                  label="Manage Driver"
+                  className="text-cyan-600 hover:text-cyan-700"
+                >
+                  <Link to="/dashboard?dash=driver-create">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Add Driver
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=driver-update">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Update Driver
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=driver-delete">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Delete Driver
+                    </Sidebar.Item>
+                  </Link>
+                </Sidebar.Collapse>
 
-                  <Sidebar.Collapse icon={HiShoppingBag} label="Manage Vehicle">
-                    <Link to="/dashboard?dash=vehicle-create">
-                      <Sidebar.Item href="#">Add Vehicle</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=vehicle-update">
-                      <Sidebar.Item href="#">Update Vehicle</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=vehicle-delete">
-                      <Sidebar.Item href="#">Delete Vehicle</Sidebar.Item>
-                    </Link>
-                  </Sidebar.Collapse>
+                {/* Manage Vehicle */}
+                <Sidebar.Collapse
+                  icon={() => <HiTruck className="w-6 h-6" />} // Pass icon as a function
+                  label="Manage Vehicle"
+                  className="text-cyan-600 hover:text-cyan-700"
+                >
+                  <Link to="/dashboard?dash=vehicle-create">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Add Vehicle
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=vehicle-update">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Update Vehicle
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=vehicle-delete">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Delete Vehicle
+                    </Sidebar.Item>
+                  </Link>
+                </Sidebar.Collapse>
 
-                  <Sidebar.Collapse
-                    icon={HiShoppingBag}
-                    label="Manage Violation Type"
-                  >
-                    <Link to="/dashboard?dash=violationType-create">
-                      <Sidebar.Item href="#">Add Violation Type</Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=violationType-update">
-                      <Sidebar.Item href="#">
-                        Update Violation Type
-                      </Sidebar.Item>
-                    </Link>
-                    <Link to="/dashboard?dash=violationType-delete">
-                      <Sidebar.Item href="#">
-                        Delete Violation Type
-                      </Sidebar.Item>
-                    </Link>
-                  </Sidebar.Collapse>
+                {/* Manage Violation Type */}
+                <Sidebar.Collapse
+                  icon={() => <HiExclamationCircle className="w-6 h-6" />} // Pass icon as a function
+                  label="Manage Violation"
+                  className="text-cyan-600 hover:text-cyan-700"
+                >
+                  <Link to="/dashboard?dash=violationType-create">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Add Violation Type
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=violationType-update">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Update Violation Type
+                    </Sidebar.Item>
+                  </Link>
+                  <Link to="/dashboard?dash=violationType-delete">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Delete Violation Type
+                    </Sidebar.Item>
+                  </Link>
+                </Sidebar.Collapse>
 
-                  <Sidebar.Collapse icon={HiShoppingBag} label="Manage Fine">
-                    <Link to="/dashboard?dash=blockFine-update">
-                      <Sidebar.Item href="#">
-                        Update Block/State Fine
-                      </Sidebar.Item>
-                    </Link>
-                  </Sidebar.Collapse>
-                </Sidebar.ItemGroup>
-              </Sidebar.Items>
-            </Sidebar>
-          </div>
-          <div className="   w-full sm:max-w-8xl bg-cover  bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]  ">
-            <div className="bg-slate-200  bg-opacity-80">
-              {(searchParams.get("dash") === "officer-create" && (
-                <DashOfficerSignUp />
+                {/* Manage Fine */}
+                <Sidebar.Collapse
+                  icon={() => <HiDocumentText className="w-6 h-6" />} // Pass icon as a function
+                  label="Manage Fine"
+                  className="text-cyan-600 hover:text-cyan-700"
+                >
+                  <Link to="/dashboard?dash=blockFine-update">
+                    <Sidebar.Item
+                      href="#"
+                      className="hover:bg-cyan-50 rounded-lg"
+                    >
+                      Update Block/State Fine
+                    </Sidebar.Item>
+                  </Link>
+                </Sidebar.Collapse>
+              </Sidebar.ItemGroup>
+            </Sidebar.Items>
+          </Sidebar>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]">
+          <div className="bg-slate-200 bg-opacity-80 p-6">
+            {(searchParams.get("dash") === "officer-create" && (
+              <DashOfficerSignUp />
+            )) ||
+              (searchParams.get("dash") === "officer-update" && (
+                <DashOfficerUpdate />
               )) ||
-                (searchParams.get("dash") === "officer-update" && (
-                  <DashOfficerUpdate />
-                )) ||
-                (searchParams.get("dash") === "officer-delete" && (
-                  <DashOfficerDelete />
-                )) ||
-                (searchParams.get("dash") === "vehicle-create" && (
-                  <DashVehicleSignUp />
-                )) ||
-                (searchParams.get("dash") === "vehicle-update" && (
-                  <DashVehicleUpdate />
-                )) ||
-                (searchParams.get("dash") === "vehicle-delete" && (
-                  <DashVehicleDelete />
-                )) ||
-                (searchParams.get("dash") === "driver-create" && (
-                  <DashDriverSignUp />
-                )) ||
-                (searchParams.get("dash") === "driver-update" && (
-                  <DashDriverUpdate />
-                )) ||
-                (searchParams.get("dash") === "driver-delete" && (
-                  <DashDriverDelete />
-                )) ||
-                (searchParams.get("dash") === "violationType-create" && (
-                  <DashViolationTypeCreate />
-                )) ||
-                (searchParams.get("dash") === "violationType-update" && (
-                  <DashViolationTypeUpdate />
-                )) ||
-                (searchParams.get("dash") === "violationType-delete" && (
-                  <DashViolationTypeDelete />
-                )) ||
-                (searchParams.get("dash") === "blockFine-update" && (
-                  <DashBlockFineUpdate />
-                ))}
-            </div>
+              (searchParams.get("dash") === "officer-delete" && (
+                <DashOfficerDelete />
+              )) ||
+              (searchParams.get("dash") === "vehicle-create" && (
+                <DashVehicleSignUp />
+              )) ||
+              (searchParams.get("dash") === "vehicle-update" && (
+                <DashVehicleUpdate />
+              )) ||
+              (searchParams.get("dash") === "vehicle-delete" && (
+                <DashVehicleDelete />
+              )) ||
+              (searchParams.get("dash") === "driver-create" && (
+                <DashDriverSignUp />
+              )) ||
+              (searchParams.get("dash") === "driver-update" && (
+                <DashDriverUpdate />
+              )) ||
+              (searchParams.get("dash") === "driver-delete" && (
+                <DashDriverDelete />
+              )) ||
+              (searchParams.get("dash") === "violationType-create" && (
+                <DashViolationTypeCreate />
+              )) ||
+              (searchParams.get("dash") === "violationType-update" && (
+                <DashViolationTypeUpdate />
+              )) ||
+              (searchParams.get("dash") === "violationType-delete" && (
+                <DashViolationTypeDelete />
+              )) ||
+              (searchParams.get("dash") === "blockFine-update" && (
+                <DashBlockFineUpdate />
+              ))}
           </div>
         </div>
       </div>

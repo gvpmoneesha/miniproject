@@ -35,29 +35,42 @@ export const Payment = () => {
   };
 
   return (
-    <form
-      className="flex max-w-md flex-col gap-4"
-      // onSubmit={makepayment(fineId)}
-    >
-      <div>
-        <div className="mb-2 block">
-          <Label htmlFor="email2" value="Your payment Id" />
+    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 flex items-center justify-center p-6">
+      <form
+        className="flex max-w-md flex-col gap-6 bg-white p-8 rounded-2xl shadow-2xl"
+        // onSubmit={makepayment(fineId)}
+      >
+        {/* Payment ID Input */}
+        <div>
+          <div className="mb-2 block">
+            <Label
+              htmlFor="email2"
+              value="Your Payment ID"
+              className="text-cyan-600 font-medium"
+            />
+          </div>
+          <TextInput
+            id="_id"
+            type="text"
+            value={fineId}
+            onChange={(e) => {
+              setFineId(e.target.value);
+            }}
+            required
+            className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
+            shadow
+          />
         </div>
-        <TextInput
-          id="_id"
-          type="text"
-          value={fineId}
-          onChange={(e) => {
-            setFineId(e.target.value);
-          }}
-          required
-          shadow
-        />
-      </div>
 
-      <Button type="button" onClick={() => makepayment(fineId)}>
-        Register new account
-      </Button>
-    </form>
+        {/* Submit Button */}
+        <Button
+          type="button"
+          onClick={() => makepayment(fineId)}
+          className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 transform hover:scale-105"
+        >
+          Submit
+        </Button>
+      </form>
+    </div>
   );
 };
