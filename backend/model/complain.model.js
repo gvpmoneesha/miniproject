@@ -30,8 +30,7 @@ const complainSchema = new mongoose.Schema(
     image: {
       type: String,
       required: true,
-      default:
-        "https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg",
+      default: "https://sephorainfo.com/images/complaints.png",
     },
   },
   { timestamps: true }

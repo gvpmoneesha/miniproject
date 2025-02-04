@@ -7,26 +7,29 @@ export const DashDriverFineView = () => {
   const [error, setError] = useState(null);
   const [fineIdToView, setFineIdToView] = useState("");
 
-  const getFine = async () => {
-    try {
-      if (fineIdToView === "") {
-        return setError("Fill Serach field");
-      }
-      const res = await fetch(`/api/v1/fine/getfine/${fineIdToView}`);
-      const data = await res.json();
-      console.log(data);
-      if (data.success == false) {
-        return setError(data.messaage);
-      }
-      if (res.ok) {
-        setFine(Array.isArray(data) ? data : []);
+  useEffect(() => {
+    const getFine = async () => {
+      try {
+        if (fineIdToView === "") {
+          return setError("Fill Serach field");
+        }
+        const res = await fetch(`/api/v1/fine/getfine/${fineIdToView}`);
+        const data = await res.json();
+        console.log(data);
+        if (data.success == false) {
+          return setError(data.messaage);
+        }
+        if (res.ok) {
+          setFine(Array.isArray(data) ? data : []);
 
-        setError("");
+          setError("");
+        }
+      } catch (error) {
+        setError(error);
       }
-    } catch (error) {
-      setError(error);
-    }
-  };
+    };
+    getFine();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -35,8 +38,8 @@ export const DashDriverFineView = () => {
           <h2 className="font-bold text-3xl sm:text-5xl pt-10">View Fines</h2>
         </div>
       </div>
-
-      <div className="flex justify-center">
+      const fineIdToView = JSON.parse(localStorage.getItem("user")).id;
+      {/* <div className="flex justify-center">
         <div className="flex items-center gap-10 mb-14 px-5 pt-10">
           <div className="mb-2 block">
             <Label value="Driver Id-:" />
@@ -66,18 +69,16 @@ export const DashDriverFineView = () => {
             </Button>
           </div>
         </div>
-      </div>
-
+      </div> */}
       {error && (
         <Alert color="failure" className="m-4">
           {error}
         </Alert>
       )}
-
       <div>
         <div>
           {fine && (
-            <div className="table-auto overflow-x-auto md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+            <div className="table-auto overflow-x-auto md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 max-h-[92vh">
               {fine.length > 0 ? (
                 <>
                   <Table hoverable className="shadow-md ">

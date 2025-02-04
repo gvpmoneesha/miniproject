@@ -54,13 +54,13 @@ export function Header() {
           </Navbar.Link>
         </Link>
 
-        <Link to="/about">
+        <Link to="/search">
           <Navbar.Link
-            active={location.pathname == "/about"}
+            active={location.pathname == "/search"}
             href="#"
             className="text-lg text-white"
           >
-            About Us
+            Search
           </Navbar.Link>
         </Link>
 

@@ -7,13 +7,14 @@ import { LoginOfficer } from "./pages/LoginOfficer";
 import { LoginDriver } from "./pages/LoginDriver";
 import { DriverDashboard } from "./pages/DriverDashboard";
 import { Payment } from "./pages/Payment";
-import { About } from "./pages/About";
+
 import { Contact } from "./pages/Contact";
 import { Footer } from "flowbite-react";
 import { FooterPage } from "./components/FooterPage";
 
 import { Header } from "./components/Header";
 import Success from "./pages/Success";
+import { About } from "./pages/About";
 
 export default function App() {
   return (
@@ -30,7 +31,7 @@ export default function App() {
         <Route path="/officerDashboard" element={<OfficerDashboard />} />
         <Route path="/driverDashboard" element={<DriverDashboard />} />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/search" element={<About />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
       <FooterPage />

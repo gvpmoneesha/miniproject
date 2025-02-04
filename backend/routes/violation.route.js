@@ -5,6 +5,7 @@ import {
   getRule,
   violaionUpdate,
   deleteViolation,
+  getRuleBySearch,
 } from "../controllers/violation.controller.js";
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.get("/getallrules", getAllRule);
 router.get("/getrule/:_id", getRule);
 router.put("/update/:_id", violaionUpdate);
 router.delete("/delete/:_id", deleteViolation);
+router.get("/search", getRuleBySearch);
 
 export default router;

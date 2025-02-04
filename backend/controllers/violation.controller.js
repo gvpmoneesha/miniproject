@@ -1,5 +1,6 @@
 import Violation from "../model/violation.model.js";
 import { errorHandler } from "../utils/error.js";
+import FuzzySearch from "fuzzy-search";
 
 export const ruleCreate = async (req, res, next) => {
   const { type, description, price } = req.body;
@@ -94,6 +95,26 @@ export const deleteViolation = async (req, res, next) => {
     }
     await Violation.findByIdAndDelete(req.params._id);
     res.status(200).json("Violation delete is completed");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getRuleBySearch = async (req, res, next) => {
+  try {
+    const { searchText } = req.query;
+    if (!searchText || searchText.trim() === "") {
+      return next(errorHandler(400, "Search text is required"));
+    }
+    const rules = await Violation.find();
+    if (!rules) {
+      return next(400, "Rules not found.");
+    }
+    const searcher = new FuzzySearch(rules, ["type"], {
+      caseSensitive: false,
+    });
+    const result = searcher.search(searchText);
+    res.json(result);
   } catch (error) {
     next(error);
   }

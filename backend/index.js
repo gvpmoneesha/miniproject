@@ -8,6 +8,7 @@ import fineRoutes from "./routes/fine.route.js";
 import messageRoutes from "./routes/message.route.js";
 import violatioRoute from "./routes/violation.route.js";
 import complainRoutes from "./routes/complain.route.js";
+import stativRoutes from "./routes/staticvalue.route.js";
 
 import { app, server } from "./socket/socket.js";
 import cron from "node-cron";
@@ -53,6 +54,7 @@ app.use("/api/v1/message", messageRoutes);
 app.use("/api/v1/violation", violatioRoute);
 app.use("/api/pay", payRoutes);
 app.use("/api/v1/complain", complainRoutes);
+app.use("/api/v1/static", stativRoutes);
 
 server.listen(3000, () => {
   console.log("Server is running on port 3000!");

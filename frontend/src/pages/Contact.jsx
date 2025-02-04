@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -20,14 +20,23 @@ import { useNavigate } from "react-router-dom";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({});
+  const [stations, setStations] = useState({});
+  const [stationEmail, setStationEmail] = useState("");
+  const [stationNumber, setStationNumber] = useState("");
 
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
 
   const navigate = useNavigate();
-
-  console.log(formData);
+  useEffect(() => {
+    const fetchValues = async () => {
+      await fetch("/api/v1/static//getstaticvalue/station")
+        .then((res) => res.json())
+        .then((data) => setStations(data));
+    };
+    fetchValues();
+  }, []);
 
   const handleUploadImage = async () => {
     try {
@@ -88,16 +97,29 @@ export const Contact = () => {
     }
   };
 
+  const handleStationSelect = async (e) => {
+    const result = await stations.data.value.find(
+      (item) => item.name === e.target.value
+    );
+    if (e.target.value !== "Stations") {
+      setStationEmail(result.email);
+      setStationNumber(result.phone);
+    } else {
+      setStationEmail("Stations");
+      setStationNumber("Phone");
+    }
+  };
+
   return (
-    <div className="  max-w-lg p-3 mx-auto">
+    <div className="   p-10 mx-auto bg-teal-50">
       <div>
         <div className="text-center text-teal-700 ">
           <h2 className=" font-bold text-3xl sm:text-5xl pt-10">Complain</h2>
         </div>
       </div>
 
-      <div className=" pt-14 ">
-        <div>
+      <div className=" pt-14  md:flex gap-5">
+        <div className="flex-1">
           <form className="gap-4 " onSubmit={handleSubmit}>
             <div>
               <div className="mb-2 block">
@@ -205,6 +227,48 @@ export const Contact = () => {
               )}
             </div>
           </form>
+        </div>
+
+        <div className=" flex-1">
+          <div className="mb-2 block">
+            <Label htmlFor="station" value="Station" />
+          </div>
+          <Select
+            id="station"
+            required
+            onChange={(e) => handleStationSelect(e)}
+          >
+            <option>Stations</option>
+            {stations &&
+              stations.data?.value.map((s, index) => (
+                <option key={index}>{s.name}</option>
+              ))}
+          </Select>
+          <div className="mb-2 block">
+            <Label value="Email" />
+          </div>
+
+          <TextInput
+            id="email"
+            type="email"
+            placeholder="email"
+            required
+            readOnly
+            shadow
+            value={stationEmail || ""}
+          />
+          <div className="mb-2 block">
+            <Label value="Email" />
+          </div>
+          <TextInput
+            id="phone"
+            type="number"
+            placeholder="Phone"
+            required
+            readOnly
+            shadow
+            value={stationNumber || ""}
+          />
         </div>
       </div>
     </div>

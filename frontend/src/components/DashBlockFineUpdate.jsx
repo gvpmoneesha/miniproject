@@ -246,6 +246,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.dId || ""}
                     />
                   </div>
@@ -259,6 +260,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.dName || ""}
                     />
                   </div>
@@ -272,6 +274,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.email || ""}
                     />
                   </div>
@@ -285,6 +288,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.vNo || ""}
                     />
                   </div>
@@ -298,6 +302,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={new Date(
                         fine.issueDate
                       ).toLocaleDateString()}
@@ -313,6 +318,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.time || ""}
                     />
                   </div>
@@ -326,6 +332,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.place || ""}
                     />
                   </div>
@@ -339,6 +346,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={new Date(
                         fine.expireDate
                       ).toLocaleDateString()}
@@ -354,6 +362,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.violation || ""}
                     />
                   </div>
@@ -367,19 +376,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
-                      defaultValue={fine?.pId || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Police Id" />
-                    </div>
-                    <TextInput
-                      id="pId"
-                      type="text"
-                      required
-                      shadow
+                      readOnly
                       defaultValue={fine?.pId || ""}
                     />
                   </div>
@@ -393,6 +390,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.pName || ""}
                     />
                   </div>
@@ -406,6 +404,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.pStation || ""}
                     />
                   </div>
@@ -419,6 +418,7 @@ export const DashBlockFineUpdate = () => {
                       type="text"
                       required
                       shadow
+                      readOnly
                       defaultValue={fine?.charge || ""}
                     />
                   </div>
