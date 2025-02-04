@@ -9,6 +9,7 @@ import { DashVehiclesView } from "../components/DashVehiclesView";
 import { DashFineView } from "../components/DashFineView";
 
 import { DashGroupMessage } from "../components/DashGroupMessage";
+import { DashBlockFineView } from "../components/DashBlockFineView";
 
 export const OfficerDashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,6 +34,9 @@ export const OfficerDashboard = () => {
                   <Sidebar.Collapse icon={HiShoppingBag} label="Information">
                     <Link to="/officerdashboard?dash=fine-view">
                       <Sidebar.Item href="#">View Fines</Sidebar.Item>
+                    </Link>
+                    <Link to="/officerdashboard?dash=block-view">
+                      <Sidebar.Item href="#">View Block Fines</Sidebar.Item>
                     </Link>
                     <Link to="/officerdashboard?dash=driver-view">
                       <Sidebar.Item href="#">View Drivers</Sidebar.Item>
@@ -62,6 +66,9 @@ export const OfficerDashboard = () => {
               )) ||
                 (searchParams.get("dash") === "fine-view" && (
                   <DashFineView />
+                )) ||
+                (searchParams.get("dash") === "block-view" && (
+                  <DashBlockFineView />
                 )) ||
                 (searchParams.get("dash") === "driver-view" && (
                   <DashDriversView />

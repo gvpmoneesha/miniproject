@@ -183,6 +183,7 @@ export const fineIssue = async (req, res, next) => {
 export const getAllFines = async (req, res, next) => {
   try {
     const fines = await Fine.find();
+
     if (fines) {
       res.status(200).json(fines);
     } else {
@@ -235,13 +236,31 @@ export const getFineByOid = async (req, res, next) => {
       return next(404, "Fine not found");
     }
 
-    // Check conditions: block === false && state === false
     if (!fine.block && !fine.state) {
       return res.status(200).json(fine);
     } else {
       return res
         .status(403)
         .json({ message: "Fine cannot be processed for payment" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBlockFines = async (req, res, next) => {
+  try {
+    const fines = await Fine.find();
+
+    if (!fines) {
+      return next(404, "Fine not found");
+    }
+    const blockedFines = fines.filter((fine) => fine.block === true);
+
+    if (blockedFines.length > 0) {
+      return res.status(200).json(blockedFines);
+    } else {
+      return res.status(404).json({ message: "No blocked fines found" });
     }
   } catch (error) {
     next(error);

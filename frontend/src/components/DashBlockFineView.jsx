@@ -1,16 +1,15 @@
-import React from "react";
+import { useEffect } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export const DashFineView = () => {
+export const DashBlockFineView = () => {
   const [fine, setFine] = useState([]);
   const [error, setError] = useState(null);
-  const [fineIdToView, setFineIdToView] = useState("");
 
   useEffect(() => {
     const fetchFines = async () => {
       try {
-        const res = await fetch("/api/v1/fine/getallfine");
+        const res = await fetch("/api/v1/fine/getblockfines");
         const data = await res.json();
 
         if (res.ok) {
@@ -20,69 +19,17 @@ export const DashFineView = () => {
         setError(error);
       }
     };
-    if (fineIdToView === "") {
-      fetchFines();
-    }
-  }, [fineIdToView]);
 
-  const getFine = async () => {
-    try {
-      if (fineIdToView === "") {
-        return setError("Fill Serach field");
-      }
-      const res = await fetch(`/api/v1/fine/getfine/${fineIdToView}`);
-      const data = await res.json();
-      console.log(data);
-      if (data.success == false) {
-        return setError(data.messaage);
-      }
-      if (res.ok) {
-        setFine(Array.isArray(data) ? data : []);
-
-        setError("");
-      }
-    } catch (error) {
-      setError(error);
-    }
-  };
+    fetchFines();
+  }, []);
 
   return (
     <div className="min-h-screen md:max-w-5xl">
       <div>
         <div className="text-center text-teal-700">
-          <h2 className="font-bold text-3xl sm:text-5xl pt-10">View Fines</h2>
-        </div>
-      </div>
-
-      <div className="flex justify-center">
-        <div className="flex items-center gap-10 mb-14 px-5 pt-10">
-          <div className="mb-2 block">
-            <Label value="Driver Id-:" />
-          </div>
-
-          <div>
-            <TextInput
-              id="id"
-              type="text"
-              required
-              shawod
-              onChange={(e) => {
-                setFineIdToView(e.target.value);
-              }}
-            />
-          </div>
-
-          <div>
-            <Button
-              type="button"
-              gradientDuoTone="purpleToBlue"
-              size="sm"
-              outline
-              onClick={getFine}
-            >
-              Search
-            </Button>
-          </div>
+          <h2 className="font-bold text-3xl sm:text-5xl pt-10">
+            View Block Fines
+          </h2>
         </div>
       </div>
 
@@ -92,7 +39,7 @@ export const DashFineView = () => {
         </Alert>
       )}
 
-      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 md:max-h-[68vh] overflow-y-scroll">
+      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 md:max-h-[98vh] overflow-y-scroll pt-16">
         {fine.length > 0 ? (
           <>
             <Table hoverable className="shadow-md ">
@@ -139,7 +86,7 @@ export const DashFineView = () => {
             </Table>
           </>
         ) : (
-          <p>No fines</p>
+          <p>No block fines</p>
         )}
       </div>
     </div>

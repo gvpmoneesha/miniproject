@@ -39,7 +39,7 @@ export const DashDriverFineView = () => {
       <div className="flex justify-center">
         <div className="flex items-center gap-10 mb-14 px-5 pt-10">
           <div className="mb-2 block">
-            <Label value="Id-:" />
+            <Label value="Driver Id-:" />
           </div>
 
           <div>
