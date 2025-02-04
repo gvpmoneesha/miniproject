@@ -266,3 +266,39 @@ export const getBlockFines = async (req, res, next) => {
     next(error);
   }
 };
+
+export const fineUpdate = async (req, res, next) => {
+  try {
+    const fine = await Fine.findOne({ _id: req.params._id });
+
+    const updateFine = await Fine.findByIdAndUpdate(
+      fine._id,
+      {
+        $set: {
+          block: req.body.block,
+          state: req.body.state,
+        },
+      },
+      { new: true }
+    );
+    res.status(200).json(updateFine);
+    console.log("Success");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBlockFine = async (req, res, next) => {
+  try {
+    const fineId = req.params._id;
+    const fine = await Fine.findOne({ _id: fineId });
+
+    if (fine) {
+      res.status(200).json(fine);
+    } else {
+      return next(404, "Rule not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};

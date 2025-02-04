@@ -15,6 +15,7 @@ import { DashVehicleDelete } from "../components/DashVehicleDelete";
 import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
 import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 import { DashViolationTypeDelete } from "../components/DashViolationTypeDelete";
+import { DashBlockFineUpdate } from "../components/DashBlockFineUpdate";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -90,6 +91,14 @@ export const Dashboard = () => {
                       </Sidebar.Item>
                     </Link>
                   </Sidebar.Collapse>
+
+                  <Sidebar.Collapse icon={HiShoppingBag} label="Manage Fine">
+                    <Link to="/dashboard?dash=blockFine-update">
+                      <Sidebar.Item href="#">
+                        Update Block/State Fine
+                      </Sidebar.Item>
+                    </Link>
+                  </Sidebar.Collapse>
                 </Sidebar.ItemGroup>
               </Sidebar.Items>
             </Sidebar>
@@ -131,6 +140,9 @@ export const Dashboard = () => {
                 )) ||
                 (searchParams.get("dash") === "violationType-delete" && (
                   <DashViolationTypeDelete />
+                )) ||
+                (searchParams.get("dash") === "blockFine-update" && (
+                  <DashBlockFineUpdate />
                 ))}
             </div>
           </div>

@@ -43,9 +43,9 @@ export const DashViolationTypeUpdate = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSearchId = (e) => {
-    setSearchId(e.target.value);
-  };
+  //const handleSearchId = (e) => {
+  //  setSearchId(e.target.value);
+  //};
 
   const handleSearchVehicle = async (vId) => {
     try {
