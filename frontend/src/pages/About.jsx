@@ -50,20 +50,22 @@ export const About = () => {
 
   const processBarData = () => {
     const violationCounts = {};
-
     fineData.forEach((fine) => {
       violationCounts[fine.violation] =
         (violationCounts[fine.violation] || 0) + 1;
     });
 
+    const labels = Object.keys(violationCounts); // Store original labels
+    const dataValues = Object.values(violationCounts);
+
     return {
-      labels: [1, 2, 3, 4, 5, 6, 7, 8],
+      labels: labels.map((_, index) => index + 1), // Show numbers instead of long text
       datasets: [
         {
           label: "Number of Violations",
-          data: Object.values(violationCounts),
+          data: dataValues,
           backgroundColor: [
-            "rgba(255, 99, 132, 0.5)", // 0.5 opacity
+            "rgba(255, 99, 132, 0.5)",
             "rgba(54, 162, 235, 0.5)",
             "rgba(255, 206, 86, 0.5)",
             "rgba(76, 175, 80, 0.5)",
@@ -73,7 +75,23 @@ export const About = () => {
           borderWidth: 1,
         },
       ],
+      originalLabels: labels,
     };
+  };
+
+  const barData = processBarData();
+
+  const options = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          title: (tooltipItems) => {
+            const index = tooltipItems[0].dataIndex;
+            return barData.originalLabels[index];
+          },
+        },
+      },
+    },
   };
 
   const processData = () => {
@@ -115,7 +133,7 @@ export const About = () => {
       <div className="lg:flex justify-between mx-auto p-10 lg:pl-20 lg:pr-20 bg-teal-50">
         <div className="w-100 lg:w-3/5  lg:pt-0">
           {fineData.length > 0 ? (
-            <Bar data={processBarData()} />
+            <Bar data={processBarData()} options={options} />
           ) : (
             <p>Loading...</p>
           )}

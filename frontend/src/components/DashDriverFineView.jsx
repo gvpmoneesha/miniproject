@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 export const DashDriverFineView = () => {
   const [fine, setFine] = useState([]);
   const [error, setError] = useState(null);
-  const [fineIdToView, setFineIdToView] = useState("");
+  // const [fineIdToView, setFineIdToView] = useState("");
+  const fineIdToView = JSON.parse(localStorage.getItem("user")).id;
 
   useEffect(() => {
     const getFine = async () => {
@@ -38,7 +39,6 @@ export const DashDriverFineView = () => {
           <h2 className="font-bold text-3xl sm:text-5xl pt-10">View Fines</h2>
         </div>
       </div>
-      const fineIdToView = JSON.parse(localStorage.getItem("user")).id;
       {/* <div className="flex justify-center">
         <div className="flex items-center gap-10 mb-14 px-5 pt-10">
           <div className="mb-2 block">
@@ -117,7 +117,13 @@ export const DashDriverFineView = () => {
                           <Table.Cell>{fines.pId}</Table.Cell>
                           <Table.Cell>{fines.pName}</Table.Cell>
                           <Table.Cell>{fines.pStation}</Table.Cell>
-                          <Table.Cell>{fines.state}</Table.Cell>
+                          <Table.Cell>
+                            {fines.state ? (
+                              <span className="text-green-400">Paid</span>
+                            ) : (
+                              <span className="text-red-400">Unpaid</span>
+                            )}
+                          </Table.Cell>
                         </Table.Row>
                       </Table.Body>
                     ))}

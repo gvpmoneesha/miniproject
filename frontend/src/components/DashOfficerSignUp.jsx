@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -24,8 +24,17 @@ const DashOfficerSignUp = () => {
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
-
+  const [stations, setStations] = useState({});
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchValues = async () => {
+      await fetch("/api/v1/static//getstaticvalue/station")
+        .then((res) => res.json())
+        .then((data) => setStations(data));
+    };
+    fetchValues();
+  }, []);
 
   const handleUploadImage = async () => {
     try {
@@ -247,9 +256,10 @@ const DashOfficerSignUp = () => {
                 onChange={handleTextboxDataChange}
               >
                 <option>Select Police Station</option>
-                <option>Matara</option>
-                <option>Galle</option>
-                <option>Colombo</option>
+                {stations &&
+                  stations.data?.value.map((s, index) => (
+                    <option key={index}>{s.name}</option>
+                  ))}
               </Select>
             </div>
 

@@ -37,7 +37,7 @@ export default function Home() {
           </div>
 
           {/* Call-to-Action Buttons */}
-          <div className="mt-16 flex flex-col md:flex-row gap-6 animate-fade-in">
+          <div className="mt-16 flex flex-col md:flex-row gap-6 animate-fade-in pb-10">
             <button
               className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 transform hover:scale-105"
               onClick={() => navigate("/payment")}

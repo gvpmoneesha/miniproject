@@ -174,6 +174,7 @@ export const fineIssue = async (req, res, next) => {
   </html>
 `;
     await sendEmail(email, "Notice: Traffic Fine", emailBodyFine);
+    // await sendEmail(email, "Notice: Traffic Fine", emailBodyFine);
     res.json("Fine registration is successfull");
   } catch (error) {
     next(error);

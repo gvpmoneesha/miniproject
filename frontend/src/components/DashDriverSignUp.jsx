@@ -243,9 +243,9 @@ export const DashDriverSignUp = () => {
               </div>
               <Select id="vType" required onChange={handleTextboxDataChange}>
                 <option>Select Vehicle Type</option>
-                <option>Large</option>
-                <option>Small</option>
-                <option>Medium</option>
+                <option>Heavy</option>
+                <option>Semi</option>
+                <option>Normal</option>
               </Select>
             </div>
 
