@@ -19,14 +19,14 @@ export default function Home() {
         {/* Main Content */}
         <div className="relative z-10 flex flex-col items-center justify-center text-center text-white px-4">
           <h4 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-8 mt-32 animate-fade-in">
-            Traffic Fine Processing and Payment System <br />
-            <span className="text-blue-300">for Sri Lanka</span>
+            Fine Issue And Online Payment System <br />
+            <span className="text-blue-300">For Sri Lanka Police</span>
           </h4>
 
           {/* Description Box */}
           <div className="max-w-4xl mx-auto bg-white bg-opacity-20 backdrop-blur-md rounded-lg p-6 md:p-8 shadow-2xl animate-slide-up">
             <p className="text-base md:text-lg text-justify leading-relaxed text-gray-100">
-              Traffic Fine Processing and Payment System for Sri Lanka aims to
+              Fine Issue And Online Payment System For Sri Lanka Police aims to
               modernize how traffic fines are handled, providing a convenient
               online payment system for drivers to pay fines securely.
               Additionally, police officers can issue penalty sheets directly

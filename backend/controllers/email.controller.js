@@ -46,6 +46,7 @@ export const checkFinesAndSendEmails = async () => {
     const fines = await Fine.find({
       expireDate: yesterdayStr, // Match only exact date
       state: false, // Only unpaid fines
+      block: true,
     });
 
     console.log(fines);
@@ -196,7 +197,7 @@ export const checkFinesAndSendReminder = async () => {
       const issueDateNew = new Date(fine.issueDate);
       //const dueDate = new Date(issueDate);
       //dueDate.setDate(issueDate.getDate() + 10);
-      issueDateNew.setDate(issueDateNew.getDate() + 3);
+      issueDateNew.setDate(issueDateNew.getDate() + 10);
       const formattedIssueDate = issueDateNew.toISOString().split("T")[0];
 
       if (formattedIssueDate === today) {

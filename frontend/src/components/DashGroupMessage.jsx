@@ -10,16 +10,18 @@ export const DashGroupMessage = () => {
   const { socket } = useSocketContext();
   const [newMessage, setNewMessage] = useState("");
   const chatEndRef = useRef(null);
-  const [searchParams, setSearchPrams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const getMessages = async () => {
       try {
         if (searchParams.get("dash") === "all") {
-          var res = await fetch(`/api/v1/message/getgroup/${authUser._id}/all`);
+          var res = await fetch(`/api/v1/message/getgroup/${user._id}/all`);
         } else {
           var res = await fetch(
-            `/api/v1/message/getgroup/${authUser._id}/${authUser.pStation}`
+            `/api/v1/message/getgroup/${user._id}/${user.pStation}`
           );
         }
         const data = await res.json();
@@ -33,7 +35,9 @@ export const DashGroupMessage = () => {
       }
     };
     getMessages();
-  }, [authUser, searchParams]);
+  }, [searchParams]);
+
+  //authUser, searchParams
 
   console.log(messages);
 

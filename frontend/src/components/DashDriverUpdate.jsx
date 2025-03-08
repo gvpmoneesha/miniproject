@@ -117,6 +117,7 @@ export const DashDriverUpdate = () => {
         console.log("error");
       } else {
         console.log("Update is success");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log("error here");

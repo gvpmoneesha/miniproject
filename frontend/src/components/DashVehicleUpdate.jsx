@@ -59,6 +59,7 @@ export const DashVehicleUpdate = () => {
         console.log(data);
       } else {
         console.log("Update is success");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log("error here");

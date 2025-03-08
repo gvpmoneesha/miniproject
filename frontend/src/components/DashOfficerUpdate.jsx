@@ -97,6 +97,7 @@ const DashOfficerUpdate = () => {
     e.preventDefault();
     if (Object.keys(formData).length === 0) {
       console.log("There are no changes");
+
       return;
     }
 
@@ -117,6 +118,7 @@ const DashOfficerUpdate = () => {
         console.log("error");
       } else {
         console.log("Update is success");
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log("error here");
@@ -351,6 +353,7 @@ const DashOfficerUpdate = () => {
                     type="file"
                     className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
                     onChange={(e) => setFile(e.target.files[0])}
+                    defaultValue={user?.pro || ""}
                   />
                   <Button
                     type="button"
