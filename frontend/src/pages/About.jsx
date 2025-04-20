@@ -340,7 +340,7 @@ export const About = () => {
                 </div>
               ) : (
                 <div className="p-8 text-center text-gray-500">
-                  Start typing to search traffic rule
+                  Start typing to search traffic rules
                 </div>
               )}
             </div>
