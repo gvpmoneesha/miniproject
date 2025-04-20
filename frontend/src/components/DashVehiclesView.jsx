@@ -54,9 +54,7 @@ export const DashVehiclesView = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Vehicle Management System
           </h1>
-          <p className="text-cyan-100 font-medium">
-            View and manage registered vehicles
-          </p>
+          <p className="text-cyan-100 font-medium">View registered vehicles</p>
         </div>
 
         {/* Search Section */}

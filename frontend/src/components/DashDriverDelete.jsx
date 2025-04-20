@@ -148,7 +148,7 @@ export const DashDriverDelete = () => {
       {/* Results Section */}
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
         {users.length > 0 ? (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <Table hoverable className="min-w-full">
               <Table.Head className="bg-gradient-to-r from-blue-50 to-cyan-50">
                 <Table.HeadCell className="text-blue-600">ID</Table.HeadCell>

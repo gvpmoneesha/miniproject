@@ -150,7 +150,7 @@ export const DashVehicleDelete = () => {
       {/* Results Section */}
       <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         {vehicles.length > 0 ? (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <Table hoverable className="min-w-full">
               <Table.Head className="bg-gradient-to-r from-red-50 to-orange-50">
                 <Table.HeadCell className="text-blue-600">

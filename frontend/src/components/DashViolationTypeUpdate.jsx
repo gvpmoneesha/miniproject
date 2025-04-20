@@ -118,7 +118,7 @@ export const DashViolationTypeUpdate = () => {
       {/* Violations Table */}
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         {violations.length > 0 ? (
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <Table hoverable className="min-w-full">
               <Table.Head className="bg-gradient-to-r from-red-50 to-orange-50">
                 <Table.HeadCell className="text-red-600">ID</Table.HeadCell>

@@ -32,7 +32,7 @@ export const DashBlockFineView = () => {
             Blocked Fines Management
           </h1>
           <p className="text-cyan-100 font-medium">
-            View and manage blocked traffic fines
+            View blocked traffic fines
           </p>
         </div>
 

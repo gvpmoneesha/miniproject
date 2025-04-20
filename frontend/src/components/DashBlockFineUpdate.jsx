@@ -105,7 +105,7 @@ export const DashBlockFineUpdate = () => {
       {/* Fines Table - Maintaining Your Exact Structure */}
       <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
         {fines.length > 0 ? (
-          <div className="overflow-x-auto relative max-h-[75vh]">
+          <div className="overflow-x-auto max-h-96 overflow-y-auto">
             <Table hoverable className="min-w-full">
               <Table.Head className="bg-gradient-to-r from-blue-100 to-teal-100 sticky top-0">
                 <Table.HeadCell className="text-blue-800">
@@ -197,13 +197,27 @@ export const DashBlockFineUpdate = () => {
                     </Table.Cell>
                     <Table.Cell>
                       <Button
-                        gradientDuoTone="tealToBlue"
+                        color="warning"
                         size="xs"
                         onClick={() => {
                           handleSearchFine(fine._id);
                           setShowModal(true);
                         }}
+                        className="flex items-center"
                       >
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
+                        </svg>
                         Update
                       </Button>
                     </Table.Cell>

@@ -52,9 +52,7 @@ export const DashDriversView = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Driver Management System
           </h1>
-          <p className="text-cyan-100 font-medium">
-            View and manage registered drivers
-          </p>
+          <p className="text-cyan-100 font-medium">View registered drivers</p>
         </div>
 
         {/* Search Section */}

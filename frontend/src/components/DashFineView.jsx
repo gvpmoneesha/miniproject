@@ -54,9 +54,7 @@ export const DashFineView = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Traffic Fine Records
           </h1>
-          <p className="text-cyan-100 font-medium">
-            View and manage issued traffic fines
-          </p>
+          <p className="text-cyan-100 font-medium">View issued traffic fines</p>
         </div>
 
         {/* Search Section - Now perfectly aligned */}
