@@ -22,6 +22,7 @@ import { DashViolationTypeCreate } from "../components/DashViolationTypeCreate";
 import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 import { DashViolationTypeDelete } from "../components/DashViolationTypeDelete";
 import { DashBlockFineUpdate } from "../components/DashBlockFineUpdate";
+import DashReport from "../components/DashReport";
 
 export const Dashboard = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -179,13 +180,23 @@ export const Dashboard = () => {
                     </Sidebar.Item>
                   </Link>
                 </Sidebar.Collapse>
+
+                <Link to="/dashboard?dash=report">
+                  <Sidebar.Item
+                    icon={() => <HiDocumentText className="w-6 h-6" />}
+                    href="#"
+                    className="text-cyan-600 hover:text-cyan-700"
+                  >
+                    Generate Report
+                  </Sidebar.Item>
+                </Link>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </Sidebar>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\signup.jpg')]">
+        <div className="flex-1 bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('H:\miniproject\frontend\src\assets\signup.jpg')]">
           <div className="bg-slate-200 bg-opacity-80 p-6">
             {(searchParams.get("dash") === "officer-create" && (
               <DashOfficerSignUp />
@@ -225,7 +236,8 @@ export const Dashboard = () => {
               )) ||
               (searchParams.get("dash") === "blockFine-update" && (
                 <DashBlockFineUpdate />
-              ))}
+              )) ||
+              (searchParams.get("dash") === "report" && <DashReport />)}
           </div>
         </div>
       </div>

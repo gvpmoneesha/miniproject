@@ -95,192 +95,242 @@ export const DashViolationTypeUpdate = () => {
   };
 
   return (
-    <div className="min-h-screen   p-3 ">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Update Violation Rule And Information
-          </h2>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="text-center mb-8 relative">
+        <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-2">
+          Update Violation Rules
+        </h2>
+        <p className="text-gray-600">
+          Manage and update traffic violation penalties
+        </p>
       </div>
 
+      {/* Error Alert */}
       {error && (
-        <Alert color="failure" className="m-4">
-          {error}
-        </Alert>
+        <div className="max-w-4xl mx-auto mb-6">
+          <Alert color="failure">
+            <span className="font-medium">Error!</span> {error}
+          </Alert>
+        </div>
       )}
 
-      <div className="w-full pt-14 table-auto overflow-x-auto md:w-full md:mx-auto p-6 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {/* Violations Table */}
+      <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         {violations.length > 0 ? (
-          <>
-            <Table hoverable className="shadow-md ">
-              <Table.Head>
-                <Table.HeadCell>ID</Table.HeadCell>
-                <Table.HeadCell>Type</Table.HeadCell>
-                <Table.HeadCell>Description</Table.HeadCell>
-                <Table.HeadCell>Price</Table.HeadCell>
-                <Table.HeadCell>Update</Table.HeadCell>
+          <div className="overflow-x-auto">
+            <Table hoverable className="min-w-full">
+              <Table.Head className="bg-gradient-to-r from-red-50 to-orange-50">
+                <Table.HeadCell className="text-red-600">ID</Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Violation Type
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Description
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Penalty (LKR)
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Actions
+                </Table.HeadCell>
               </Table.Head>
-
-              {violations.map((violation) => (
-                <Table.Body key={violation._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>{violation._id}</Table.Cell>
-                    <Table.Cell>{violation.type}</Table.Cell>
-                    <Table.Cell>{violation.description}</Table.Cell>
-                    <Table.Cell>{violation.price}</Table.Cell>
+              <Table.Body className="divide-y">
+                {violations.map((violation) => (
+                  <Table.Row key={violation._id} className="hover:bg-gray-50">
+                    <Table.Cell className="font-medium text-gray-900">
+                      {violation._id.slice(-6)}
+                    </Table.Cell>
                     <Table.Cell>
-                      <span
-                        onClick={() => {
-                          handleSearchVehicle(violation._id);
-                        }}
-                        className="font-medium text-red-500 hover:underline cursor-pointer"
-                      >
-                        Update
+                      <span className="font-medium">{violation.type}</span>
+                    </Table.Cell>
+                    <Table.Cell className="max-w-xs truncate">
+                      {violation.description}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                        Rs. {violation.price}
                       </span>
                     </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        color="warning"
+                        size="xs"
+                        onClick={() => {
+                          handleSearchVehicle(violation._id);
+                          setShowModal(true);
+                        }}
+                        className="flex items-center"
+                      >
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
+                        </svg>
+                        Update
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
-                </Table.Body>
-              ))}
+                ))}
+              </Table.Body>
             </Table>
-          </>
+          </div>
         ) : (
-          <p>No violations</p>
+          <div className="p-8 text-center">
+            <div className="mx-auto w-24 h-24 text-gray-400 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-700">
+              No violations found
+            </h3>
+            <p className="text-gray-500">
+              No violation rules have been added yet
+            </p>
+          </div>
         )}
+      </div>
 
-        <Modal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          popup
-          size="md"
-        >
-          <Modal.Header />
+      {/* Update Modal */}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="lg"
+      >
+        <Modal.Header className="border-b border-gray-200 p-6">
+          <h3 className="text-xl font-bold text-gray-900">
+            Update Violation Rule
+          </h3>
+        </Modal.Header>
+        <Modal.Body className="p-6">
+          {violation && (
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Violation ID */}
+                <div>
+                  <Label
+                    htmlFor="_id"
+                    value="Violation ID"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  />
+                  <TextInput
+                    id="_id"
+                    type="text"
+                    required
+                    shadow
+                    readOnly
+                    className="border-gray-300 bg-gray-100"
+                    defaultValue={violation._id}
+                  />
+                </div>
 
-          <Modal.Body>
-            {/* {!showForm ? (
-              <div className="text-center">
-                <HiOutlineExclamationCircle className="mx-auto h-14 w-14 text-gray-400 dark:text-gray-200 mb-4" />
-                <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-                  Are you sure you want to update this violation?
-                </h3>
-                <div className="flex justify-center gap-5">
-                  <Button color="failure" onClick={() => setShowForm(true)}>
-                    Yes, I'm sure
-                  </Button>
-                  <Button color="gray" onClick={() => setShowModal(false)}>
-                    No, Cancel
-                  </Button>
+                {/* Violation Type */}
+                <div>
+                  <Label
+                    htmlFor="type"
+                    value="Violation Type"
+                    className="block text-sm font-medium text-gray-700 mb-2"
+                  />
+                  <TextInput
+                    id="type"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    defaultValue={violation.type}
+                    onChange={handleTextboxDataChange}
+                  />
                 </div>
               </div>
-            ) : ( */}
-            {violation && (
-              <div className="mt-4">
-                <h2 className="text-xl font-bold mb-4">
-                  Update Information of Violation
-                </h2>
 
-                {/* <div className="flex items-center gap-5  px-3 pt-6">
-                  <div className="mb-2 block">
-                    <Label value="ID-:" />
-                  </div>
-
-                  <div>
-                    <TextInput
-                      id="_id"
-                      type="text"
-                      required
-                      shadow
-                      defaultValue={violation?._id || ""}
-                      // onChange={handleSearchId}
-                    />
-                  </div>
-
-                  {/* <div>
-                    <Button
-                      type="button"
-                      gradientDuoTone="purpleToBlue"
-                      size="sm"
-                      outline
-                      onClick={handleSearchVehicle}
-                    >
-                      Search
-                    </Button>
-                  </div> }
-                </div> */}
-
-                <form className="space-y-4  mt-8">
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value="ID-:" />
-                    </div>
-                    <TextInput
-                      id="_id"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={violation?._id || ""}
-                      // onChange={handleSearchId}
-                    />
-                  </div>
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Violation Type" />
-                    </div>
-                    <TextInput
-                      id="type"
-                      type="text"
-                      required
-                      shadow
-                      defaultValue={violation?.type || ""}
-                      onChange={handleTextboxDataChange}
-                    />
-                  </div>
-
-                  <label
-                    for="message"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Description
-                  </label>
-                  <textarea
-                    id="description"
-                    rows="5"
-                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Discription of rule..."
-                    defaultValue={violation?.description || ""}
-                    onChange={handleTextboxDataChange}
-                  ></textarea>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Price" />
-                    </div>
-                    <TextInput
-                      id="price"
-                      type="text"
-                      required
-                      shadow
-                      defaultValue={violation?.price || ""}
-                      onChange={handleTextboxDataChange}
-                    />
-                  </div>
-
-                  <div className="flex justify-end gap-3">
-                    <Button color="success" onClick={handleSubmit}>
-                      Submit
-                    </Button>
-                    <Button color="gray" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </div>
-                </form>
+              {/* Description */}
+              <div>
+                <Label
+                  htmlFor="description"
+                  value="Rule Description"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                />
+                <textarea
+                  id="description"
+                  rows="4"
+                  className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                  placeholder="Detailed description of the violation rule..."
+                  defaultValue={violation.description}
+                  onChange={handleTextboxDataChange}
+                ></textarea>
               </div>
-            )}
-            {/* )} */}
-          </Modal.Body>
-        </Modal>
-      </div>
+
+              {/* Price */}
+              <div>
+                <Label
+                  htmlFor="price"
+                  value="Penalty Amount (LKR)"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                />
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span className="text-gray-500">Rs.</span>
+                  </div>
+                  <TextInput
+                    id="price"
+                    type="text"
+                    required
+                    shadow
+                    className="w-full pl-10 border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                    defaultValue={violation.price}
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-4 pt-4">
+                <Button
+                  color="gray"
+                  onClick={() => setShowModal(false)}
+                  className="px-6 py-2.5 border border-gray-300"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  color="success"
+                  onClick={handleSubmit}
+                  className="px-6 py-2.5"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

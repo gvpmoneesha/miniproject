@@ -96,226 +96,264 @@ const DashOfficerSignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 flex items-center justify-center p-6">
-      <div className="max-w-lg w-full bg-white rounded-2xl shadow-2xl overflow-hidden p-6">
-        {/* Page Heading */}
-        <div className="text-center text-teal-700 py-6">
-          <h2 className="font-bold text-3xl sm:text-4xl">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+      <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+        {/* Header with decorative elements */}
+        <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white relative z-10">
             Officer Registration
           </h2>
+          <p className="text-blue-100 mt-2 relative z-10">
+            Join our law enforcement team
+          </p>
         </div>
 
         {/* Registration Form */}
-        <div className="pt-6">
-          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-            {/* Name Input */}
-            <div>
-              <div className="mb-2 block">
-                <Label value="Name" className="text-cyan-600 font-medium" />
+        <div className="p-6 sm:p-8">
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            {/* Grid layout for form fields */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Name */}
+              <div>
+                <Label
+                  value="Full Name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="name"
+                  type="text"
+                  placeholder="John Doe"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="Enter your name"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            {/* Password Input */}
-            <div>
-              <div className="mb-2 block">
-                <Label value="Password" className="text-cyan-600 font-medium" />
+              {/* ID */}
+              <div>
+                <Label
+                  value="Officer ID"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="id"
+                  type="text"
+                  placeholder="OF-12345"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
+                />
               </div>
-              <TextInput
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            {/* ID Input */}
-            <div>
-              <div className="mb-2 block">
-                <Label value="ID" className="text-cyan-600 font-medium" />
+              {/* Password */}
+              <div>
+                <Label
+                  value="Password"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="password"
+                  type="password"
+                  placeholder="Create a password"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
+                />
+                <p className="mt-1 text-xs text-gray-500">
+                  Minimum 8 characters with numbers and symbols
+                </p>
               </div>
-              <TextInput
-                id="id"
-                type="text"
-                placeholder="Enter your ID"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            {/* Date of Birth Input */}
-            <div>
-              <div className="mb-2 block">
+              {/* Email */}
+              <div>
+                <Label
+                  value="Email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="email"
+                  type="email"
+                  placeholder="john.doe@police.gov"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              {/* Date of Birth */}
+              <div>
                 <Label
                   value="Date of Birth"
-                  className="text-cyan-600 font-medium"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <Datepicker
+                  onSelectedDateChanged={(date) => {
+                    const dob =
+                      date.getFullYear() +
+                      "-" +
+                      (date.getMonth() + 1) +
+                      "-" +
+                      date.getDate();
+                    setFormData({ ...formData, dob });
+                  }}
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
-              <Datepicker
-                onSelectedDateChanged={(date) => {
-                  const dob =
-                    date.getFullYear() +
-                    "-" +
-                    (date.getMonth() + 1) +
-                    "-" +
-                    date.getDate();
-                  setFormData({ ...formData, dob });
-                }}
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-              />
-            </div>
 
-            {/* Email Input */}
-            <div>
-              <div className="mb-2 block">
-                <Label value="Email" className="text-cyan-600 font-medium" />
-              </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="name@example.com"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            {/* NIC Number Input */}
-            <div>
-              <div className="mb-2 block">
+              {/* NIC Number */}
+              <div>
                 <Label
                   value="NIC Number"
-                  className="text-cyan-600 font-medium"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="nic"
+                  type="text"
+                  placeholder="123456789V"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <TextInput
-                id="nic"
-                type="text"
-                placeholder="Enter your NIC number"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            {/* Phone Number Input */}
-            <div>
-              <div className="mb-2 block">
+              {/* Phone Number */}
+              <div>
                 <Label
                   value="Phone Number"
-                  className="text-cyan-600 font-medium"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="phoneNumber"
+                  type="text"
+                  placeholder="0771234567"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                placeholder="Enter your phone number"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            {/* Address Input */}
-            <div>
-              <div className="mb-2 block">
-                <Label value="Address" className="text-cyan-600 font-medium" />
-              </div>
-              <TextInput
-                id="address"
-                type="text"
-                placeholder="Enter your address"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            {/* Police Station Select */}
-            <div>
-              <div className="mb-2 block">
+              {/* Police Station */}
+              <div>
                 <Label
                   value="Police Station"
-                  className="text-cyan-600 font-medium"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <Select
+                  id="pStation"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
+                >
+                  <option>Select Police Station</option>
+                  {stations &&
+                    stations.data?.value.map((s, index) => (
+                      <option key={index}>{s.name}</option>
+                    ))}
+                </Select>
+              </div>
+
+              {/* Address */}
+              <div className="md:col-span-2">
+                <Label
+                  value="Address"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                />
+                <TextInput
+                  id="address"
+                  type="text"
+                  placeholder="Enter your full address"
+                  required
+                  className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  onChange={handleTextboxDataChange}
                 />
               </div>
-              <Select
-                id="pStation"
-                required
-                className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                onChange={handleTextboxDataChange}
-              >
-                <option>Select Police Station</option>
-                {stations &&
-                  stations.data?.value.map((s, index) => (
-                    <option key={index}>{s.name}</option>
-                  ))}
-              </Select>
-            </div>
 
-            {/* Profile Picture Upload */}
-            <div>
-              <div className="mb-2 block">
+              {/* Profile Picture */}
+              <div className="md:col-span-2">
                 <Label
                   value="Profile Picture"
-                  className="text-cyan-600 font-medium"
+                  className="block text-sm font-medium text-gray-700 mb-1"
                 />
-              </div>
-              <div className="flex gap-5 items-center">
-                <FileInput
-                  id="file-upload-helper-text"
-                  type="file"
-                  className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <Button
-                  type="button"
-                  gradientDuoTone="purpleToBlue"
-                  size="sm"
-                  outline
-                  onClick={handleUploadImage}
-                  className="transition-all duration-300 transform hover:scale-105"
-                >
-                  Upload Image
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                  <FileInput
+                    id="file-upload-helper-text"
+                    type="file"
+                    className="border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    onChange={(e) => setFile(e.target.files[0])}
+                  />
+                  <Button
+                    type="button"
+                    gradientDuoTone="purpleToBlue"
+                    size="sm"
+                    outline
+                    onClick={handleUploadImage}
+                    className="transition-all hover:scale-[1.02] active:scale-95"
+                  >
+                    {imageUploadProgress > 0 ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        Uploading ({imageUploadProgress}%)
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                        Upload Image
+                      </span>
+                    )}
+                  </Button>
+                </div>
+                {imageUploadError && (
+                  <Alert color="failure" className="mt-3">
+                    {imageUploadError}
+                  </Alert>
+                )}
               </div>
             </div>
-
-            {/* Error Message */}
-            {imageUploadError && (
-              <Alert color="failure" className="mt-4">
-                {imageUploadError}
-              </Alert>
-            )}
 
             {/* Submit Button */}
             <div className="pt-4">
-              {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
-                <Button
-                  type="submit"
-                  disabled
-                  className="w-full bg-cyan-600 hover:bg-cyan-700"
-                >
-                  Loading...
-                </Button>
-              ) : (
-                <Button
-                  type="submit"
-                  className="w-full bg-cyan-600 hover:bg-cyan-700"
-                >
-                  Add New Officer
-                </Button>
-              )}
+              <Button
+                type="submit"
+                gradientDuoTone="tealToBlue"
+                className="w-full py-3 font-medium text-lg transition-all hover:scale-[1.01] active:scale-95"
+                disabled={imageUploadProgress >= 1 && imageUploadProgress <= 99}
+              >
+                {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Processing...
+                  </span>
+                ) : (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Register Officer
+                  </span>
+                )}
+              </Button>
             </div>
           </form>
         </div>

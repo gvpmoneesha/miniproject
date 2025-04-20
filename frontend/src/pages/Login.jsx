@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import login from "../assets/login.png";
+import { AuthContext } from "../context/AuthContext";
 
 export const Login = () => {
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setAuthUser } = useContext(AuthContext);
 
   console.log(formData);
 
@@ -24,6 +26,7 @@ export const Login = () => {
       if (res.ok) {
         if (data.role === "admin") {
           localStorage.setItem("user", JSON.stringify(data));
+          setAuthUser(data);
           navigate("/dashboard");
         } else if (data.role === "officer") {
           localStorage.setItem("user", JSON.stringify(data));

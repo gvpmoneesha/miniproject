@@ -35,135 +35,191 @@ export const DashVehicleSignUp = () => {
 
   console.log(formData);
   return (
-    <div className="  max-w-lg p-3 mx-auto">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto">
+        {/* Header Section */}
+        <div className="text-center mb-8 relative">
+          <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-blue-600 mb-2">
             Vehicle Registration
           </h2>
+          <p className="text-gray-600">Register new vehicle in the system</p>
         </div>
-      </div>
 
-      <div className=" pt-14 ">
-        <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="no" value="Vehicle Number" />
+        {/* Form Card */}
+        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-100">
+          <form className="p-6 sm:p-8 space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Left Column */}
+              <div className="space-y-5">
+                <div>
+                  <Label
+                    htmlFor="no"
+                    value="Vehicle Number"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="no"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="ABC-1234"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="cNumber"
+                    value="Chassis Number"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="cNumber"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="MH1234567890"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="date"
+                    value="Date of Acquisition"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <Datepicker
+                    id="date"
+                    onSelectedDateChanged={(date) => {
+                      const dateBrought =
+                        date.getFullYear() +
+                        "-" +
+                        (date.getMonth() + 1) +
+                        "-" +
+                        date.getDate();
+                      setFormData({ ...formData, dateBrought });
+                    }}
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="name"
+                    value="Owner Name"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="name"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="John Doe"
+                  />
+                </div>
               </div>
-              <TextInput
-                id="no"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
+
+              {/* Right Column */}
+              <div className="space-y-5">
+                <div>
+                  <Label
+                    htmlFor="nic"
+                    value="Owner's NIC"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="nic"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="123456789V"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="phoneNumber"
+                    value="Phone Number"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="phoneNumber"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="0771234567"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="email"
+                    value="Email Address"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <TextInput
+                    id="email"
+                    type="email"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                    placeholder="john@example.com"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="model"
+                    value="Vehicle Model"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  />
+                  <Select
+                    id="model"
+                    required
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  >
+                    <option>Select Vehicle Model</option>
+                    <option>Car</option>
+                    <option>Van</option>
+                    <option>Bus</option>
+                    <option>Motorcycle</option>
+                    <option>Truck</option>
+                  </Select>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="cNumber" value="Vehicle Chassie Number" />
-              </div>
-              <TextInput
-                id="cNumber"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  htmlFor="date"
-                  value="Date of Current Owner Brought Vehicle"
-                />
-              </div>
-              <div>
-                <Datepicker
-                  onSelectedDateChanged={(date) => {
-                    const dateBrought =
-                      date.getFullYear() +
-                      "-" +
-                      (date.getMonth() + 1) +
-                      "-" +
-                      date.getDate();
-                    setFormData({ ...formData, dateBrought });
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="name" value="Owner Name" />
-              </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="moneesha kavindi"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="nic" value="Owner's NIC Number" />
-              </div>
-              <TextInput
-                id="nic"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="phoneNumber" value="Owner's Phone Number" />
-              </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="email" value="Owner's email" />
-              </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="moneesha@gmail"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label htmlFor="model" value="Vehicle model" />
-              </div>
-              <Select id="model" required onChange={handleTextboxDataChange}>
-                <option>Select Vehicle Model</option>
-                <option>Car</option>
-                <option>Van</option>
-                <option>Bus</option>
-              </Select>
-            </div>
-
-            <div className="pt-4 ">
-              <Button type="submit" className="w-full">
-                Add Vehicle
+            {/* Submit Button */}
+            <div className="pt-4">
+              <Button
+                type="submit"
+                gradientDuoTone="tealToBlue"
+                className="w-full py-3 font-medium text-lg transition-all hover:scale-[1.01] active:scale-95"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 mr-2"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm3 1h6v2H7V5zm0 4h6v2H7V9zm0 4h6v2H7v-2z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                Register Vehicle
               </Button>
             </div>
           </form>

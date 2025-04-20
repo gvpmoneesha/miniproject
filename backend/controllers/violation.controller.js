@@ -1,4 +1,5 @@
 import Violation from "../model/violation.model.js";
+import Notification from "../model/notification.model.js";
 import { errorHandler } from "../utils/error.js";
 import FuzzySearch from "fuzzy-search";
 
@@ -59,6 +60,8 @@ export const getRule = async (req, res, next) => {
 
 export const violaionUpdate = async (req, res, next) => {
   try {
+    console.log(req.body);
+    
     const violation = await Violation.findOne({ _id: req.params._id });
 
     if (req.body.type) {
@@ -68,6 +71,11 @@ export const violaionUpdate = async (req, res, next) => {
           return next(errorHandler(409, "Violation Type is already exist"));
         }
       }
+    }else{
+      req.body.type = violation.type;
+    }
+    if(!req.body.description){
+      req.body.description=violation.description
     }
 
     const updateViolation = await Violation.findByIdAndUpdate(
@@ -81,6 +89,13 @@ export const violaionUpdate = async (req, res, next) => {
       },
       { new: true }
     );
+    const newNotification = Notification({
+      fineId:violation._id,
+      type:req.body.type,
+      price:req.body.price,
+    });
+    await newNotification.save();
+
     res.status(200).json(updateViolation);
   } catch (error) {
     next(error);

@@ -86,45 +86,73 @@ export const DashBlockFineUpdate = () => {
   };
 
   return (
-    <div className="min-h-screen md:max-w-5xl">
-      <div>
-        <div className="text-center text-teal-700">
-          <h2 className="font-bold text-3xl sm:text-5xl pt-10">
-            View Block Fines
-          </h2>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="text-center mb-8 relative">
+        <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-600 mb-2">
+          Update Block Fines
+        </h2>
+        <p className="text-gray-600">Manage and update blocked traffic fines</p>
       </div>
 
+      {/* Error Alert */}
       {error && (
-        <Alert color="failure" className="m-4">
-          {error}
+        <Alert color="failure" className="max-w-5xl mx-auto mb-6">
+          <span className="font-medium">Error!</span> {error}
         </Alert>
       )}
 
-      <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500 md:max-h-[98vh] overflow-y-scroll pt-16">
+      {/* Fines Table - Maintaining Your Exact Structure */}
+      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200">
         {fines.length > 0 ? (
-          <>
-            <Table hoverable className="shadow-md ">
-              <Table.Head>
-                <Table.HeadCell>Driver Id</Table.HeadCell>
-                <Table.HeadCell>Driver Name</Table.HeadCell>
-                <Table.HeadCell>Vehicle Number</Table.HeadCell>
-                <Table.HeadCell>Issue Date</Table.HeadCell>
-                <Table.HeadCell>Time</Table.HeadCell>
-                <Table.HeadCell>Place</Table.HeadCell>
-                <Table.HeadCell>Expire Date</Table.HeadCell>
-                <Table.HeadCell>Violation</Table.HeadCell>
-                <Table.HeadCell>Charge</Table.HeadCell>
-                <Table.HeadCell>Police Id</Table.HeadCell>
-                <Table.HeadCell>Police's Name</Table.HeadCell>
-                <Table.HeadCell>Police Station</Table.HeadCell>
-                <Table.HeadCell>Fine State</Table.HeadCell>
-                <Table.HeadCell>Fine Block</Table.HeadCell>
-                <Table.HeadCell>Update</Table.HeadCell>
+          <div className="overflow-x-auto relative max-h-[75vh]">
+            <Table hoverable className="min-w-full">
+              <Table.Head className="bg-gradient-to-r from-blue-100 to-teal-100 sticky top-0">
+                <Table.HeadCell className="text-blue-800">
+                  Driver Id
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Driver Name
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Vehicle Number
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Issue Date
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">Time</Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">Place</Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Expire Date
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Violation
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Charge
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Police Id
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Police's Name
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Police Station
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Fine State
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Fine Block
+                </Table.HeadCell>
+                <Table.HeadCell className="text-blue-800">
+                  Update
+                </Table.HeadCell>
               </Table.Head>
-              {fines.map((fine) => (
-                <Table.Body key={fine._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+              <Table.Body className="divide-y">
+                {fines.map((fine) => (
+                  <Table.Row key={fine._id} className="hover:bg-gray-50">
                     <Table.Cell>{fine.dId}</Table.Cell>
                     <Table.Cell>{fine.dName}</Table.Cell>
                     <Table.Cell>{fine.vNo}</Table.Cell>
@@ -136,336 +164,336 @@ export const DashBlockFineUpdate = () => {
                     <Table.Cell>
                       {new Date(fine.expireDate).toLocaleDateString()}
                     </Table.Cell>
-                    <Table.Cell>{fine.violation}</Table.Cell>
-                    <Table.Cell>{fine.charge}</Table.Cell>
+                    <Table.Cell className="text-red-600 font-medium">
+                      {fine.violation}
+                    </Table.Cell>
+                    <Table.Cell className="font-semibold">
+                      Rs. {fine.charge}
+                    </Table.Cell>
                     <Table.Cell>{fine.pId}</Table.Cell>
                     <Table.Cell>{fine.pName}</Table.Cell>
                     <Table.Cell>{fine.pStation}</Table.Cell>
-                    <Table.Cell>{String(fine.state)}</Table.Cell>
-                    <Table.Cell>{String(fine.block)}</Table.Cell>
                     <Table.Cell>
                       <span
-                        onClick={() => {
-                          handleSearchFine(fine._id);
-                        }}
-                        className="font-medium text-red-500 hover:underline cursor-pointer"
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          fine.state
+                            ? "bg-green-100 text-green-800"
+                            : "bg-red-100 text-red-800"
+                        }`}
                       >
-                        Update
+                        {String(fine.state)}
                       </span>
                     </Table.Cell>
+                    <Table.Cell>
+                      <span
+                        className={`px-2 py-1 text-xs rounded-full ${
+                          fine.block
+                            ? "bg-red-100 text-red-800"
+                            : "bg-gray-100 text-gray-800"
+                        }`}
+                      >
+                        {String(fine.block)}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        gradientDuoTone="tealToBlue"
+                        size="xs"
+                        onClick={() => {
+                          handleSearchFine(fine._id);
+                          setShowModal(true);
+                        }}
+                      >
+                        Update
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
-                </Table.Body>
-              ))}
+                ))}
+              </Table.Body>
             </Table>
-          </>
+          </div>
         ) : (
-          <p>No block fines</p>
+          <div className="p-8 text-center">
+            <div className="mx-auto w-24 h-24 text-gray-400 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-700">
+              No blocked fines found
+            </h3>
+            <p className="text-gray-500">
+              There are currently no blocked fines in the system
+            </p>
+          </div>
         )}
-
-        <Modal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          popup
-          size="md"
-        >
-          <Modal.Header />
-
-          <Modal.Body>
-            {/* {!showForm ? (
-                      <div className="text-center">
-                        <HiOutlineExclamationCircle className="mx-auto h-14 w-14 text-gray-400 dark:text-gray-200 mb-4" />
-                        <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-                          Are you sure you want to update this violation?
-                        </h3>
-                        <div className="flex justify-center gap-5">
-                          <Button color="failure" onClick={() => setShowForm(true)}>
-                            Yes, I'm sure
-                          </Button>
-                          <Button color="gray" onClick={() => setShowModal(false)}>
-                            No, Cancel
-                          </Button>
-                        </div>
-                      </div>
-                    ) : ( */}
-            {fine && (
-              <div className="mt-4">
-                <h2 className="text-xl font-bold mb-4">
-                  Update Information of Fine
-                </h2>
-
-                {/* <div className="flex items-center gap-5  px-3 pt-6">
-                          <div className="mb-2 block">
-                            <Label value="ID-:" />
-                          </div>
-        
-                          <div>
-                            <TextInput
-                              id="_id"
-                              type="text"
-                              required
-                              shadow
-                              defaultValue={violation?._id || ""}
-                              // onChange={handleSearchId}
-                            />
-                          </div>
-        
-                          {/* <div>
-                            <Button
-                              type="button"
-                              gradientDuoTone="purpleToBlue"
-                              size="sm"
-                              outline
-                              onClick={handleSearchVehicle}
-                            >
-                              Search
-                            </Button>
-                          </div> }
-                        </div> */}
-
-                <form className="space-y-4  mt-8">
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value="ID-:" />
-                    </div>
-                    <TextInput
-                      id="_id"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?._id || ""}
-                      // onChange={handleSearchId}
-                    />
-                  </div>
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value="Driver Id" />
-                    </div>
-                    <TextInput
-                      id="dId"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.dId || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value="Driver Name" />
-                    </div>
-                    <TextInput
-                      id="dName"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.dName || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value="Email" />
-                    </div>
-                    <TextInput
-                      id="email"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.email || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Vehicle No" />
-                    </div>
-                    <TextInput
-                      id="vNo"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.vNo || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Issue Date" />
-                    </div>
-                    <TextInput
-                      id="issueDate"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={new Date(
-                        fine.issueDate
-                      ).toLocaleDateString()}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Time" />
-                    </div>
-                    <TextInput
-                      id="time"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.time || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Place" />
-                    </div>
-                    <TextInput
-                      id="place"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.place || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Expire Date" />
-                    </div>
-                    <TextInput
-                      id="expireDate"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={new Date(
-                        fine.expireDate
-                      ).toLocaleDateString()}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Violation" />
-                    </div>
-                    <TextInput
-                      id="violation"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.violation || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Police Id" />
-                    </div>
-                    <TextInput
-                      id="pId"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.pId || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Police Name" />
-                    </div>
-                    <TextInput
-                      id="pName"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.pName || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Police Station" />
-                    </div>
-                    <TextInput
-                      id="pStation"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.pStation || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Charge" />
-                    </div>
-                    <TextInput
-                      id="charge"
-                      type="text"
-                      required
-                      shadow
-                      readOnly
-                      defaultValue={fine?.charge || ""}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Fine State" />
-                    </div>
-                    <TextInput
-                      id="state"
-                      type="text"
-                      required
-                      shadow
-                      defaultValue={String(fine?.state) || ""}
-                      onChange={handleTextboxDataChange}
-                    />
-                  </div>
-
-                  <div>
-                    <div className="mb-2 block">
-                      <Label value=" Fine Block" />
-                    </div>
-                    <TextInput
-                      id="block"
-                      type="text"
-                      required
-                      shadow
-                      defaultValue={fine?.block || ""}
-                      onChange={handleTextboxDataChange}
-                    />
-                  </div>
-
-                  <div className="flex justify-end gap-3">
-                    <Button color="success" onClick={handleSubmit}>
-                      Submit
-                    </Button>
-                    <Button color="gray" onClick={handleClose}>
-                      Close
-                    </Button>
-                  </div>
-                </form>
-              </div>
-            )}
-            {/* )} */}
-          </Modal.Body>
-        </Modal>
       </div>
+
+      {/* Update Modal */}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="xl"
+      >
+        <Modal.Header className="border-b border-gray-200 p-6">
+          <h3 className="text-xl font-bold text-gray-900">
+            Update Fine Details
+          </h3>
+        </Modal.Header>
+        <Modal.Body className="p-6 overflow-y-auto max-h-[70vh]">
+          {fine && (
+            <form className="space-y-4">
+              {/* Your existing form fields exactly as you have them */}
+              <div>
+                <div className="mb-2 block">
+                  <Label value="ID-:" />
+                </div>
+                <TextInput
+                  id="_id"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?._id || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Driver Id" />
+                </div>
+                <TextInput
+                  id="dId"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.dId || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Driver Name" />
+                </div>
+                <TextInput
+                  id="dName"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.dName || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Email" />
+                </div>
+                <TextInput
+                  id="email"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.email || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Vehicle No" />
+                </div>
+                <TextInput
+                  id="vNo"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.vNo || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Issue Date" />
+                </div>
+                <TextInput
+                  id="issueDate"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={new Date(fine.issueDate).toLocaleDateString()}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Time" />
+                </div>
+                <TextInput
+                  id="time"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.time || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Place" />
+                </div>
+                <TextInput
+                  id="place"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.place || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Expire Date" />
+                </div>
+                <TextInput
+                  id="expireDate"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={new Date(fine.expireDate).toLocaleDateString()}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Violation" />
+                </div>
+                <TextInput
+                  id="violation"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.violation || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Police Id" />
+                </div>
+                <TextInput
+                  id="pId"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.pId || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Police Name" />
+                </div>
+                <TextInput
+                  id="pName"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.pName || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Police Station" />
+                </div>
+                <TextInput
+                  id="pStation"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.pStation || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Charge" />
+                </div>
+                <TextInput
+                  id="charge"
+                  type="text"
+                  required
+                  shadow
+                  readOnly
+                  defaultValue={fine?.charge || ""}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Fine State" />
+                </div>
+                <TextInput
+                  id="state"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={String(fine?.state) || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div>
+                <div className="mb-2 block">
+                  <Label value=" Fine Block" />
+                </div>
+                <TextInput
+                  id="block"
+                  type="text"
+                  required
+                  shadow
+                  defaultValue={fine?.block || ""}
+                  onChange={handleTextboxDataChange}
+                />
+              </div>
+
+              <div className="flex justify-end gap-4 pt-6">
+                <Button
+                  color="gray"
+                  onClick={() => setShowModal(false)}
+                  className="px-6 py-2.5"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  gradientDuoTone="tealToBlue"
+                  onClick={handleSubmit}
+                  className="px-6 py-2.5"
+                >
+                  Save Changes
+                </Button>
+              </div>
+            </form>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

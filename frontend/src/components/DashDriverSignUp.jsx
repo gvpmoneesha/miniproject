@@ -89,186 +89,221 @@ export const DashDriverSignUp = () => {
   console.log(formData);
 
   return (
-    <div className="  max-w-lg p-3 mx-auto">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-100">
+        {/* Header Section */}
+        <div className="bg-gradient-to-r from-teal-600 to-blue-600 p-6 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white">
             Driver Registration
           </h2>
+          <p className="mt-2 text-teal-100">
+            Complete your professional driver profile
+          </p>
         </div>
-      </div>
 
-      <div className=" pt-14 ">
-        <div>
-          <form className="gap-4  " onSubmit={handleSubmit}>
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Name"
-                />
+        {/* Form Section */}
+        <div className="p-6 sm:p-8">
+          <form className="space-y-6" onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Personal Information Column */}
+              <div className="space-y-5">
+                <div>
+                  <Label
+                    htmlFor="name"
+                    value="Full Name"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="name"
+                    type="text"
+                    placeholder="John Doe"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="password"
+                    value="Password"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="password"
+                    type="password"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                  <p className="mt-1 text-xs text-gray-500">
+                    Minimum 8 characters with numbers and symbols
+                  </p>
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="id"
+                    value="Driver ID"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="id"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="email"
+                    value="Email Address"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="email"
+                    type="email"
+                    placeholder="john.doe@example.com"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
               </div>
-              <TextInput
-                id="name"
-                type="text"
-                placeholder="moneesha kavindi"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
+
+              {/* Identification Column */}
+              <div className="space-y-5">
+                <div>
+                  <Label
+                    htmlFor="nic"
+                    value="NIC Number"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="nic"
+                    type="text"
+                    placeholder="123456789V"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="dob"
+                    value="Date of Birth"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <Datepicker
+                    id="dob"
+                    onSelectedDateChanged={(date) => {
+                      const dob =
+                        date.getFullYear() +
+                        "-" +
+                        (date.getMonth() + 1) +
+                        "-" +
+                        date.getDate();
+                      setFormData({ ...formData, dob });
+                    }}
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="phoneNumber"
+                    value="Phone Number"
+                    className="block mb-2 font-medium text-gray-700 mt-10"
+                  />
+                  <TextInput
+                    id="phoneNumber"
+                    type="text"
+                    placeholder="0771234567"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+
+                <div>
+                  <Label
+                    htmlFor="address"
+                    value="Address"
+                    className="block mb-2 font-medium text-gray-700"
+                  />
+                  <TextInput
+                    id="address"
+                    type="text"
+                    required
+                    shadow
+                    className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                    onChange={handleTextboxDataChange}
+                  />
+                </div>
+              </div>
             </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Password"
-                />
-              </div>
-              <TextInput
-                id="password"
-                type="password"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 ID"
-                />
-              </div>
-              <TextInput
-                id="id"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Date of Birth"
-                />
-              </div>
+            {/* Vehicle Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <Datepicker
-                  onSelectedDateChanged={(date) => {
-                    const dob =
-                      date.getFullYear() +
-                      "-" +
-                      (date.getMonth() + 1) +
-                      "-" +
-                      date.getDate();
-                    setFormData({ ...formData, dob });
-                  }}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
                 <Label
-                  value="
-                 Email"
+                  htmlFor="vType"
+                  value="Vehicle Type"
+                  className="block mb-2 font-medium text-gray-700"
                 />
+                <Select
+                  id="vType"
+                  required
+                  onChange={handleTextboxDataChange}
+                  className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                >
+                  <option>Select Vehicle Type</option>
+                  <option>Heavy</option>
+                  <option>Semi</option>
+                  <option>Normal</option>
+                </Select>
               </div>
-              <TextInput
-                id="email"
-                type="email"
-                placeholder="name@flowbite.com"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
 
-            <div>
-              <div className="mb-2 block">
+              <div>
                 <Label
-                  value="
-                 NIC Number"
+                  htmlFor="model"
+                  value="Vehicle Model"
+                  className="block mb-2 font-medium text-gray-700"
                 />
+                <Select
+                  id="model"
+                  required
+                  onChange={handleTextboxDataChange}
+                  className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
+                >
+                  <option>Select Vehicle Model</option>
+                  <option>Car</option>
+                  <option>Van</option>
+                  <option>Bus</option>
+                </Select>
               </div>
-              <TextInput
-                id="nic"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
+            </div>
+
+            {/* Profile Picture Upload */}
+            <div>
+              <Label
+                value="Profile Picture"
+                className="block mb-2 font-medium text-gray-700"
               />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Phone Number"
-                />
-              </div>
-              <TextInput
-                id="phoneNumber"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label
-                  value="
-                 Address"
-                />
-              </div>
-              <TextInput
-                id="address"
-                type="text"
-                required
-                shadow
-                onChange={handleTextboxDataChange}
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Vehicle Type" />
-              </div>
-              <Select id="vType" required onChange={handleTextboxDataChange}>
-                <option>Select Vehicle Type</option>
-                <option>Heavy</option>
-                <option>Semi</option>
-                <option>Normal</option>
-              </Select>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Vehicle model" />
-              </div>
-              <Select id="model" required onChange={handleTextboxDataChange}>
-                <option>Select Vehicle Model</option>
-                <option>Car</option>
-                <option>Van</option>
-                <option>Bus</option>
-              </Select>
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Profile Picture" />
-              </div>
-              <div className="flex  gap-5 items-center justify-between ">
+              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-end">
                 <FileInput
                   id="file-upload-helper-text"
                   type="file"
+                  className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                   onChange={(e) => setFile(e.target.files[0])}
                 />
                 <Button
@@ -277,25 +312,57 @@ export const DashDriverSignUp = () => {
                   size="sm"
                   outline
                   onClick={handleUploadImage}
+                  className="transition-all hover:scale-[1.02] active:scale-95"
                 >
-                  Upload Image
+                  {imageUploadProgress > 0 ? (
+                    <span className="flex items-center gap-2">
+                      <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                      Uploading ({imageUploadProgress}%)
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2">
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                      </svg>
+                      Upload Image
+                    </span>
+                  )}
                 </Button>
               </div>
-            </div>
-            {imageUploadError && (
-              <Alert color="failure">{imageUploadError}</Alert>
-            )}
-
-            <div className="pt-4 ">
-              {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
-                <Button type="submit" disabled className="w-full">
-                  Loading....
-                </Button>
-              ) : (
-                <Button type="submit" className="w-full">
-                  Add Driver
-                </Button>
+              {imageUploadError && (
+                <Alert color="failure" className="mt-3">
+                  {imageUploadError}
+                </Alert>
               )}
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-4">
+              <Button
+                type="submit"
+                gradientDuoTone="tealToBlue"
+                className="w-full py-3 font-medium text-lg transition-all hover:scale-[1.01] active:scale-95"
+                disabled={imageUploadProgress >= 1 && imageUploadProgress <= 99}
+              >
+                {imageUploadProgress >= 1 && imageUploadProgress <= 99 ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    Processing...
+                  </span>
+                ) : (
+                  "Register Driver"
+                )}
+              </Button>
             </div>
           </form>
         </div>

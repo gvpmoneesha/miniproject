@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import driver3 from "../assets/driver3.jpg";
+import { AuthContext } from "../context/AuthContext";
 
 export const LoginDriver = () => {
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setAuthUser } = useContext(AuthContext);
 
   console.log(formData);
 
@@ -30,6 +32,8 @@ export const LoginDriver = () => {
           navigate("/officerDashboard");
         } else if (data.role === "driver") {
           localStorage.setItem("user", JSON.stringify(data));
+          setAuthUser(data);
+
           navigate("/driverDashboard");
         }
       }

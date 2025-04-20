@@ -75,118 +75,238 @@ export const DashViolationTypeDelete = () => {
   };
 
   return (
-    <div className="min-h-screen ">
-      <div>
-        <div className="text-center text-teal-700 ">
-          <h2 className=" font-bold text-3xl sm:text-5xl pt-10">
-            Delete Violation Rule And Information
-          </h2>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-teal-50 py-8 px-4 sm:px-6 lg:px-8">
+      {/* Header Section */}
+      <div className="text-center mb-8 relative">
+        <h2 className="text-3xl sm:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 mb-2">
+          Delete Violation Rules
+        </h2>
+        <p className="text-gray-600">
+          Manage and remove traffic violation penalties
+        </p>
       </div>
 
-      <div className="flex justify-center">
-        <div className="flex items-center gap-10 mb-14 px-5 pt-14">
-          <div className="mb-2 block">
-            <Label value="ID" />
-          </div>
-
-          <div>
-            <TextInput
-              id="_id"
-              type="text"
-              required
-              shawod
-              onChange={(e) => {
-                setViolationIdToDelete(e.target.value);
-              }}
+      {/* Search Section */}
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg p-6 mb-8 border border-gray-200">
+        <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className="w-full">
+            <Label
+              htmlFor="_id"
+              value="Search by Violation ID"
+              className="block text-sm font-medium text-gray-700 mb-1"
             />
+            <div className="relative">
+              <TextInput
+                id="_id"
+                type="text"
+                required
+                shadow
+                className="w-full pl-10 border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                onChange={(e) => setViolationIdToDelete(e.target.value)}
+                placeholder="Enter violation ID"
+              />
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <svg
+                  className="h-5 w-5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+            </div>
           </div>
-
-          <div>
+          <div className="w-full sm:w-auto mt-6">
             <Button
               type="button"
-              gradientDuoTone="purpleToBlue"
-              size="sm"
-              outline
+              gradientDuoTone="redToOrange"
+              className="w-full sm:w-auto h-[42px] px-6 flex items-center justify-center"
               onClick={getDeleteViolation}
             >
+              <svg
+                className="w-5 h-5 mr-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
               Search
             </Button>
           </div>
         </div>
       </div>
 
+      {/* Error Alert */}
       {error && (
-        <Alert color="failure" className="m-4">
-          {error}
+        <Alert color="failure" className="max-w-3xl mx-auto mb-6">
+          <span className="font-medium">Error!</span> {error}
         </Alert>
       )}
 
-      <div className="pt-2 table-auto overflow-x-auto md:w-full md:mx-auto p-6 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+      {/* Results Section */}
+      <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
         {violations.length > 0 ? (
-          <>
-            <Table hoverable className="shadow-md ">
-              <Table.Head>
-                <Table.HeadCell>ID</Table.HeadCell>
-                <Table.HeadCell>Type</Table.HeadCell>
-                <Table.HeadCell>Description</Table.HeadCell>
-                <Table.HeadCell>Price</Table.HeadCell>
-                <Table.HeadCell>Delete</Table.HeadCell>
+          <div className="overflow-x-auto">
+            <Table hoverable className="min-w-full">
+              <Table.Head className="bg-gradient-to-r from-red-50 to-orange-50">
+                <Table.HeadCell className="text-red-600">ID</Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Violation Type
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Description
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Penalty (LKR)
+                </Table.HeadCell>
+                <Table.HeadCell className="text-red-600">
+                  Actions
+                </Table.HeadCell>
               </Table.Head>
-
-              {violations.map((violation) => (
-                <Table.Body key={violation._id} className="divide-y">
-                  <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                    <Table.Cell>{violation._id}</Table.Cell>
-                    <Table.Cell>{violation.type}</Table.Cell>
-                    <Table.Cell>{violation.description}</Table.Cell>
-                    <Table.Cell>{violation.price}</Table.Cell>
+              <Table.Body className="divide-y">
+                {violations.map((violation) => (
+                  <Table.Row key={violation._id} className="hover:bg-gray-50">
+                    <Table.Cell className="font-medium text-gray-900">
+                      {violation._id}
+                    </Table.Cell>
                     <Table.Cell>
-                      <span
+                      <span className="font-medium">{violation.type}</span>
+                    </Table.Cell>
+                    <Table.Cell className="max-w-xs truncate">
+                      {violation.description}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <span className="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                        Rs. {violation.price}
+                      </span>
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        color="failure"
+                        size="xs"
                         onClick={() => {
                           setShowModal(true);
                           setViolationIdToDelete(violation._id);
                         }}
-                        className="font-medium text-red-500 hover:underline cursor-pointer"
+                        className="flex items-center"
                       >
+                        <svg
+                          className="w-4 h-4 mr-1"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
+                        </svg>
                         Delete
-                      </span>
+                      </Button>
                     </Table.Cell>
                   </Table.Row>
-                </Table.Body>
-              ))}
+                ))}
+              </Table.Body>
             </Table>
-          </>
+          </div>
         ) : (
-          <p>No violations</p>
-        )}
-
-        <Modal
-          show={showModal}
-          onClose={() => setShowModal(false)}
-          popup
-          size="md"
-        >
-          <Modal.Header />
-
-          <Modal.Body>
-            <div className="text-center">
-              <HiOutlineExclamationCircle className="mx-auto h-14 w-14 dark:text-gray-200 text-gray-400 mb-4" />
-              <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete this user?
-              </h3>
-              <div className="flex justify-center gap-5">
-                <Button color="failure" onClick={handleDeleteViolation}>
-                  Yes, I'm sure
-                </Button>
-                <Button color="gray" onClick={() => setShowModal(false)}>
-                  No, Cancel
-                </Button>
-              </div>
+          <div className="p-8 text-center">
+            <div className="mx-auto w-24 h-24 text-gray-400 mb-4">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
             </div>
-          </Modal.Body>
-        </Modal>
+            <h3 className="text-lg font-medium text-gray-700">
+              No violations found
+            </h3>
+            <p className="text-gray-500">Try searching with a different ID</p>
+          </div>
+        )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header className="border-b border-gray-200" />
+        <Modal.Body>
+          <div className="text-center">
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+              <svg
+                className="h-8 w-8 text-red-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
+              </svg>
+            </div>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              Confirm Deletion
+            </h3>
+            <p className="text-gray-500 mb-6">
+              Are you sure you want to delete this violation rule? This action
+              cannot be undone.
+            </p>
+            <div className="flex justify-center gap-4">
+              <Button
+                color="failure"
+                onClick={handleDeleteViolation}
+                className="px-6 py-2.5"
+              >
+                <svg
+                  className="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                  />
+                </svg>
+                Delete
+              </Button>
+              <Button
+                color="light"
+                onClick={() => setShowModal(false)}
+                className="px-6 py-2.5 border border-gray-300"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 };

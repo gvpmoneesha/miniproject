@@ -2,6 +2,7 @@ import express from "express";
 import {
   fineIssue,
   fineUpdate,
+  generateFinePDF,
   getAllFines,
   getBlockFine,
   getBlockFines,
@@ -18,5 +19,6 @@ router.get("/getfinebyobjectid/:_id", getFineByOid);
 router.get("/getblockfines", getBlockFines);
 router.put("/updateblockfines/:_id", fineUpdate);
 router.get("/getblockfine/:_id", getBlockFine);
+router.get('/pdf', generateFinePDF);
 
 export default router;

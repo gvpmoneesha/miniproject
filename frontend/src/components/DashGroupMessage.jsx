@@ -12,16 +12,14 @@ export const DashGroupMessage = () => {
   const chatEndRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const user = JSON.parse(localStorage.getItem("user"));
-
   useEffect(() => {
     const getMessages = async () => {
       try {
         if (searchParams.get("dash") === "all") {
-          var res = await fetch(`/api/v1/message/getgroup/${user._id}/all`);
+          var res = await fetch(`/api/v1/message/getgroup/${authUser._id}/all`);
         } else {
           var res = await fetch(
-            `/api/v1/message/getgroup/${user._id}/${user.pStation}`
+            `/api/v1/message/getgroup/${authUser._id}/${authUser.pStation}`
           );
         }
         const data = await res.json();
@@ -117,6 +115,7 @@ export const DashGroupMessage = () => {
     }
   };
   console.log(messages.length);
+  console.log(authUser?._id);
 
   return (
     <div className="flex flex-col h-screen ">
@@ -127,12 +126,12 @@ export const DashGroupMessage = () => {
             <div
               key={message._id}
               className={`flex items-start my-2 ${
-                message.senderId === authUser._id
+                message.senderId === authUser?._id
                   ? "justify-end"
                   : "justify-start"
               }`}
             >
-              {message.senderId !== authUser._id && (
+              {message.senderId !== authUser?._id && (
                 <div className="flex-shrink-0 mr-2">
                   <div className="w-8 h-8 ">
                     <img className="rounded-full" src={message.senderImage} />
@@ -143,7 +142,7 @@ export const DashGroupMessage = () => {
               {/* 66f9a9f9bb2cf7ce10e1a857 */}
               <div
                 className={`p-3 rounded-lg ${
-                  message.senderId === authUser._id
+                  message.senderId === authUser?._id
                     ? "bg-blue-500 text-white"
                     : "bg-gray-300 text-black"
                 }`}
@@ -151,7 +150,7 @@ export const DashGroupMessage = () => {
                 <div className="font-bold">{message.senderName}</div>
                 <div>{message.message}</div>
               </div>
-              {message.senderId === authUser._id && (
+              {message.senderId === authUser?._id && (
                 <div className="flex-shrink-0 ml-2">
                   <div className="w-8 h-8 ">
                     <img className="rounded-full" src={message.senderImage} />

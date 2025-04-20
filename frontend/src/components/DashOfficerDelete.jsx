@@ -1,7 +1,13 @@
 import React from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
-import { HiOutlineExclamationCircle } from "react-icons/hi";
+
+import {
+  HiOutlineExclamationCircle,
+  HiSearch,
+  HiTrash,
+  HiOutlineX,
+} from "react-icons/hi";
 
 export const DashOfficerDelete = () => {
   const [users, setUsers] = useState([]);
@@ -70,122 +76,224 @@ export const DashOfficerDelete = () => {
   console.log(users);
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-teal-50 to-cyan-50 p-6">
-      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
-        {/* Page Heading */}
-        <div className="text-center text-teal-700 py-10">
-          <h2 className="font-bold text-3xl sm:text-5xl">Officer Delete</h2>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 p-4 md:p-8">
+      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
+        {/* Header Section */}
+        <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
+          <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white relative z-10">
+            Officer Management System
+          </h2>
+          <p className="text-cyan-100 font-medium">Delete Officer Records</p>
         </div>
 
-        {/* Search Section */}
-        <div className="flex justify-center p-6">
-          <div className="flex items-center gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-            <div className="mb-2 block">
-              <Label value="ID" className="text-cyan-600 font-medium" />
-            </div>
-            <TextInput
-              id="id"
-              type="text"
-              required
-              className="rounded-lg border-cyan-200 focus:ring-cyan-500 focus:border-cyan-500"
-              onChange={(e) => setUserIdToDelete(e.target.value)}
+        {/* Search Section - Now perfectly aligned */}
+        <div className="p-6 border-b border-gray-200">
+          <div className="max-w-3xl mx-auto">
+            <Label
+              value="Search Officer by ID"
+              className="block text-sm font-medium text-cyan-700 mb-2"
             />
-            <Button
-              type="button"
-              gradientDuoTone="purpleToBlue"
-              size="sm"
-              outline
-              onClick={getDeleteUser}
-              className="transition-all duration-300 transform hover:scale-105"
-            >
-              Search
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="relative flex-grow">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <HiSearch className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Enter officer ID"
+                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg 
+                        focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500
+                        sm:text-sm h-[42px]"
+                  value={userIdToDelete}
+                  onChange={(e) => setUserIdToDelete(e.target.value)}
+                />
+                {userIdToDelete && (
+                  <button
+                    onClick={() => setUserIdToDelete("")}
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                  >
+                    <HiOutlineX className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                  </button>
+                )}
+              </div>
+              <button
+                onClick={getDeleteUser}
+                className="inline-flex items-center justify-center px-4 py-2.5 border border-transparent 
+                      text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-cyan-500 to-blue-500
+                      hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 
+                      focus:ring-cyan-500 h-[42px] transition-all duration-200"
+              >
+                <HiSearch className="mr-2 h-5 w-5" />
+                Search
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Error Message */}
         {error && (
-          <Alert color="failure" className="m-4">
-            {error}
-          </Alert>
+          <div className="px-6 pt-2">
+            <div className="flex items-center p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg">
+              <svg
+                className="flex-shrink-0 inline w-5 h-5 mr-3"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+              <span className="font-medium">{error}</span>
+            </div>
+          </div>
         )}
 
         {/* Table Section */}
-        <div className="table-auto overflow-x-scroll md:w-full md:mx-auto p-6 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500">
+        <div className="p-4 md:p-6">
           {users.length > 0 ? (
-            <>
-              <Table hoverable className="shadow-md">
-                <Table.Head>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    ID
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Profile Picture
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    User Name
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Station
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Email
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    NIC
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Date of Birth
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Address
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Phone Number
-                  </Table.HeadCell>
-                  <Table.HeadCell className="bg-cyan-600 text-white">
-                    Delete
-                  </Table.HeadCell>
-                </Table.Head>
-
-                {users.map((user) => (
-                  <Table.Body key={user._id} className="divide-y">
-                    <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                      <Table.Cell>{user.id}</Table.Cell>
-                      <Table.Cell>
-                        <img
-                          src={user.profilePicture}
-                          alt={user.name}
-                          className="w-10 h-10 object-cover rounded-full bg-gray-500"
-                        />
-                      </Table.Cell>
-                      <Table.Cell>{user.name}</Table.Cell>
-                      <Table.Cell>{user.pStation}</Table.Cell>
-                      <Table.Cell>{user.email}</Table.Cell>
-                      <Table.Cell>{user.nic}</Table.Cell>
-                      <Table.Cell>
-                        {new Date(user.dob).toLocaleDateString()}
-                      </Table.Cell>
-                      <Table.Cell>{user.address}</Table.Cell>
-                      <Table.Cell>{user.phoneNumber}</Table.Cell>
-                      <Table.Cell>
-                        <span
-                          onClick={() => {
-                            setShowModal(true);
-                            setUserIdToDelete(user._id);
-                          }}
-                          className="font-medium text-red-500 hover:underline cursor-pointer"
-                        >
-                          Delete
-                        </span>
-                      </Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-                ))}
-              </Table>
-            </>
+            <div className="relative overflow-x-auto shadow-md rounded-lg border border-gray-200">
+              <div className="horizontal-scroll-container">
+                <table className="min-w-[1000px] md:min-w-full divide-y divide-gray-200">
+                  <thead className="bg-gradient-to-r from-cyan-600 to-blue-600 text-white">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Officer ID
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Profile
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Full Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Station
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        NIC
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        DOB
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Phone
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200">
+                    {users.map((user) => (
+                      <tr key={user._id} className="hover:bg-gray-50">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          {user.id}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <img
+                            className="w-10 h-10 rounded-full border-2 border-cyan-100"
+                            src={user.profilePicture}
+                            alt={user.name}
+                          />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                          {user.name}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.pStation}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-cyan-600">
+                          {user.email}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-500">
+                          {user.nic}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {new Date(user.dob).toLocaleDateString()}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {user.phoneNumber}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                          <button
+                            onClick={() => {
+                              setShowModal(true);
+                              setUserIdToDelete(user._id);
+                            }}
+                            className="flex items-center justify-center text-white bg-red-600 hover:bg-red-700 
+                                  px-3 py-1.5 rounded-md text-sm transition-colors"
+                          >
+                            <HiTrash className="mr-1.5 h-4 w-4" />
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="bg-gray-50 px-4 py-2 text-center text-xs text-gray-500">
+                ← Scroll horizontally to view all columns →
+              </div>
+            </div>
           ) : (
-            <p className="text-center text-gray-500">No officers found.</p>
+            <div className="text-center py-12">
+              <div className="mx-auto h-20 w-20 text-gray-300 mb-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1}
+                    d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-lg font-medium text-gray-700">
+                No officers found
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                {userIdToDelete
+                  ? "No officer matches your search criteria"
+                  : "The officer database is currently empty"}
+              </p>
+            </div>
           )}
         </div>
 
@@ -196,33 +304,59 @@ export const DashOfficerDelete = () => {
           popup
           size="md"
         >
-          <Modal.Header />
-          <Modal.Body>
+          <Modal.Header className="border-b border-gray-200 px-6 py-4">
+            <h3 className="text-lg font-medium text-gray-900">
+              Confirm Deletion
+            </h3>
+          </Modal.Header>
+          <Modal.Body className="px-6 py-4">
             <div className="text-center">
-              <HiOutlineExclamationCircle className="mx-auto h-14 w-14 text-gray-400 dark:text-gray-200 mb-4" />
-              <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
-                Are you sure you want to delete this user?
-              </h3>
-              <div className="flex justify-center gap-5">
-                <Button
-                  color="failure"
+              <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-red-100 mb-4">
+                <HiOutlineExclamationCircle className="h-10 w-10 text-red-600" />
+              </div>
+              <p className="text-sm text-gray-500 mb-6">
+                This action will permanently delete the officer record. This
+                cannot be undone.
+              </p>
+              <div className="flex justify-center gap-4">
+                <button
                   onClick={handleDeleteUser}
-                  className="bg-red-600 hover:bg-red-700"
+                  className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md
+                        focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors"
                 >
-                  Yes, I'm sure
-                </Button>
-                <Button
-                  color="gray"
+                  Confirm Delete
+                </button>
+                <button
                   onClick={() => setShowModal(false)}
-                  className="bg-gray-500 hover:bg-gray-600"
+                  className="px-4 py-2 border border-gray-300 bg-white text-gray-700 text-sm font-medium rounded-md
+                        hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors"
                 >
-                  No, Cancel
-                </Button>
+                  Cancel
+                </button>
               </div>
             </div>
           </Modal.Body>
         </Modal>
       </div>
+
+      <style jsx>{`
+        .horizontal-scroll-container {
+          overflow-x: auto;
+          scrollbar-width: thin;
+          scrollbar-color: #06b6d4 #e5e7eb;
+        }
+        .horizontal-scroll-container::-webkit-scrollbar {
+          height: 8px;
+        }
+        .horizontal-scroll-container::-webkit-scrollbar-track {
+          background: #e5e7eb;
+          border-radius: 4px;
+        }
+        .horizontal-scroll-container::-webkit-scrollbar-thumb {
+          background-color: #06b6d4;
+          border-radius: 4px;
+        }
+      `}</style>
     </div>
   );
 };
