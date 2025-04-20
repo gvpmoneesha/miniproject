@@ -88,6 +88,14 @@ const DashOfficerSignUp = () => {
       });
       const data = await res.json();
       if (res.ok) {
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "officer-create",
+            createdBy: "AdminUser",
+          }),
+        });
         navigate("/dashboard");
       }
     } catch (error) {
