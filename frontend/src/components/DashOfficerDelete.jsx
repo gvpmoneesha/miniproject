@@ -76,57 +76,83 @@ export const DashOfficerDelete = () => {
   console.log(users);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-100 p-4 md:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 p-4 md:p-8">
       <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-xl overflow-hidden">
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
-          <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white relative z-10">
-            Officer Management System
-          </h2>
-          <p className="text-cyan-100 font-medium">Delete Officer Records</p>
+        <div className="bg-gradient-to-r from-cyan-600 to-blue-600 py-8 px-6 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
+            Traffic Fine Records
+          </h1>
+          <p className="text-cyan-100 font-medium">
+            View and manage issued traffic fines
+          </p>
         </div>
 
-        {/* Search Section - Now perfectly aligned */}
+        {/* Search Section - Perfectly Aligned */}
         <div className="p-6 border-b border-gray-200">
           <div className="max-w-3xl mx-auto">
-            <Label
-              value="Search Officer by ID"
-              className="block text-sm font-medium text-cyan-700 mb-2"
-            />
-            <div className="flex flex-col sm:flex-row gap-2">
-              <div className="relative flex-grow">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <HiSearch className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Enter officer ID"
-                  className="block w-full pl-10 pr-3 py-2.5 border border-gray-300 rounded-lg 
-                        focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500
-                        sm:text-sm h-[42px]"
-                  value={userIdToDelete}
-                  onChange={(e) => setUserIdToDelete(e.target.value)}
+            <div className="flex flex-col sm:flex-row items-end gap-3">
+              <div className="w-full sm:w-64">
+                {" "}
+                {/* Minimized width */}
+                <Label
+                  value="Search by Driver ID"
+                  className="block text-sm font-medium text-cyan-700 mb-1"
                 />
-                {userIdToDelete && (
-                  <button
-                    onClick={() => setUserIdToDelete("")}
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                  >
-                    <HiOutlineX className="h-5 w-5 text-gray-400 hover:text-gray-600" />
-                  </button>
-                )}
+                <div className="relative">
+                  <TextInput
+                    id="search"
+                    type="text"
+                    placeholder="Driver ID"
+                    className="w-full pl-9"
+                    value={fineIdToView}
+                    onChange={(e) => setFineIdToView(e.target.value)}
+                  />
+                  <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                    <svg
+                      className="h-5 w-5 text-gray-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </div>
+                  {fineIdToView && (
+                    <button
+                      onClick={() => setFineIdToView("")}
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                    >
+                      <svg
+                        className="h-5 w-5"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M6 18L18 6M6 6l12 12"
+                        />
+                      </svg>
+                    </button>
+                  )}
+                </div>
               </div>
-              <button
-                onClick={getDeleteUser}
-                className="inline-flex items-center justify-center px-4 py-2.5 border border-transparent 
-                      text-sm font-medium rounded-lg shadow-sm text-white bg-gradient-to-r from-cyan-500 to-blue-500
-                      hover:from-cyan-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 
-                      focus:ring-cyan-500 h-[42px] transition-all duration-200"
+
+              <Button
+                gradientDuoTone="cyanToBlue"
+                onClick={getFine}
+                className="h-[42px] w-full sm:w-auto px-6"
               >
-                <HiSearch className="mr-2 h-5 w-5" />
                 Search
-              </button>
+              </Button>
             </div>
           </div>
         </div>

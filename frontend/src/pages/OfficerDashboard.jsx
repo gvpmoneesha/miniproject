@@ -104,7 +104,7 @@ export const OfficerDashboard = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('G:\miniproject\frontend\src\assets\police.png')]">
+        <div className="flex-1 bg-cover bg-no-repeat bg-center relative overflow-hidden bg-[url('H:\miniproject\frontend\src\assets\police.png')]">
           <div className="bg-slate-200 bg-opacity-80 p-6">
             {(searchParams.get("dash") === "fine-issue" && <DashFineIssue />) ||
               (searchParams.get("dash") === "fine-view" && <DashFineView />) ||
