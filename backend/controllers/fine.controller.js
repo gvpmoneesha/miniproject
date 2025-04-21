@@ -321,6 +321,38 @@ export const getBlockFine = async (req, res, next) => {
   }
 };
 
+export const getUnpaidFine = async (req, res, next) => {
+  try {
+    const fineId = req.params.dId;
+
+    const fine = await Fine.find({ dId: fineId, state: false });
+
+    if (fine) {
+      res.status(200).json(fine);
+    } else {
+      return next(404, "Rule not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getblockdriverFine = async (req, res, next) => {
+  try {
+    const fineId = req.params.dId;
+
+    const fine = await Fine.find({ dId: fineId, block: true });
+
+    if (fine) {
+      res.status(200).json(fine);
+    } else {
+      return next(404, "Rule not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 // export const generateFinePDF = async (req, res) => {
 //   try {
 //     const { date, pId, dId, vNo } = req.query;

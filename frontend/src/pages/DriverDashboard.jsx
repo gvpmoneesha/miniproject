@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 import { Link, useSearchParams } from "react-router-dom";
 import { Sidebar } from "flowbite-react";
 import {
@@ -20,10 +21,14 @@ export const DriverDashboard = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const [stats, setStats] = useState({
-    totalFines: 3,
-    unpaidFines: 1,
-    points: 2,
+    totalFines: 0,
+    unpaidFines: 0,
+    blockFines: 0,
   });
+  const [pId, setPId] = useState("");
+  const { authUser } = useContext(AuthContext);
+
+  console.log(authUser);
 
   const getPageTitle = () => {
     return "Driver Dashboard";
@@ -37,6 +42,49 @@ export const DriverDashboard = () => {
       day: "numeric",
     });
   };
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        // Get pId from wherever it's stored (localStorage, context, etc.)
+        //const pdata = localStorage.getItem("_id"); // or from your auth context
+        //console.log(pdata);
+
+        //if (!pId) {
+        // console.error("No user ID found");
+        //  return;
+        //}
+
+        // Properly construct URLs with template literals
+        const finesRes = await fetch(`/api/v1/fine/getfine/${authUser.id}`);
+        const finesData = await finesRes.json();
+        console.log(finesData);
+
+        const unpaidRes = await fetch(
+          `/api/v1/fine/getunpaidfine/${authUser.id}`
+        );
+        const unpaidData = await unpaidRes.json();
+        console.log(unpaidData);
+
+        const blockRes = await fetch(
+          `/api/v1/fine/getblockdriverfine/${authUser.id}`
+        );
+        const blockData = await blockRes.json();
+        console.log(blockData);
+
+        setStats({
+          totalFines: Array.isArray(finesData) ? finesData.length : 0,
+          unpaidFines: Array.isArray(unpaidData) ? unpaidData.length : 0,
+          blockFines: Array.isArray(blockData) ? blockData.length : 0,
+        });
+      } catch (error) {
+        console.error("Error fetching stats:", error);
+        // Optionally set error state to show to user
+      }
+    };
+
+    fetchStats();
+  }, []); // Add pId as dependency if it can change
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -254,10 +302,10 @@ export const DriverDashboard = () => {
                           </div>
                           <div>
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
-                              License Points
+                              Block Fines
                             </h3>
                             <p className="text-3xl font-bold text-gray-800 dark:text-white">
-                              {stats.points}
+                              {stats.blockFines}
                             </p>
                           </div>
                         </div>
