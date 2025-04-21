@@ -15,6 +15,14 @@ export const DashVehiclesView = () => {
 
         if (res.ok) {
           setVehicles(data);
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "vehicle-view",
+              createdBy: "AdminUser",
+            }),
+          });
         }
       } catch (error) {
         setError(error);

@@ -15,6 +15,14 @@ export const DashFineView = () => {
 
         if (res.ok) {
           setFine(data);
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "fine-view",
+              createdBy: "AdminUser",
+            }),
+          });
         }
       } catch (error) {
         setError(error);

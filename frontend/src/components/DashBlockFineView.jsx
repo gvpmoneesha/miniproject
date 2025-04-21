@@ -14,6 +14,14 @@ export const DashBlockFineView = () => {
 
         if (res.ok) {
           setFine(data);
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "block-view",
+              createdBy: "AdminUser",
+            }),
+          });
         }
       } catch (error) {
         setError(error);

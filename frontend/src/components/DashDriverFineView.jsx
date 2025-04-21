@@ -22,7 +22,14 @@ export const DashDriverFineView = () => {
         }
         if (res.ok) {
           setFine(Array.isArray(data) ? data : []);
-
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "driver-view",
+              createdBy: "AdminUser",
+            }),
+          });
           setError("");
         }
       } catch (error) {

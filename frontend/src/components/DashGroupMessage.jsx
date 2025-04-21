@@ -17,10 +17,26 @@ export const DashGroupMessage = () => {
       try {
         if (searchParams.get("dash") === "all") {
           var res = await fetch(`/api/v1/message/getgroup/${authUser._id}/all`);
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: all,
+              createdBy: "AdminUser",
+            }),
+          });
         } else {
           var res = await fetch(
             `/api/v1/message/getgroup/${authUser._id}/${authUser.pStation}`
           );
+          await fetch("/api/v1/activity/addOfficer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "message-group",
+              createdBy: "AdminUser",
+            }),
+          });
         }
         const data = await res.json();
         if (data.success === false) {

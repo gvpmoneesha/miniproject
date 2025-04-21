@@ -69,6 +69,14 @@ export const DashFineIssue = () => {
       console.log(res);
 
       if (res.ok) {
+        await fetch("/api/v1/activity/addOfficer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "fine-issue",
+            createdBy: "AdminUser",
+          }),
+        });
         navigate("/officerDashboard");
       }
     } catch (error) {
