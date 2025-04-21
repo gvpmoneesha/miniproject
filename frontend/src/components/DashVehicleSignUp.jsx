@@ -26,6 +26,14 @@ export const DashVehicleSignUp = () => {
       console.log(res);
 
       if (res.ok) {
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "vehicle-create",
+            createdBy: "AdminUser",
+          }),
+        });
         Navigate("/dashboard");
       }
     } catch (error) {

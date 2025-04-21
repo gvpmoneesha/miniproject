@@ -28,6 +28,14 @@ export const DashViolationTypeCreate = () => {
       console.log(res);
 
       if (res.ok) {
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "violationType-create",
+            createdBy: "AdminUser",
+          }),
+        });
         Navigate("/dashboard");
       }
     } catch (error) {

@@ -67,6 +67,14 @@ export const DashViolationTypeDelete = () => {
       } else {
         setError(data.messaage);
         setViolationIdToDelete("");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "violationType-delete",
+            createdBy: "AdminUser",
+          }),
+        });
         console.log(violationIdToDelete);
       }
     } catch (error) {

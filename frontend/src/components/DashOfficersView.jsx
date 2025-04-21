@@ -98,14 +98,14 @@ export const DashOfficersView = () => {
                 </div>
               </div>
 
-              <div className="self-end sm:self-center w-full sm:w-auto mt-10 sm:mt-0 ">
+              <div className="self-end sm:self-center w-full sm:w-auto mt-10 sm:mt-6 ">
                 <Button
                   type="button"
                   gradientDuoTone="purpleToBlue"
                   size="md"
                   pill
                   onClick={getUser}
-                  className="w-full sm:w-auto px-6 py-2.5 font-medium transition-all duration-300 transform hover:scale-105 mt-6"
+                  className="w-full sm:w-auto px-6 py-2.5 font-medium transition-all duration-300 transform hover:scale-105"
                 >
                   Search
                 </Button>

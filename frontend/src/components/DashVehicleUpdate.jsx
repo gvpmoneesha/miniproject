@@ -59,6 +59,14 @@ export const DashVehicleUpdate = () => {
         console.log(data);
       } else {
         console.log("Update is success");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "vehicle-update",
+            createdBy: "AdminUser",
+          }),
+        });
         navigate("/dashboard");
       }
     } catch (error) {

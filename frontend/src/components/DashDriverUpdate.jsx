@@ -117,6 +117,14 @@ export const DashDriverUpdate = () => {
         console.log("error");
       } else {
         console.log("Update is success");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "driver-update",
+            createdBy: "AdminUser",
+          }),
+        });
         navigate("/dashboard");
       }
     } catch (error) {

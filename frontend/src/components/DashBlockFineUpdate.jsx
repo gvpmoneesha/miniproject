@@ -78,6 +78,14 @@ export const DashBlockFineUpdate = () => {
         console.log(data);
       } else {
         console.log("Update is success");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "blockFine-update",
+            createdBy: "AdminUser",
+          }),
+        });
         window.location.reload();
       }
     } catch (error) {

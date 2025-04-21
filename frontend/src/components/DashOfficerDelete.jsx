@@ -61,6 +61,14 @@ export const DashOfficerDelete = () => {
       } else {
         setError(data.messaage);
         setUserIdToDelete("");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "officer-delete",
+            createdBy: "AdminUser",
+          }),
+        });
       }
     } catch (error) {
       console.log(error);

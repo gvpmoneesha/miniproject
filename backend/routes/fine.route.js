@@ -8,6 +8,7 @@ import {
   getBlockFines,
   getFine,
   getFineByOid,
+  getFineOfficer,
 } from "../controllers/fine.controller.js";
 
 const router = express.Router();
@@ -19,6 +20,7 @@ router.get("/getfinebyobjectid/:_id", getFineByOid);
 router.get("/getblockfines", getBlockFines);
 router.put("/updateblockfines/:_id", fineUpdate);
 router.get("/getblockfine/:_id", getBlockFine);
-router.get('/pdf', generateFinePDF);
+router.get("/pdf", generateFinePDF);
+router.get("/getfineofficer/:pId", getFineOfficer);
 
 export default router;

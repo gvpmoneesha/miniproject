@@ -1,7 +1,7 @@
 import Fine from "../model/fine.model.js";
 import { errorHandler } from "../utils/error.js";
 import { sendEmail } from "./email.controller.js";
-import PDFDocument from 'pdfkit';
+import PDFDocument from "pdfkit";
 
 export const fineIssue = async (req, res, next) => {
   const now = new Date();
@@ -212,6 +212,22 @@ export const getFine = async (req, res, next) => {
   }
 };
 
+export const getFineOfficer = async (req, res, next) => {
+  try {
+    const fineIdOfficer = req.params.pId;
+
+    const fineOfficer = await Fine.find({ pId: fineIdOfficer });
+
+    if (fineOfficer) {
+      res.status(200).json(fineOfficer);
+    } else {
+      return next(404, "Fine not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 //export const getFineByOid = async (req, res, next) => {
 // try {
 //  const fineId = req.params._id;
@@ -314,7 +330,7 @@ export const getBlockFine = async (req, res, next) => {
 //       const selectedDate = new Date(date);
 //       const nextDay = new Date(selectedDate);
 //       nextDay.setDate(nextDay.getDate() + 1);
-      
+
 //       filter.issueDate = {
 //         $gte: selectedDate,
 //         $lt: nextDay
@@ -336,7 +352,7 @@ export const getBlockFine = async (req, res, next) => {
 //     res.setHeader('Content-Disposition', 'attachment; filename=fines_report.pdf');
 
 //     doc.pipe(res);
-    
+
 //     doc.fontSize(18).text('Traffic Fine Report', { align: 'center' });
 //     doc.moveDown();
 
@@ -366,10 +382,9 @@ export const getBlockFine = async (req, res, next) => {
 //         .text(fine.vNo, { width: 80, align: 'left' })
 //         .text(fine.violation, { width: 120, align: 'left' })
 //         .text(`Rs. ${fine.charge}`, { width: 80, align: 'right' });
-      
+
 //       doc.moveDown();
 //     });
-
 
 //     doc.moveDown();
 //     const totalFines = fines.reduce((sum, fine) => sum + parseFloat(fine.charge.split(' ')[1]), 0);
@@ -382,7 +397,7 @@ export const getBlockFine = async (req, res, next) => {
 //       .text(`Generated on: ${new Date().toLocaleString()}`, { align: 'center' });
 
 //     doc.end();
-    
+
 //   } catch (error) {
 //     console.error('Error generating PDF:', error);
 //     res.status(500).json({ message: 'Error generating PDF report' });
@@ -398,10 +413,10 @@ export const generateFinePDF = async (req, res) => {
       const selectedDate = new Date(date);
       const nextDay = new Date(selectedDate);
       nextDay.setDate(nextDay.getDate() + 1);
-      
+
       filter.issueDate = {
         $gte: selectedDate,
-        $lt: nextDay
+        $lt: nextDay,
       };
     }
     if (pId) filter.pId = pId;
@@ -411,57 +426,62 @@ export const generateFinePDF = async (req, res) => {
     const fines = await Fine.find(filter);
 
     if (fines.length === 0) {
-      return res.status(404).json({ message: 'No fines found with the specified filters' });
+      return res
+        .status(404)
+        .json({ message: "No fines found with the specified filters" });
     }
 
     // Create PDF with better margins
-    const doc = new PDFDocument({ 
-      margin: 30, 
-      size: 'A4',
+    const doc = new PDFDocument({
+      margin: 30,
+      size: "A4",
       info: {
-        Title: 'Traffic Fine Report',
-        Author: 'Traffic Management System',
-        Creator: 'Your Application Name',
-        Producer: 'PDFKit'
-      }
+        Title: "Traffic Fine Report",
+        Author: "Traffic Management System",
+        Creator: "Your Application Name",
+        Producer: "PDFKit",
+      },
     });
 
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline; filename=fines_report.pdf'); // Changed to inline for viewing
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader("Content-Disposition", "inline; filename=fines_report.pdf"); // Changed to inline for viewing
 
     doc.pipe(res);
-    
+
     // Add header with logo and title
-    doc.fillColor('#2c3e50')
-       .fontSize(20)
-       .font('Helvetica-Bold')
-       .text('TRAFFIC FINE REPORT', { align: 'center' });
-    
+    doc
+      .fillColor("#2c3e50")
+      .fontSize(20)
+      .font("Helvetica-Bold")
+      .text("TRAFFIC FINE REPORT", { align: "center" });
+
     doc.moveDown(0.5);
-    
+
     // Add decorative line
-    doc.strokeColor('#3498db')
-       .lineWidth(2)
-       .moveTo(50, doc.y)
-       .lineTo(550, doc.y)
-       .stroke();
-    
+    doc
+      .strokeColor("#3498db")
+      .lineWidth(2)
+      .moveTo(50, doc.y)
+      .lineTo(550, doc.y)
+      .stroke();
+
     doc.moveDown(1);
 
     // Filters section with colored background
-    doc.fillColor('#ffffff')
-       .rect(50, doc.y, 500, 70)
-       .fill('#f8f9fa')
-       .stroke('#dee2e6');
-    
-    doc.fillColor('#2c3e50')
-       .fontSize(12)
-       .font('Helvetica-Bold')
-       .text('FILTERS APPLIED:', 60, doc.y + 10);
-    
-    doc.fillColor('#7f8c8d')
-       .font('Helvetica');
-    
+    doc
+      .fillColor("#ffffff")
+      .rect(50, doc.y, 500, 70)
+      .fill("#f8f9fa")
+      .stroke("#dee2e6");
+
+    doc
+      .fillColor("#2c3e50")
+      .fontSize(12)
+      .font("Helvetica-Bold")
+      .text("FILTERS APPLIED:", 60, doc.y + 10);
+
+    doc.fillColor("#7f8c8d").font("Helvetica");
+
     let filterY = doc.y + 30;
     if (date) {
       doc.text(`• Date: ${new Date(date).toLocaleDateString()}`, 60, filterY);
@@ -479,106 +499,184 @@ export const generateFinePDF = async (req, res) => {
       doc.text(`• Vehicle No: ${vNo}`, 60, filterY);
       filterY += 20;
     }
-    
+
     doc.moveDown(2);
 
     // Table header with colored background
     const tableTop = doc.y;
     const tableLeft = 50;
     const colWidths = [30, 80, 100, 80, 120, 80];
-    
+
     // Header background
-    doc.fillColor('#ffffff')
-       .rect(tableLeft, tableTop, 500, 20)
-       .fill('#3498db')
-       .stroke('#3498db');
-    
+    doc
+      .fillColor("#ffffff")
+      .rect(tableLeft, tableTop, 500, 20)
+      .fill("#3498db")
+      .stroke("#3498db");
+
     // Header text
-    doc.fillColor('#ffffff')
-       .font('Helvetica-Bold')
-       .fontSize(10)
-       .text('No.', tableLeft, tableTop + 5, { width: colWidths[0] })
-       .text('Driver ID', tableLeft + colWidths[0], tableTop + 5, { width: colWidths[1] })
-       .text('Driver Name', tableLeft + colWidths[0] + colWidths[1], tableTop + 5, { width: colWidths[2] })
-       .text('Vehicle No', tableLeft + colWidths[0] + colWidths[1] + colWidths[2], tableTop + 5, { width: colWidths[3] })
-       .text('Violation', tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3], tableTop + 5, { width: colWidths[4] })
-       .text('Fine Amount', tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], tableTop + 5, { width: colWidths[5], align: 'right' });
-    
+    doc
+      .fillColor("#ffffff")
+      .font("Helvetica-Bold")
+      .fontSize(10)
+      .text("No.", tableLeft, tableTop + 5, { width: colWidths[0] })
+      .text("Driver ID", tableLeft + colWidths[0], tableTop + 5, {
+        width: colWidths[1],
+      })
+      .text(
+        "Driver Name",
+        tableLeft + colWidths[0] + colWidths[1],
+        tableTop + 5,
+        { width: colWidths[2] }
+      )
+      .text(
+        "Vehicle No",
+        tableLeft + colWidths[0] + colWidths[1] + colWidths[2],
+        tableTop + 5,
+        { width: colWidths[3] }
+      )
+      .text(
+        "Violation",
+        tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3],
+        tableTop + 5,
+        { width: colWidths[4] }
+      )
+      .text(
+        "Fine Amount",
+        tableLeft +
+          colWidths[0] +
+          colWidths[1] +
+          colWidths[2] +
+          colWidths[3] +
+          colWidths[4],
+        tableTop + 5,
+        { width: colWidths[5], align: "right" }
+      );
+
     // Table rows with alternating colors
     let rowTop = tableTop + 20;
     fines.forEach((fine, index) => {
       // Alternate row colors
-      const rowColor = index % 2 === 0 ? '#ffffff' : '#f8f9fa';
-      
-      doc.fillColor(rowColor)
-         .rect(tableLeft, rowTop, 500, 20)
-         .fill()
-         .stroke('#dee2e6');
-      
-      doc.fillColor('#2c3e50')
-         .font('Helvetica')
-         .fontSize(10)
-         .text(`${index + 1}.`, tableLeft, rowTop + 5, { width: colWidths[0] })
-         .text(fine.dId, tableLeft + colWidths[0], rowTop + 5, { width: colWidths[1] })
-         .text(fine.dName, tableLeft + colWidths[0] + colWidths[1], rowTop + 5, { width: colWidths[2] })
-         .text(fine.vNo, tableLeft + colWidths[0] + colWidths[1] + colWidths[2], rowTop + 5, { width: colWidths[3] })
-         .text(fine.violation, tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3], rowTop + 5, { width: colWidths[4] })
-         .fillColor('#e74c3c') // Red color for fine amount
-         .text(`LKR ${parseFloat(fine.charge.split(' ')[1]).toFixed(2)}`, tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3] + colWidths[4], rowTop + 5, { width: colWidths[5], align: 'right' });
-      
+      const rowColor = index % 2 === 0 ? "#ffffff" : "#f8f9fa";
+
+      doc
+        .fillColor(rowColor)
+        .rect(tableLeft, rowTop, 500, 20)
+        .fill()
+        .stroke("#dee2e6");
+
+      doc
+        .fillColor("#2c3e50")
+        .font("Helvetica")
+        .fontSize(10)
+        .text(`${index + 1}.`, tableLeft, rowTop + 5, { width: colWidths[0] })
+        .text(fine.dId, tableLeft + colWidths[0], rowTop + 5, {
+          width: colWidths[1],
+        })
+        .text(fine.dName, tableLeft + colWidths[0] + colWidths[1], rowTop + 5, {
+          width: colWidths[2],
+        })
+        .text(
+          fine.vNo,
+          tableLeft + colWidths[0] + colWidths[1] + colWidths[2],
+          rowTop + 5,
+          { width: colWidths[3] }
+        )
+        .text(
+          fine.violation,
+          tableLeft + colWidths[0] + colWidths[1] + colWidths[2] + colWidths[3],
+          rowTop + 5,
+          { width: colWidths[4] }
+        )
+        .fillColor("#e74c3c") // Red color for fine amount
+        .text(
+          `LKR ${parseFloat(fine.charge.split(" ")[1]).toFixed(2)}`,
+          tableLeft +
+            colWidths[0] +
+            colWidths[1] +
+            colWidths[2] +
+            colWidths[3] +
+            colWidths[4],
+          rowTop + 5,
+          { width: colWidths[5], align: "right" }
+        );
+
       rowTop += 30;
     });
 
     // Add total summary with colored background
-    doc.fillColor('#ffffff')
-       .rect(tableLeft, rowTop, 500, 30)
-       .fill('#2c3e50')
-       .stroke('#2c3e50');
-    
-    const totalFines = fines.reduce((sum, fine) => sum + parseFloat(fine.charge.split(' ')[1]), 0);
-    
-    doc.fillColor('#ffffff')
-       .font('Helvetica-Bold')
-       .fontSize(12)
-       .text(`Total Fines: ${fines.length}`, tableLeft + 10, rowTop + 10)
-       .text(`Total Amount: LKR ${totalFines.toFixed(2)}`, tableLeft + 300, rowTop + 10, { width: 190, align: 'right' });
-    
+    doc
+      .fillColor("#ffffff")
+      .rect(tableLeft, rowTop, 500, 30)
+      .fill("#2c3e50")
+      .stroke("#2c3e50");
+
+    const totalFines = fines.reduce(
+      (sum, fine) => sum + parseFloat(fine.charge.split(" ")[1]),
+      0
+    );
+
+    doc
+      .fillColor("#ffffff")
+      .font("Helvetica-Bold")
+      .fontSize(12)
+      .text(`Total Fines: ${fines.length}`, tableLeft + 10, rowTop + 10)
+      .text(
+        `Total Amount: LKR ${totalFines.toFixed(2)}`,
+        tableLeft + 300,
+        rowTop + 10,
+        { width: 190, align: "right" }
+      );
+
     rowTop += 40;
 
     // Add interactive elements (links)
-    doc.fillColor('#3498db')
-       .text('For payment instructions, visit our website: ', tableLeft, rowTop, { continued: true })
-       .text('www.trafficfines.gov.lk/payment', { 
-         link: 'https://www.trafficfines.gov.lk/payment',
-         underline: true 
-       });
-    
+    doc
+      .fillColor("#3498db")
+      .text(
+        "For payment instructions, visit our website: ",
+        tableLeft,
+        rowTop,
+        { continued: true }
+      )
+      .text("www.trafficfines.gov.lk/payment", {
+        link: "https://www.trafficfines.gov.lk/payment",
+        underline: true,
+      });
+
     rowTop += 20;
-    
+
     // Add QR code placeholder (you can replace with actual QR code generation)
-    doc.fillColor('#000000')
-       .text('Scan to pay:', tableLeft, rowTop);
-    
+    doc.fillColor("#000000").text("Scan to pay:", tableLeft, rowTop);
+
     // This is a placeholder - you would use a QR code library here
-    doc.rect(tableLeft, rowTop + 20, 80, 80)
-       .fill('#ffffff')
-       .stroke('#000000')
-       .fillColor('#000000')
-       .text('QR Code', tableLeft + 10, rowTop + 50);
-    
+    doc
+      .rect(tableLeft, rowTop + 20, 80, 80)
+      .fill("#ffffff")
+      .stroke("#000000")
+      .fillColor("#000000")
+      .text("QR Code", tableLeft + 10, rowTop + 50);
+
     // Add footer with page numbers
     doc.page.margins.bottom = 0;
-    doc.fillColor('#7f8c8d')
-       .fontSize(10)
-       .text(`Generated on ${new Date().toLocaleString()} • Page ${doc.bufferedPageRange().count} of ${doc.bufferedPageRange().count}`, 50, doc.page.height - 30, { 
-         align: 'center',
-         width: 500 
-       });
+    doc
+      .fillColor("#7f8c8d")
+      .fontSize(10)
+      .text(
+        `Generated on ${new Date().toLocaleString()} • Page ${
+          doc.bufferedPageRange().count
+        } of ${doc.bufferedPageRange().count}`,
+        50,
+        doc.page.height - 30,
+        {
+          align: "center",
+          width: 500,
+        }
+      );
 
     doc.end();
-    
   } catch (error) {
-    console.error('Error generating PDF:', error);
-    res.status(500).json({ message: 'Error generating PDF report' });
+    console.error("Error generating PDF:", error);
+    res.status(500).json({ message: "Error generating PDF report" });
   }
 };

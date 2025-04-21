@@ -63,6 +63,14 @@ export const DashVehicleDelete = () => {
       } else {
         setError(data.messaage);
         setVehicleIdToDelete("");
+        await fetch("/api/v1/activity/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "vehicle-delete",
+            createdBy: "AdminUser",
+          }),
+        });
       }
     } catch (error) {
       console.log(error);
