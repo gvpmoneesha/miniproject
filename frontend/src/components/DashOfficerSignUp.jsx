@@ -79,6 +79,7 @@ const DashOfficerSignUp = () => {
   const handleTextboxDataChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
   const handlePhoneNumberDataChange = (e) => {
     if (e.target.value.length > 10) {
       e.target.value = formData.phoneNumber;
@@ -86,6 +87,7 @@ const DashOfficerSignUp = () => {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
   };
+
   const handlePasswordDataChange = (e) => {
     const value = e.target.value;
 

@@ -27,6 +27,14 @@ export const DashVehicleUpdate = () => {
     setSearchId(e.target.value);
   };
 
+  const handlePhoneNumberDataChange = (e) => {
+    if (e.target.value.length > 10) {
+      e.target.value = formData.phoneNumber;
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+  };
+
   const handleSearchVehicle = async (req, res) => {
     try {
       const res = await fetch(`/api/v1/vehicle/getvehicle/${searchId}`);
@@ -305,13 +313,15 @@ export const DashVehicleUpdate = () => {
                     />
                     <TextInput
                       id="phoneNumber"
-                      type="text"
+                      type="number"
+                      value={formData.phoneNumber}
                       required
                       shadow
                       className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                       defaultValue={vehicle?.phoneNumber || ""}
-                      onChange={handleTextboxDataChange}
+                      onChange={handlePhoneNumberDataChange}
                       placeholder="0771234567"
+                      maxLength={10}
                     />
                   </div>
 

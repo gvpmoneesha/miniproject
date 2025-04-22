@@ -8,6 +8,7 @@ import {
   Select,
 } from "flowbite-react";
 import { AuthContext } from "../context/AuthContext";
+import { HiInformationCircle } from "react-icons/hi";
 
 export const DashVehicleSignUp = () => {
   const { authUser } = useContext(AuthContext);
@@ -15,6 +16,14 @@ export const DashVehicleSignUp = () => {
 
   const handleTextboxDataChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handlePhoneNumberDataChange = (e) => {
+    if (e.target.value.length > 10) {
+      e.target.value = formData.phoneNumber;
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -161,12 +170,14 @@ export const DashVehicleSignUp = () => {
                   />
                   <TextInput
                     id="phoneNumber"
-                    type="text"
+                    type="number"
+                    value={formData.phoneNumber}
                     required
                     shadow
                     className="border-gray-300 focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
-                    onChange={handleTextboxDataChange}
+                    onChange={handlePhoneNumberDataChange}
                     placeholder="0771234567"
+                    maxLength={10}
                   />
                 </div>
 

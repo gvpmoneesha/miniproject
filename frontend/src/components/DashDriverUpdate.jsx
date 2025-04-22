@@ -18,6 +18,7 @@ import {
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import { HiInformationCircle } from "react-icons/hi";
 
 export const DashDriverUpdate = () => {
   const [formData, setFormData] = useState();
@@ -28,6 +29,7 @@ export const DashDriverUpdate = () => {
   const [searchId, setSearchId] = useState(null);
   const [user, setUser] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [passwardError, setPasswardError] = useState(false);
 
   const navigate = useNavigate();
 
@@ -70,6 +72,28 @@ export const DashDriverUpdate = () => {
 
   const handleTextboxDataChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  const handlePhoneNumberDataChange = (e) => {
+    if (e.target.value.length > 10) {
+      e.target.value = formData.phoneNumber;
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+  };
+
+  const handlePasswordDataChange = (e) => {
+    const value = e.target.value;
+
+    const hasNumber = /[0-9]/.test(value);
+    const hasSymbol = /[^A-Za-z0-9]/.test(value); // Any character not a letter or number
+
+    if (value.length < 8 || !hasNumber || !hasSymbol) {
+      setPasswardError(true);
+    } else {
+      setFormData({ ...formData, [e.target.id]: value });
+      setPasswardError(false);
+    }
   };
 
   const handleSearchId = (e) => {
@@ -258,8 +282,16 @@ export const DashDriverUpdate = () => {
                       type="password"
                       shadow
                       className="border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-                      onChange={handleTextboxDataChange}
+                      onChange={handlePasswordDataChange}
                     />
+                    {passwardError && (
+                      <Alert color="failure" icon={HiInformationCircle}>
+                        <span className="font-medium">
+                          Minimum 8 characters with numbers and symbols
+                        </span>{" "}
+                        Change a few things up and try submitting again.
+                      </Alert>
+                    )}
                   </div>
 
                   <div>
@@ -288,12 +320,13 @@ export const DashDriverUpdate = () => {
                     />
                     <TextInput
                       id="phoneNumber"
-                      type="text"
+                      type="number"
                       required
                       shadow
                       className="border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
                       defaultValue={user?.phoneNumber || ""}
-                      onChange={handleTextboxDataChange}
+                      onChange={handlePhoneNumberDataChange}
+                      maxLength={10}
                     />
                   </div>
 
