@@ -19,8 +19,8 @@ import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
-const DashOfficerUpdate = () => {
-  const [formData, setFormData] = useState({ role: "officer" });
+export default function DashAdminUpdate() {
+  const [formData, setFormData] = useState({ role: "admin" });
   const { authUser } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
@@ -78,14 +78,14 @@ const DashOfficerUpdate = () => {
 
   const handleSearchUser = async () => {
     try {
-      const res = await fetch(`/api/v1/user/getofficer/${searchId}`);
+      const res = await fetch(`/api/v1/user/getadmin/${searchId}`);
 
       if (!res.ok) {
         return;
       } else {
         const data = await res.json();
 
-        if (data.role == "officer") {
+        if (data.role == "admin") {
           setUser(data);
         }
       }
@@ -123,7 +123,7 @@ const DashOfficerUpdate = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            action: "officer-update",
+            action: "Admin-update",
             createdBy: authUser.id,
           }),
         });
@@ -144,10 +144,10 @@ const DashOfficerUpdate = () => {
         <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
           <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white relative z-10">
-            Officer Profile Update
+            Admin Profile Update
           </h2>
           <p className="text-blue-100 mt-2 relative z-10">
-            Update officer information
+            Update Admin information
           </p>
         </div>
 
@@ -156,7 +156,7 @@ const DashOfficerUpdate = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4 bg-blue-50 p-4 rounded-lg">
             <div className="w-full">
               <Label
-                value="Search by Officer ID"
+                value="Search by Admin ID"
                 className="block text-sm font-medium text-gray-700 mb-1"
               />
               <div className="relative">
@@ -166,7 +166,7 @@ const DashOfficerUpdate = () => {
                   required
                   className="w-full pl-10 border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   onChange={handleSearchId}
-                  placeholder="Enter officer ID"
+                  placeholder="Enter Admin ID"
                 />
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <svg
@@ -313,7 +313,7 @@ const DashOfficerUpdate = () => {
                 {/* ID */}
                 <div>
                   <Label
-                    value="Officer ID"
+                    value="Admin ID"
                     className="block text-sm font-medium text-gray-700 mb-1"
                   />
                   <TextInput
@@ -487,6 +487,4 @@ const DashOfficerUpdate = () => {
       </div>
     </div>
   );
-};
-
-export default DashOfficerUpdate;
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -8,8 +8,10 @@ import {
   Select,
 } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashVehicleUpdate = () => {
+  const { authUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({});
 
   const [searchId, setSearchId] = useState(null);
@@ -64,7 +66,7 @@ export const DashVehicleUpdate = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "vehicle-update",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         navigate("/dashboard");

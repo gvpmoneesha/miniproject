@@ -438,22 +438,22 @@ export const getblockdriverFine = async (req, res, next) => {
 
 export const generateFinePDF = async (req, res) => {
   try {
-    const { date, pId, dId, vNo } = req.query;
+    const { date, pId, dId, vNo, pStation } = req.query;
 
     const filter = {};
     if (date) {
       const selectedDate = new Date(date);
-      const nextDay = new Date(selectedDate);
-      nextDay.setDate(nextDay.getDate() + 1);
 
+      // Find fines where issueDate >= selectedDate
       filter.issueDate = {
         $gte: selectedDate,
-        $lt: nextDay,
       };
+      console.log(filter);
     }
     if (pId) filter.pId = pId;
     if (dId) filter.dId = dId;
     if (vNo) filter.vNo = vNo;
+    if (pStation) filter.pStation = pStation;
 
     const fines = await Fine.find(filter);
 

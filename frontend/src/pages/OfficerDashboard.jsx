@@ -38,8 +38,6 @@ export const OfficerDashboard = () => {
   const [pId, setPId] = useState("");
   const { authUser } = useContext(AuthContext);
 
-  console.log("pId", pId);
-
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -57,19 +55,15 @@ export const OfficerDashboard = () => {
           `/api/v1/fine/getfineofficer/${authUser.id}`
         );
         const officersData = await officersRes.json();
-        console.log(officersData);
 
         const driversRes = await fetch("/api/v1/user/getAllDrivers");
         const driversData = await driversRes.json();
-        console.log(driversData);
 
         const vehiclesRes = await fetch("/api/v1/vehicle/getAllVehicles");
         const vehiclesData = await vehiclesRes.json();
-        console.log(vehiclesData);
 
         const violationsRes = await fetch("/api/v1/fine/getallfine");
         const violationsData = await violationsRes.json();
-        console.log(violationsData);
 
         setStats({
           finesIssued: Array.isArray(officersData) ? officersData.length : 0,
@@ -95,7 +89,9 @@ export const OfficerDashboard = () => {
   useEffect(() => {
     const fetchRecentActivities = async () => {
       try {
-        const res = await fetch("/api/v1/activity/recentOfficer");
+        const res = await fetch(
+          `/api/v1/activity/recentOfficer/${authUser.id}`
+        );
         const data = await res.json();
         console.log("Recent Activity Response:", data);
 
@@ -129,7 +125,7 @@ export const OfficerDashboard = () => {
       "block-view": "Block Fine Records",
       "driver-view": "Driver Database",
       "vehicle-view": "Vehicle Registry",
-      all: "Message Center",
+      "all-message": "Message Center",
       "message-group": "Group Messages",
     };
     return titles[dashParam] || "Officer Dashboard";
@@ -330,7 +326,7 @@ export const OfficerDashboard = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-800 dark:text-white">
-                      Officer {authUser.name}
+                      Officer {authUser?.name}
                     </p>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
                       Traffic Department
@@ -365,7 +361,7 @@ export const OfficerDashboard = () => {
                     {/* Welcome Banner */}
                     <div className="bg-gradient-to-r from-cyan-500 to-teal-500 rounded-xl p-6 text-white shadow-lg">
                       <h2 className="text-2xl font-bold mb-2">
-                        Welcome Back, Officer {authUser.name}!
+                        Welcome Back, Officer {authUser?.name}!
                       </h2>
                       <p className="opacity-90">
                         Here's what's happening traffic control activities.
@@ -373,6 +369,7 @@ export const OfficerDashboard = () => {
                     </div>
 
                     {/* Stats Cards */}
+
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                       {/* Fines Card */}
                       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-6 transition-all hover:shadow-lg hover:-translate-y-1">

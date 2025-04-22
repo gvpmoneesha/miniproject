@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashFineView = () => {
   const [fine, setFine] = useState([]);
   const [error, setError] = useState(null);
   const [fineIdToView, setFineIdToView] = useState("");
+  const { authUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchFines = async () => {
@@ -20,7 +22,7 @@ export const DashFineView = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               action: "fine-view",
-              createdBy: "AdminUser",
+              createdBy: authUser.id,
             }),
           });
         }

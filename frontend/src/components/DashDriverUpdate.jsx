@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -17,10 +17,11 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashDriverUpdate = () => {
   const [formData, setFormData] = useState();
-
+  const { authUser } = useContext(AuthContext);
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(0);
   const [imageUploadError, setImageUploadError] = useState(null);
@@ -122,7 +123,7 @@ export const DashDriverUpdate = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "driver-update",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         navigate("/dashboard");

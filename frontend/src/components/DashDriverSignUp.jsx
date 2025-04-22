@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -17,8 +17,10 @@ import {
 } from "firebase/storage";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashDriverSignUp = () => {
+  const { authUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({ role: "driver" });
 
   const [file, setFile] = useState(null);
@@ -84,7 +86,7 @@ export const DashDriverSignUp = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "driver-create",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         navigate("/dashboard");

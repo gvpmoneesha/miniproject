@@ -1,6 +1,6 @@
 import { Link, useSearchParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import { Sidebar } from "flowbite-react";
+import React, { useState, useEffect, useContext } from "react";
+import { Badge, Sidebar } from "flowbite-react";
 import {
   HiUserGroup,
   HiUser,
@@ -25,12 +25,20 @@ import { DashViolationTypeUpdate } from "../components/DashViolationTypeUpdate";
 import { DashViolationTypeDelete } from "../components/DashViolationTypeDelete";
 import { DashBlockFineUpdate } from "../components/DashBlockFineUpdate";
 import DashReport from "../components/DashReport";
+import { AuthContext } from "../context/AuthContext";
+import DashAdminSignUp from "../components/DashAdminSignUp";
+import DashAdminUpdate from "../components/DashAdminUpdate";
+import DashAdminDelete from "../components/DashAdminDelete";
+import DashViewComplaint from "../components/DashViewComplaint";
 
 // Helper function to get page title
 function getPageTitle(dashParam) {
   const titles = {
+    "admin-create": "Add Admin",
     "officer-create": "Add Traffic Officer",
     "officer-update": "Update Officer Records",
+    "Admin-update": "Update Admin Records",
+    "admin-delete": "Delete Admin Records",
     "officer-delete": "Delete Officer Records",
     "driver-create": "Register New Driver",
     "driver-update": "Update Driver Records",
@@ -62,6 +70,7 @@ function formatTimeAgo(dateString) {
 }
 
 export const Dashboard = () => {
+  const { authUser } = useContext(AuthContext);
   const [searchParams] = useSearchParams();
   const [collapsed, setCollapsed] = useState(false);
   const [stats, setStats] = useState({
@@ -108,9 +117,8 @@ export const Dashboard = () => {
   useEffect(() => {
     const fetchRecentActivities = async () => {
       try {
-        const res = await fetch("/api/v1/activity/recent");
+        const res = await fetch(`/api/v1/activity/recent/${authUser.id}`);
         const data = await res.json();
-        console.log("Recent Activity Response:", data);
 
         if (data && Array.isArray(data)) {
           // Changed this condition
@@ -205,6 +213,30 @@ export const Dashboard = () => {
                     {!collapsed && "Dashboard Home"}
                   </Sidebar.Item>
                 </Link>
+                {/* Manage Admins*/}
+                {authUser?.role === "superAdmin" && (
+                  <Sidebar.Collapse
+                    icon={HiUserGroup}
+                    label={!collapsed && "Manage Admins"}
+                    className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300"
+                  >
+                    <Link to="/dashboard?dash=admin-create">
+                      <Sidebar.Item className="hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        {!collapsed && "Add Admin"}
+                      </Sidebar.Item>
+                    </Link>
+                    <Link to="/dashboard?dash=admin-update">
+                      <Sidebar.Item className="hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        {!collapsed && "Update Admin"}
+                      </Sidebar.Item>
+                    </Link>
+                    <Link to="/dashboard?dash=admin-delete">
+                      <Sidebar.Item className="hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        {!collapsed && "Delete Admin"}
+                      </Sidebar.Item>
+                    </Link>
+                  </Sidebar.Collapse>
+                )}
 
                 {/* Manage Traffic Officer */}
                 <Sidebar.Collapse
@@ -320,6 +352,14 @@ export const Dashboard = () => {
                     {!collapsed && "Generate Report"}
                   </Sidebar.Item>
                 </Link>
+                <Link to="/dashboard?dash=comp">
+                  <Sidebar.Item
+                    icon={HiDocumentText}
+                    className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                  >
+                    {!collapsed && "View Complaint"}
+                  </Sidebar.Item>
+                </Link>
 
                 {/* Logout */}
                 <Sidebar.Item
@@ -349,9 +389,18 @@ export const Dashboard = () => {
 
             {/* Content Area */}
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 border border-gray-100 dark:border-gray-600">
-              {(searchParams.get("dash") === "officer-create" && (
-                <DashOfficerSignUp />
+              {(searchParams.get("dash") === "admin-create" && (
+                <DashAdminSignUp />
               )) ||
+                (searchParams.get("dash") === "admin-update" && (
+                  <DashAdminUpdate />
+                )) ||
+                (searchParams.get("dash") === "admin-delete" && (
+                  <DashAdminDelete />
+                )) ||
+                (searchParams.get("dash") === "officer-create" && (
+                  <DashOfficerSignUp />
+                )) ||
                 (searchParams.get("dash") === "officer-update" && (
                   <DashOfficerUpdate />
                 )) ||
@@ -387,6 +436,9 @@ export const Dashboard = () => {
                 )) ||
                 (searchParams.get("dash") === "blockFine-update" && (
                   <DashBlockFineUpdate />
+                )) ||
+                (searchParams.get("dash") === "comp" && (
+                  <DashViewComplaint />
                 )) ||
                 (searchParams.get("dash") === "report" && <DashReport />) || (
                   <div className="space-y-6">

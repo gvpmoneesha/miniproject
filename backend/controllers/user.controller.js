@@ -28,7 +28,7 @@ export const userUpdate = async (req, res, next) => {
       }
     }
 
-    if (user.role === "officer") {
+    if (user.role === "officer" || user.role === "admin") {
       const userUpdate = await User.findByIdAndUpdate(
         user._id,
         {
@@ -116,12 +116,43 @@ export const getOfficer = async (req, res, next) => {
     next(error);
   }
 };
+export const getAdmin = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+
+    const user = await User.findOne({ id: userId });
+
+    if (user.role === "admin")
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        return next(404, "User not found");
+      }
+    else {
+      console.log("This user can't find.");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getAllOfficers = async (req, res, next) => {
   try {
     const officers = await User.find({ role: "officer" });
     if (officers) {
       res.status(200).json(officers);
+    } else {
+      return next(400, "User not found");
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export const getAllAdmins = async (req, res, next) => {
+  try {
+    const admins = await User.find({ role: "admin" });
+    if (admins) {
+      res.status(200).json(admins);
     } else {
       return next(400, "User not found");
     }
@@ -147,11 +178,26 @@ export const deleteOfficer = async (req, res, next) => {
   try {
     console.log(req.params.id);
     const user = await User.findById(req.params.id);
-    console.log(user);
     if (!user) {
       return next(errorHandler(404, "User not found"));
     }
     if (user.role === "officer") {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("User delete is completed");
+    } else {
+      return next(errorHandler(401, "you can't delete"));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+export const deleteAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return next(errorHandler(404, "User not found"));
+    }
+    if (user.role === "admin") {
       await User.findByIdAndDelete(req.params.id);
       res.status(200).json("User delete is completed");
     } else {

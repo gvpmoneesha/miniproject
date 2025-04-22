@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashBlockFineUpdate = () => {
+  const { authUser } = useContext(AuthContext);
   const [fines, setFines] = useState([]);
   const [error, setError] = useState(null);
   const [fineIdToUpdate, setFineIdToUpdate] = useState("");
@@ -83,7 +85,7 @@ export const DashBlockFineUpdate = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "blockFine-update",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         window.location.reload();

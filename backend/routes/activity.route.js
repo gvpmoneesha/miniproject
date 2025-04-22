@@ -10,8 +10,8 @@ import {
 const router = express.Router();
 
 router.post("/add", addActivity);
-router.get("/recent", getRecentActivities);
+router.get("/recent/:aId", getRecentActivities);
 router.post("/addOfficer", addActivityOfficer);
-router.get("/recentOfficer", getRecentActivitiesOfficer);
+router.get("/recentOfficer/:oId", getRecentActivitiesOfficer);
 
 export default router;

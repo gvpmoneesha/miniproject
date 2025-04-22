@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -10,10 +10,11 @@ import {
   Alert,
 } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashFineIssue = () => {
   const navigate = useNavigate();
-
+  const { authUser } = useContext(AuthContext);
   const [officer, setOfficer] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
@@ -74,7 +75,7 @@ export const DashFineIssue = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "fine-issue",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         navigate("/officerDashboard");

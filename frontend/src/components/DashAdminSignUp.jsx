@@ -20,8 +20,8 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import { HiInformationCircle } from "react-icons/hi";
 
-const DashOfficerSignUp = () => {
-  const [formData, setFormData] = useState({ role: "officer" });
+export default function DashAdminSignUp() {
+  const [formData, setFormData] = useState({ role: "admin" });
   const { authUser } = useContext(AuthContext);
   const [passwardError, setPasswardError] = useState(false);
 
@@ -116,7 +116,7 @@ const DashOfficerSignUp = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            action: "officer-create",
+            action: "admin-create",
             createdBy: authUser.id,
           }),
         });
@@ -134,7 +134,7 @@ const DashOfficerSignUp = () => {
         <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
           <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white relative z-10">
-            Officer Registration
+            Admin Registration
           </h2>
           <p className="text-blue-100 mt-2 relative z-10">
             Join our law enforcement team
@@ -165,7 +165,7 @@ const DashOfficerSignUp = () => {
               {/* ID */}
               <div>
                 <Label
-                  value="Officer ID"
+                  value="Admin ID"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 />
                 <TextInput
@@ -392,7 +392,7 @@ const DashOfficerSignUp = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    Register Officer
+                    Register Admin
                   </span>
                 )}
               </Button>
@@ -402,6 +402,4 @@ const DashOfficerSignUp = () => {
       </div>
     </div>
   );
-};
-
-export default DashOfficerSignUp;
+}

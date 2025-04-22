@@ -21,8 +21,8 @@ export const DashGroupMessage = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              action: all,
-              createdBy: "AdminUser",
+              action: "all-message",
+              createdBy: authUser.id,
             }),
           });
         } else {
@@ -34,7 +34,7 @@ export const DashGroupMessage = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               action: "message-group",
-              createdBy: "AdminUser",
+              createdBy: authUser.id,
             }),
           });
         }

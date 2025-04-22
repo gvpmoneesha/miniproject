@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashViolationTypeDelete = () => {
+  const { authUser } = useContext(AuthContext);
   const [violations, setViolations] = useState([]);
   const [error, setError] = useState(null);
   const [violationIdToDelete, setViolationIdToDelete] = useState("");
@@ -72,7 +74,7 @@ export const DashViolationTypeDelete = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "violationType-delete",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         console.log(violationIdToDelete);

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { AuthContext } from "../context/AuthContext";
 
-export const DashOfficerDelete = () => {
+export default function DashAdminDelete() {
   const { authUser } = useContext(AuthContext);
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
@@ -14,7 +14,7 @@ export const DashOfficerDelete = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("/api/v1/user/getallofficers");
+        const res = await fetch("/api/v1/user/getalladmins");
         const data = await res.json();
 
         if (res.ok) {
@@ -34,7 +34,7 @@ export const DashOfficerDelete = () => {
       if (userIdToDelete === "") {
         return setError("Fill Serach field");
       }
-      const res = await fetch(`/api/v1/user/getofficer/${userIdToDelete}`);
+      const res = await fetch(`/api/v1/user/getadmin/${userIdToDelete}`);
       const data = await res.json();
       if (data.success == false) {
         return setError(data.messaage);
@@ -53,7 +53,7 @@ export const DashOfficerDelete = () => {
     try {
       console.log(userIdToDelete);
 
-      const res = await fetch(`/api/v1/user/delete-officer/${userIdToDelete}`, {
+      const res = await fetch(`/api/v1/user/delete-admin/${userIdToDelete}`, {
         method: "DELETE",
       });
 
@@ -67,7 +67,7 @@ export const DashOfficerDelete = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            action: "officer-delete",
+            action: "admin-delete",
             createdBy: authUser.id,
           }),
         });
@@ -86,10 +86,10 @@ export const DashOfficerDelete = () => {
         <div className="bg-gradient-to-r from-blue-600 to-teal-600 p-6 text-center relative">
           <div className="absolute top-0 left-0 w-full h-full opacity-10"></div>
           <h2 className="font-bold text-3xl sm:text-4xl text-white">
-            Officer Management
+            Admin Management
           </h2>
           <p className="mt-2 text-teal-100 dark:text-teal-200">
-            Search and manage officer records
+            Search and manage admin records
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export const DashOfficerDelete = () => {
               <div className="w-full sm:w-auto">
                 <Label
                   htmlFor="id"
-                  value="Officer ID"
+                  value="Admin ID"
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
                 />
                 <div className="relative">
@@ -109,7 +109,7 @@ export const DashOfficerDelete = () => {
                     type="text"
                     required
                     className="w-full rounded-lg border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-600 dark:text-white pl-10"
-                    placeholder="Enter officer ID"
+                    placeholder="Enter Admin ID"
                     onChange={(e) => setUserIdToDelete(e.target.value)}
                   />
                   <div className="absolute left-3 top-2.5 text-gray-400 dark:text-gray-500">
@@ -138,7 +138,7 @@ export const DashOfficerDelete = () => {
                 onClick={getDeleteUser}
                 className="w-full sm:w-auto  sm:mt-6 margin-top: 26px;  px-6 transition-all duration-300 transform hover:scale-105"
               >
-                Search Officer
+                Search Admin
               </Button>
             </div>
           </div>
@@ -369,4 +369,4 @@ export const DashOfficerDelete = () => {
       </div>
     </div>
   );
-};
+}

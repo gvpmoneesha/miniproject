@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashVehicleDelete = () => {
+  const { authUser } = useContext(AuthContext);
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [vehicleIdToDelete, setVehicleIdToDelete] = useState("");
@@ -68,7 +70,7 @@ export const DashVehicleDelete = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "vehicle-delete",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
       }

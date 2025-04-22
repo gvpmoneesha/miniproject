@@ -33,6 +33,10 @@ export const signup = async (req, res, next) => {
 
   if (role === "admin") {
     try {
+      const { pStation, profilePicture } = req.body;
+      if (!pStation || pStation == "") {
+        next(errorHandler(400, "All fields are required"));
+      }
       const createUser = User({
         name,
         password: bcrpytPassword,
@@ -43,6 +47,8 @@ export const signup = async (req, res, next) => {
         phoneNumber,
         email,
         role,
+        pStation,
+        profilePicture,
       });
       await createUser.save();
       res.json("Signup is successfull");

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import login from "../assets/login.png";
 
@@ -11,31 +11,37 @@ export const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setAuthUser } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setError(null);
       const res = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data.role);
+      if (data.success === false) {
+        return setError(data.message);
+      }
       if (res.ok) {
-        if (data.role === "admin") {
+        if (data.role === "admin" || data.role === "superAdmin") {
           localStorage.setItem("user", JSON.stringify(data));
           setAuthUser(data);
           navigate("/dashboard");
-        } else if (data.role === "officer") {
-          localStorage.setItem("user", JSON.stringify(data));
-          navigate("/officerDashboard");
+        } else {
+          setError("You are not admin");
         }
+      } else {
+        setError(res.message);
       }
     } catch (error) {
       console.log(error);
+      setError(error.message);
     }
   };
 
@@ -287,6 +293,11 @@ export const Login = () => {
                 />
               </svg>
             </Button>
+            {error && (
+              <Alert color="failure">
+                <span className="font-medium">{error}</span>
+              </Alert>
+            )}
 
             {/* Footer Links */}
             <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 
-import { Button, Checkbox, Label, TextInput } from "flowbite-react";
+import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
 import driver3 from "../assets/driver3.jpg";
 import { AuthContext } from "../context/AuthContext";
@@ -10,35 +10,38 @@ export const LoginDriver = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { setAuthUser } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setError(null);
       const res = await fetch("/api/v1/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+      if (data.success === false) {
+        return setError(data.message);
+      }
       console.log(data.role);
       if (res.ok) {
-        if (data.role === "admin") {
-          localStorage.setItem("user", JSON.stringify(data));
-          navigate("/dashboard");
-        } else if (data.role === "officer") {
-          localStorage.setItem("user", JSON.stringify(data));
-          navigate("/officerDashboard");
-        } else if (data.role === "driver") {
+        if (data.role === "driver") {
           localStorage.setItem("user", JSON.stringify(data));
           setAuthUser(data);
-
           navigate("/driverDashboard");
+        } else {
+          setError("You are not driver");
         }
+      } else {
+        setError(res.message);
       }
     } catch (error) {
       console.log(error);
+      setError(error.message);
     }
   };
 
@@ -290,6 +293,11 @@ export const LoginDriver = () => {
                 />
               </svg>
             </Button>
+            {error && (
+              <Alert color="failure">
+                <span className="font-medium">{error}</span>
+              </Alert>
+            )}
 
             {/* Registration Link */}
             <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">

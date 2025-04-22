@@ -14,7 +14,9 @@ export const addActivity = async (req, res, next) => {
 
 export const getRecentActivities = async (req, res, next) => {
   try {
-    const activities = await Activity.find().sort({ createdAt: -1 }).limit(6);
+    const activities = await Activity.find({ createdBy: req.params.aId })
+      .sort({ createdAt: -1 })
+      .limit(6);
     if (activities) {
       res.status(200).json(activities);
     } else {
@@ -38,7 +40,9 @@ export const addActivityOfficer = async (req, res, next) => {
 
 export const getRecentActivitiesOfficer = async (req, res, next) => {
   try {
-    const activities = await Activity.find().sort({ createdAt: -1 }).limit(6);
+    const activities = await Activity.find({ createdBy: req.params.oId })
+      .sort({ createdAt: -1 })
+      .limit(6);
     if (activities) {
       res.status(200).json(activities);
     } else {

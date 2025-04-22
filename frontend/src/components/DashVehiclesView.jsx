@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Alert, Button, Label, Modal, Table, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashVehiclesView = () => {
   const [vehicles, setVehicles] = useState([]);
   const [error, setError] = useState(null);
   const [vehicleIdToDelete, setVehicleIdToDelete] = useState("");
+  const { authUser } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchVehicle = async () => {
@@ -20,7 +22,7 @@ export const DashVehiclesView = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               action: "vehicle-view",
-              createdBy: "AdminUser",
+              createdBy: authUser.id,
             }),
           });
         }

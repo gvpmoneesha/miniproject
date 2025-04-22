@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -7,8 +7,10 @@ import {
   Datepicker,
   Select,
 } from "flowbite-react";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashVehicleSignUp = () => {
+  const { authUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({});
 
   const handleTextboxDataChange = (e) => {
@@ -31,7 +33,7 @@ export const DashVehicleSignUp = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "vehicle-create",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         Navigate("/dashboard");

@@ -36,3 +36,12 @@ export const complainCreate = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getAllComplains = async (req, res, next) => {
+  try {
+    const complains = await Complain.find();
+    res.status(200).json(complains);
+  } catch (error) {
+    next(error);
+  }
+};

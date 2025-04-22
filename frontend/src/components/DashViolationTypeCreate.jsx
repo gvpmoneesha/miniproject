@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -9,8 +9,10 @@ import {
   FileInput,
   Alert,
 } from "flowbite-react";
+import { AuthContext } from "../context/AuthContext";
 
 export const DashViolationTypeCreate = () => {
+  const { authUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({});
 
   const handleTextboxDataChange = (e) => {
@@ -33,7 +35,7 @@ export const DashViolationTypeCreate = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             action: "violationType-create",
-            createdBy: "AdminUser",
+            createdBy: authUser.id,
           }),
         });
         Navigate("/dashboard");
