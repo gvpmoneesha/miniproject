@@ -53,7 +53,7 @@ export const DashOfficersView = () => {
             View Officers
           </h2>
           <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
-            Search and manage officer records
+            Search officer records
           </p>
         </div>
 

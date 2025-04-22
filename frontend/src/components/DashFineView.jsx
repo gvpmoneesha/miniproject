@@ -67,7 +67,7 @@ export const DashFineView = () => {
           <p className="text-cyan-100 font-medium">View issued traffic fines</p>
         </div>
 
-        {/* Search Section - Now perfectly aligned */}
+        {/* Search Section */}
         <div className="p-6 border-b border-gray-200">
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-col sm:flex-row gap-2 items-end">

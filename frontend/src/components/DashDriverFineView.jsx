@@ -48,7 +48,7 @@ export const DashDriverFineView = () => {
             View Fines
           </h2>
           <p className="mt-3 text-lg text-gray-600 dark:text-gray-300">
-            Manage and review traffic fines
+            Review traffic fines
           </p>
         </div>
 
@@ -126,6 +126,9 @@ export const DashDriverFineView = () => {
                   </Table.HeadCell>
                   <Table.HeadCell className="px-6 py-4 text-teal-500">
                     State
+                  </Table.HeadCell>
+                  <Table.HeadCell className="px-6 py-4 text-teal-500">
+                    Block
                   </Table.HeadCell>
                 </Table.Head>
 
@@ -209,6 +212,18 @@ export const DashDriverFineView = () => {
                             Unpaid
                           </span>
                         )}
+                      </Table.Cell>
+
+                      <Table.Cell className="px-6 py-4">
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium ${
+                            fines.block
+                              ? "bg-red-100 text-red-800"
+                              : "bg-green-100 text-green-800"
+                          }`}
+                        >
+                          {fines.block ? "Yes" : "No"}
+                        </span>
                       </Table.Cell>
                     </Table.Row>
                   ))}

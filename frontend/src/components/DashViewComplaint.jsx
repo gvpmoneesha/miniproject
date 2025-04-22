@@ -19,6 +19,14 @@ export default function DashViewComplaint() {
 
         if (res.ok) {
           setUsers(data);
+          await fetch("/api/v1/activity/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              action: "view-complaint",
+              createdBy: authUser.id,
+            }),
+          });
         }
       } catch (error) {
         setError(error);
@@ -47,7 +55,7 @@ export default function DashViewComplaint() {
               <div className="max-h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 dark:scrollbar-thumb-gray-600 dark:scrollbar-track-gray-800">
                 <Table hoverable className="min-w-full">
                   <Table.Head className="sticky top-0 bg-gray-100 dark:bg-gray-700">
-                    {["Image", "Name", "Email", "Complain", "DOB"].map(
+                    {["Image", "Name", "Email", "Complain", "Date"].map(
                       (header) => (
                         <Table.HeadCell
                           key={header}

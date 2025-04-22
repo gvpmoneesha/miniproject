@@ -663,7 +663,8 @@ export const generateFinePDF = async (req, res) => {
     rowTop += 40;
 
     // Add interactive elements (links)
-    doc
+    {
+      /*doc
       .fillColor("#3498db")
       .text(
         "For payment instructions, visit our website: ",
@@ -674,20 +675,21 @@ export const generateFinePDF = async (req, res) => {
       .text("www.trafficfines.gov.lk/payment", {
         link: "https://www.trafficfines.gov.lk/payment",
         underline: true,
-      });
+      });*/
+    }
 
     rowTop += 20;
 
     // Add QR code placeholder (you can replace with actual QR code generation)
-    doc.fillColor("#000000").text("Scan to pay:", tableLeft, rowTop);
+    //doc.fillColor("#000000").text("Scan to pay:", tableLeft, rowTop);
 
     // This is a placeholder - you would use a QR code library here
-    doc
-      .rect(tableLeft, rowTop + 20, 80, 80)
-      .fill("#ffffff")
-      .stroke("#000000")
-      .fillColor("#000000")
-      .text("QR Code", tableLeft + 10, rowTop + 50);
+    // doc
+    // .rect(tableLeft, rowTop + 20, 80, 80)
+    // .fill("#ffffff")
+    // .stroke("#000000")
+    // .fillColor("#000000")
+    // .text("QR Code", tableLeft + 10, rowTop + 50);
 
     // Add footer with page numbers
     doc.page.margins.bottom = 0;

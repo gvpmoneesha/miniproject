@@ -16,6 +16,14 @@ import { DashOfficersView } from "../components/DashOfficersView";
 import { DashDriverFineView } from "../components/DashDriverFineView";
 import { useNavigate } from "react-router-dom";
 
+function getPageTitle(dashParam) {
+  const titles = {
+    "view-fine": "Fine records",
+    "view-officer": "Officer Records",
+  };
+  return titles[dashParam] || "Dashboard";
+}
+
 export const DriverDashboard = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -30,9 +38,9 @@ export const DriverDashboard = () => {
 
   console.log(authUser);
 
-  const getPageTitle = () => {
-    return "Driver Dashboard";
-  };
+  //const getPageTitle = () => {
+  // return "Driver Dashboard";
+  //};
 
   const getCurrentDate = () => {
     return new Date().toLocaleDateString("en-US", {
@@ -46,16 +54,11 @@ export const DriverDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Get pId from wherever it's stored (localStorage, context, etc.)
-        //const pdata = localStorage.getItem("_id"); // or from your auth context
-        //console.log(pdata);
+        if (!authUser || !authUser.id) {
+          console.error("authUser not ready yet for stats");
+          return;
+        }
 
-        //if (!pId) {
-        // console.error("No user ID found");
-        //  return;
-        //}
-
-        // Properly construct URLs with template literals
         const finesRes = await fetch(`/api/v1/fine/getfine/${authUser.id}`);
         const finesData = await finesRes.json();
         console.log(finesData);
@@ -79,12 +82,13 @@ export const DriverDashboard = () => {
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
-        // Optionally set error state to show to user
       }
     };
 
-    fetchStats();
-  }, []); // Add pId as dependency if it can change
+    if (authUser && authUser.id) {
+      fetchStats();
+    }
+  }, [authUser]); //
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
@@ -156,19 +160,19 @@ export const DriverDashboard = () => {
                   </Sidebar.Item>
                 </Link>
 
-                <Link to="/driverdashboard?dash=fine-view">
+                <Link to="/driverdashboard?dash=view-fine">
                   <Sidebar.Item
                     icon={HiDocumentText}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                   >
                     {!collapsed && "Fine Information"}
                   </Sidebar.Item>
                 </Link>
 
-                <Link to="/driverdashboard?dash=officer-view">
+                <Link to="/driverdashboard?dash=view-officer">
                   <Sidebar.Item
                     icon={HiUser}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                   >
                     {!collapsed && "Officer Information"}
                   </Sidebar.Item>
@@ -177,7 +181,7 @@ export const DriverDashboard = () => {
                 <Link to="/driverdashboard?dash=payment">
                   <Sidebar.Item
                     icon={HiCreditCard}
-                    className="hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                   >
                     {!collapsed && "Pay Payment"}
                   </Sidebar.Item>
@@ -200,7 +204,7 @@ export const DriverDashboard = () => {
             {/* Header */}
             <div className="mb-6">
               <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-                {getPageTitle()}
+                {getPageTitle(searchParams.get("dash"))}
               </h1>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {getCurrentDate()}
@@ -209,10 +213,10 @@ export const DriverDashboard = () => {
 
             {/* Content Area */}
             <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 border border-gray-100 dark:border-gray-600">
-              {(searchParams.get("dash") === "fine-view" && (
+              {(searchParams.get("dash") === "view-fine" && (
                 <DashDriverFineView />
               )) ||
-                (searchParams.get("dash") === "officer-view" && (
+                (searchParams.get("dash") === "view-officer" && (
                   <DashOfficersView />
                 )) ||
                 (searchParams.get("dash") === "payment" &&
@@ -221,7 +225,7 @@ export const DriverDashboard = () => {
                     {/* Welcome Banner */}
                     <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow border border-gray-200 dark:border-gray-700">
                       <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                        Welcome Back, Driver!
+                        Welcome Back, {authUser?.name}!
                       </h2>
                       <p className="text-gray-600 dark:text-gray-300">
                         {stats.unpaidFines > 0

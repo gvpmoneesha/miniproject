@@ -35,10 +35,10 @@ import DashViewComplaint from "../components/DashViewComplaint";
 function getPageTitle(dashParam) {
   const titles = {
     "admin-create": "Add Admin",
+    "admin-update": "Update Admin Records",
+    "admin-delete": "Delete Admin Records",
     "officer-create": "Add Traffic Officer",
     "officer-update": "Update Officer Records",
-    "Admin-update": "Update Admin Records",
-    "admin-delete": "Delete Admin Records",
     "officer-delete": "Delete Officer Records",
     "driver-create": "Register New Driver",
     "driver-update": "Update Driver Records",
@@ -50,7 +50,8 @@ function getPageTitle(dashParam) {
     "violationType-update": "Update Violation Types",
     "violationType-delete": "Delete Violation Types",
     "blockFine-update": "Update Block Fines",
-    report: "Generate System Reports",
+    "view-complaint": "View Complaint",
+    "report-generate": "Generate System Reports",
   };
   return titles[dashParam] || "Dashboard";
 }
@@ -115,23 +116,29 @@ export const Dashboard = () => {
   }, []);
 
   useEffect(() => {
+    let intervalId;
+
     const fetchRecentActivities = async () => {
       try {
-        const res = await fetch(`/api/v1/activity/recent/${authUser.id}`);
+        if (!authUser || !authUser.id) {
+          console.error("authUser not ready yet for recent activities");
+          return;
+        }
+
+        const res = await fetch(
+          `/api/v1/activity/recentOfficer/${authUser.id}`
+        );
         const data = await res.json();
+        console.log("Recent Activity Response:", data);
 
         if (data && Array.isArray(data)) {
-          // Changed this condition
-          const mappedActivities = data.map((activity) => {
-            // Make sure these property names match your API response
-            return {
-              action: activity.action || "unknown-action", // Ensure this exists
-              createdAt: activity.createdAt || new Date().toISOString(),
-              title: getPageTitle(activity.action) || "Activity",
-              time: formatTimeAgo(activity.createdAt) || "Just now",
-              type: activity.action?.split("-")[0] || "general",
-            };
-          });
+          const mappedActivities = data.map((activity) => ({
+            action: activity.action || "unknown-action",
+            createdAt: activity.createdAt || new Date().toISOString(),
+            title: getPageTitle(activity.action) || "Activity",
+            time: formatTimeAgo(activity.createdAt) || "Just now",
+            type: activity.action?.split("-")[0] || "general",
+          }));
           console.log("Mapped Activities:", mappedActivities);
           setRecentActivities(mappedActivities);
         }
@@ -140,8 +147,17 @@ export const Dashboard = () => {
       }
     };
 
-    fetchRecentActivities();
-  }, []);
+    if (authUser && authUser.id) {
+      fetchRecentActivities(); // fetch immediately
+      intervalId = setInterval(fetchRecentActivities, 5000); // fetch every 5 seconds
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId); // cleanup when component unmounts
+      }
+    };
+  }, [authUser]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-gray-900 dark:to-gray-800">
@@ -205,7 +221,7 @@ export const Dashboard = () => {
             <Sidebar.Items className="overflow-y-auto">
               <Sidebar.ItemGroup>
                 {/* Home Link */}
-                <Link to="/">
+                <Link to="/dashboard">
                   <Sidebar.Item
                     icon={HiHome}
                     className="mb-2 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -344,7 +360,7 @@ export const Dashboard = () => {
                 </Sidebar.Collapse>
 
                 {/* Report */}
-                <Link to="/dashboard?dash=report">
+                <Link to="/dashboard?dash=report-generate">
                   <Sidebar.Item
                     icon={HiDocumentText}
                     className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -352,7 +368,7 @@ export const Dashboard = () => {
                     {!collapsed && "Generate Report"}
                   </Sidebar.Item>
                 </Link>
-                <Link to="/dashboard?dash=comp">
+                <Link to="/dashboard?dash=view-complaint">
                   <Sidebar.Item
                     icon={HiDocumentText}
                     className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -376,15 +392,18 @@ export const Dashboard = () => {
         {/* Main Content */}
         <div className="flex-1 p-4 sm:p-6 overflow-auto">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-700 p-6 min-h-[calc(100vh-3rem)]">
-            <div className="mb-6 flex justify-between items-center">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
               <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
                 {getPageTitle(searchParams.get("dash"))}
               </h1>
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {new Date().toLocaleDateString()}
-                </span>
-              </div>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                {new Date().toLocaleDateString("en-US", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
             </div>
 
             {/* Content Area */}
@@ -437,10 +456,12 @@ export const Dashboard = () => {
                 (searchParams.get("dash") === "blockFine-update" && (
                   <DashBlockFineUpdate />
                 )) ||
-                (searchParams.get("dash") === "comp" && (
+                (searchParams.get("dash") === "view-complaint" && (
                   <DashViewComplaint />
                 )) ||
-                (searchParams.get("dash") === "report" && <DashReport />) || (
+                (searchParams.get("dash") === "report-generate" && (
+                  <DashReport />
+                )) || (
                   <div className="space-y-6">
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
                       System Overview

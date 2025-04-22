@@ -41,16 +41,11 @@ export const OfficerDashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        // Get pId from wherever it's stored (localStorage, context, etc.)
-        //const pdata = localStorage.getItem("_id"); // or from your auth context
-        //console.log(pdata);
+        if (!authUser || !authUser.id) {
+          console.error("authUser not ready yet");
+          return;
+        }
 
-        //if (!pId) {
-        // console.error("No user ID found");
-        //  return;
-        //}
-
-        // Properly construct URLs with template literals
         const officersRes = await fetch(
           `/api/v1/fine/getfineofficer/${authUser.id}`
         );
@@ -79,16 +74,24 @@ export const OfficerDashboard = () => {
         });
       } catch (error) {
         console.error("Error fetching stats:", error);
-        // Optionally set error state to show to user
       }
     };
 
-    fetchStats();
-  }, []); // Add pId as dependency if it can change
+    if (authUser && authUser.id) {
+      fetchStats();
+    }
+  }, [authUser]); // <-- very important to add 'authUser' dependency here
 
   useEffect(() => {
+    let intervalId;
+
     const fetchRecentActivities = async () => {
       try {
+        if (!authUser || !authUser.id) {
+          console.error("authUser not ready yet for recent activities");
+          return;
+        }
+
         const res = await fetch(
           `/api/v1/activity/recentOfficer/${authUser.id}`
         );
@@ -96,17 +99,13 @@ export const OfficerDashboard = () => {
         console.log("Recent Activity Response:", data);
 
         if (data && Array.isArray(data)) {
-          // Changed this condition
-          const mappedActivities = data.map((activity) => {
-            // Make sure these property names match your API response
-            return {
-              action: activity.action || "unknown-action", // Ensure this exists
-              createdAt: activity.createdAt || new Date().toISOString(),
-              title: getPageTitle(activity.action) || "Activity",
-              time: formatTimeAgo(activity.createdAt) || "Just now",
-              type: activity.action?.split("-")[0] || "general",
-            };
-          });
+          const mappedActivities = data.map((activity) => ({
+            action: activity.action || "unknown-action",
+            createdAt: activity.createdAt || new Date().toISOString(),
+            title: getPageTitle(activity.action) || "Activity",
+            time: formatTimeAgo(activity.createdAt) || "Just now",
+            type: activity.action?.split("-")[0] || "general",
+          }));
           console.log("Mapped Activities:", mappedActivities);
           setRecentActivities(mappedActivities);
         }
@@ -115,8 +114,17 @@ export const OfficerDashboard = () => {
       }
     };
 
-    fetchRecentActivities();
-  }, []);
+    if (authUser && authUser.id) {
+      fetchRecentActivities(); // fetch immediately
+      intervalId = setInterval(fetchRecentActivities, 5000); // fetch every 5 seconds
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId); // cleanup when component unmounts
+      }
+    };
+  }, [authUser]);
 
   const getPageTitle = (dashParam) => {
     const titles = {
@@ -268,7 +276,7 @@ export const OfficerDashboard = () => {
                   label={!collapsed && "Communication"}
                   className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                 >
-                  <Link to="/officerdashboard?dash=all">
+                  <Link to="/officerdashboard?dash=all-message">
                     <Sidebar.Item className="hover:bg-blue-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                       {!collapsed && "All Messages"}
                     </Sidebar.Item>
@@ -353,7 +361,9 @@ export const OfficerDashboard = () => {
                 (searchParams.get("dash") === "vehicle-view" && (
                   <DashVehiclesView />
                 )) ||
-                (searchParams.get("dash") === "all" && <DashGroupMessage />) ||
+                (searchParams.get("dash") === "all-message" && (
+                  <DashGroupMessage />
+                )) ||
                 (searchParams.get("dash") === "message-group" && (
                   <DashGroupMessage />
                 )) || (
