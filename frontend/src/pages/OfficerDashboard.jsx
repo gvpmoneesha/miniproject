@@ -25,6 +25,7 @@ import { DashFineView } from "../components/DashFineView";
 import { DashGroupMessage } from "../components/DashGroupMessage";
 import { DashBlockFineView } from "../components/DashBlockFineView";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 export const OfficerDashboard = () => {
   const [searchParams] = useSearchParams();
@@ -39,11 +40,12 @@ export const OfficerDashboard = () => {
   const [pId, setPId] = useState("");
   const { authUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        if (!authUser || !authUser.id) {
+        if (!authUser?.id) {
           console.error("authUser not ready yet");
           return;
         }
@@ -79,10 +81,13 @@ export const OfficerDashboard = () => {
       }
     };
 
-    if (authUser && authUser.id) {
-      fetchStats();
+    if (authUser?.id) {
+      fetchStats(); // fetch immediately
+      const intervalId = setInterval(fetchStats, 5000); // keep updating every 5 seconds
+
+      return () => clearInterval(intervalId);
     }
-  }, [authUser]); // <-- very important to add 'authUser' dependency here
+  }, [authUser?.id]); // IMPORTANT: depend on location.state.refresh
 
   useEffect(() => {
     let intervalId;
@@ -135,7 +140,7 @@ export const OfficerDashboard = () => {
       "block-view": "Block Fine Records",
       "driver-view": "Driver Database",
       "vehicle-view": "Vehicle Registry",
-      "all-message": "Message Center",
+      all: "Message Center",
       "message-group": "Group Messages",
     };
     return titles[dashParam] || "Officer Dashboard";
@@ -278,7 +283,7 @@ export const OfficerDashboard = () => {
                   label={!collapsed && "Communication"}
                   className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                 >
-                  <Link to="/officerdashboard?dash=all-message">
+                  <Link to="/officerdashboard?dash=all">
                     <Sidebar.Item className="hover:bg-blue-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
                       {!collapsed && "All Messages"}
                     </Sidebar.Item>
@@ -371,9 +376,7 @@ export const OfficerDashboard = () => {
                 (searchParams.get("dash") === "vehicle-view" && (
                   <DashVehiclesView />
                 )) ||
-                (searchParams.get("dash") === "all-message" && (
-                  <DashGroupMessage />
-                )) ||
+                (searchParams.get("dash") === "all" && <DashGroupMessage />) ||
                 (searchParams.get("dash") === "message-group" && (
                   <DashGroupMessage />
                 )) || (

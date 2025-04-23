@@ -37,10 +37,10 @@ const connectDB = async () => {
 connectDB();
 
 //cron.schedule("*/1 * * * *", async () => {
-// console.log("Running cron job every 1 minutes...");
-// await checkFinesAndSendEmails();
-// await updateBlockedFines();
-// await checkFinesAndSendReminder();
+//console.log("Running cron job every 1 minutes...");
+//await checkFinesAndSendEmails();
+//await updateBlockedFines();
+//await checkFinesAndSendReminder();
 //});
 
 //const app = express();

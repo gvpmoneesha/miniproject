@@ -164,11 +164,11 @@ export const fineIssue = async (req, res, next) => {
         <p>Please pay your fine before the due date to avoid further penalties.</p>
         
         <p style="text-align: center;">
-          <a href="https://yourpaymentportal.com" class="button">Pay Fine Now</a>
+          <a href="http://localhost:5173/payment" class="button">Pay Fine Now</a>
         </p>
       </div>
       <div class="footer">
-        🚔 Traffic Fine Management System | Contact Us: kavindimoneesha@gmail.com.com
+        🚔 Traffic Fine Management System | Contact Us: sadmin@gmail.com
       </div>
     </div>
   </body>

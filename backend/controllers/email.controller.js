@@ -167,11 +167,18 @@ export const updateBlockedFines = async () => {
   const now = new Date();
   const offsetDate = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
   const today = offsetDate.toISOString().split("T")[0];
+
+  const yesterdayDate = new Date(offsetDate);
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterdayStr = yesterdayDate.toISOString().split("T")[0];
+
   try {
-    console.log(`Updating block state for fines expiring today: ${today}`);
+    console.log(
+      `Updating block state for fines expiring today: ${yesterdayStr}`
+    );
 
     const result = await Fine.updateMany(
-      { expireDate: today, block: false },
+      { expireDate: yesterdayStr, block: false },
       { $set: { block: true } }
     );
 
@@ -199,6 +206,7 @@ export const checkFinesAndSendReminder = async () => {
       //dueDate.setDate(issueDate.getDate() + 10);
       issueDateNew.setDate(issueDateNew.getDate() + 10);
       const formattedIssueDate = issueDateNew.toISOString().split("T")[0];
+      console.log(formattedIssueDate);
 
       if (formattedIssueDate === today) {
         const emailBody = `
@@ -300,11 +308,11 @@ export const checkFinesAndSendReminder = async () => {
         <p>Please pay your fine before the due date to avoid further penalties.</p>
         
         <p style="text-align: center;">
-          <a href="https://yourpaymentportal.com" class="button">Pay Fine Now</a>
+          <a href="http://localhost:5173/payment" class="button">Pay Fine Now</a>
         </p>
       </div>
       <div class="footer">
-        🚔 Traffic Fine Management System | Contact Us: kavindimoneesha@gmail.com.com
+        🚔 Traffic Fine Management System | Contact Us: sadmin@gmail.com.com
       </div>
     </div>
   </body>

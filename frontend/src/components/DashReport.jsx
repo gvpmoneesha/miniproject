@@ -7,7 +7,7 @@ import {
   Spinner,
   Alert,
 } from "flowbite-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   FiDownload,
   FiFileText,
@@ -17,6 +17,7 @@ import {
   FiUsers,
   FiCalendar,
 } from "react-icons/fi";
+import { AuthContext } from "../context/AuthContext";
 
 export default function DashReport() {
   const [stations, setStations] = useState([]);
@@ -26,6 +27,7 @@ export default function DashReport() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const { authUser } = useContext(AuthContext);
 
   const fetchValues = async () => {
     try {
@@ -80,6 +82,14 @@ export default function DashReport() {
       const url = window.URL.createObjectURL(blob);
       setPdfUrl(url);
       setSuccess("Report generated successfully!");
+      await fetch("/api/v1/activity/add", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          action: "report-generate",
+          createdBy: authUser.id,
+        }),
+      });
     } catch (error) {
       console.error("Error generating PDF:", error);
       setError(error.message || "Failed to generate PDF. Please try again.");

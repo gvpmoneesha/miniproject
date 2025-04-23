@@ -113,7 +113,7 @@ export const DashDriverSignUp = () => {
             createdBy: authUser.id,
           }),
         });
-        navigate("/dashboard");
+        window.location.href = "/dashboard";
       }
     } catch (error) {
       console.log(error);

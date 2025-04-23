@@ -12,6 +12,8 @@ export const DashGroupMessage = () => {
   const chatEndRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  console.log(searchParams);
+
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -25,7 +27,8 @@ export const DashGroupMessage = () => {
               createdBy: authUser.id,
             }),
           });
-        } else {
+        }
+        if (searchParams.get("dash") === "message-group") {
           var res = await fetch(
             `/api/v1/message/getgroup/${authUser._id}/${authUser.pStation}`
           );
@@ -41,6 +44,7 @@ export const DashGroupMessage = () => {
         const data = await res.json();
         if (data.success === false) {
           console.log(data.message);
+          setMessages([]);
         } else {
           setMessages(data.message);
         }

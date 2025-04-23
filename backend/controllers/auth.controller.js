@@ -112,7 +112,7 @@ export const login = async (req, res, next) => {
   const { password } = req.body;
 
   if (!password || password === "") {
-    return next(errorHandler(400, "fill all fields"));
+    return next(errorHandler(400, "Fill all fields."));
   }
   try {
     const user = await User.findOne({
@@ -120,11 +120,11 @@ export const login = async (req, res, next) => {
       ...(req.body.id && { id: req.body.id }),
     });
     if (!user) {
-      return next(errorHandler(404, "user can not found"));
+      return next(errorHandler(404, "User can not found."));
     }
     const checkPass = bcrpyt.compareSync(password, user.password);
     if (!checkPass) {
-      return next(errorHandler(400, "password worng"));
+      return next(errorHandler(400, "User can not found."));
     }
     const { password: pass, ...rest } = user._doc;
     res.status(200).json(rest);
