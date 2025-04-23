@@ -46,6 +46,9 @@ export default function DashViewComplaint() {
           <h2 className="font-bold text-3xl sm:text-4xl text-white">
             View Complaint
           </h2>
+          <p className="text-blue-100 mt-2 relative z-10">
+            View People Complaint
+          </p>
         </div>
 
         {/* Table Section */}

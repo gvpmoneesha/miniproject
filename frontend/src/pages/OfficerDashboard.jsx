@@ -26,6 +26,7 @@ import { DashGroupMessage } from "../components/DashGroupMessage";
 import { DashBlockFineView } from "../components/DashBlockFineView";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import DashStationMessage from "../components/DashStationMessage";
 
 export const OfficerDashboard = () => {
   const [searchParams] = useSearchParams();
@@ -378,7 +379,7 @@ export const OfficerDashboard = () => {
                 )) ||
                 (searchParams.get("dash") === "all" && <DashGroupMessage />) ||
                 (searchParams.get("dash") === "message-group" && (
-                  <DashGroupMessage />
+                  <DashStationMessage />
                 )) || (
                   <div className="space-y-6">
                     {/* Welcome Banner */}

@@ -156,7 +156,11 @@ export const checkFinesAndSendEmails = async () => {
 `;
 
       await sendEmail(fine.email, "Reminder: Unpaid Fine Payment", emailBody);
-      //  await sendEmail(fine.dName, "Reminder: Unpaid Traffic Fine", emailBody);
+      await sendEmail(
+        "moneeshakavindi66@gmail.com",
+        "Reminder: Unpaid Traffic Fine",
+        emailBody
+      );
     }
   } catch (error) {
     console.error("Error fetching fines:", error);

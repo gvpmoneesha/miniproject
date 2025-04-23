@@ -78,6 +78,14 @@ export const Contact = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const handlePhoneNumberDataChange = (e) => {
+    if (e.target.value.length > 10) {
+      e.target.value = formData.phoneNumber;
+    } else {
+      setFormData({ ...formData, [e.target.id]: e.target.value });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
