@@ -30,6 +30,7 @@ import DashAdminSignUp from "../components/DashAdminSignUp";
 import DashAdminUpdate from "../components/DashAdminUpdate";
 import DashAdminDelete from "../components/DashAdminDelete";
 import DashViewComplaint from "../components/DashViewComplaint";
+import { useNavigate } from "react-router-dom";
 
 // Helper function to get page title
 function getPageTitle(dashParam) {
@@ -81,6 +82,7 @@ export const Dashboard = () => {
     violations: 0,
   });
   const [recentActivities, setRecentActivities] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -378,12 +380,20 @@ export const Dashboard = () => {
                 </Link>
 
                 {/* Logout */}
-                <Sidebar.Item
-                  icon={HiOutlineLogout}
-                  className="mt-6 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                <div
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/");
+                  }}
+                  className="cursor-pointer"
                 >
-                  {!collapsed && "Logout"}
-                </Sidebar.Item>
+                  <Sidebar.Item
+                    icon={HiOutlineLogout}
+                    className="mt-6 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                  >
+                    {!collapsed && "Logout"}
+                  </Sidebar.Item>
+                </div>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </Sidebar>

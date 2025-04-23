@@ -24,6 +24,7 @@ import { DashVehiclesView } from "../components/DashVehiclesView";
 import { DashFineView } from "../components/DashFineView";
 import { DashGroupMessage } from "../components/DashGroupMessage";
 import { DashBlockFineView } from "../components/DashBlockFineView";
+import { useNavigate } from "react-router-dom";
 
 export const OfficerDashboard = () => {
   const [searchParams] = useSearchParams();
@@ -37,6 +38,7 @@ export const OfficerDashboard = () => {
   const [recentActivities, setRecentActivities] = useState([]);
   const [pId, setPId] = useState("");
   const { authUser } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -289,12 +291,20 @@ export const OfficerDashboard = () => {
                 </Sidebar.Collapse>
 
                 {/* Logout */}
-                <Sidebar.Item
-                  icon={HiOutlineLogout}
-                  className="mt-6 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                <div
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    navigate("/");
+                  }}
+                  className="cursor-pointer"
                 >
-                  {!collapsed && "Logout"}
-                </Sidebar.Item>
+                  <Sidebar.Item
+                    icon={HiOutlineLogout}
+                    className="mt-6 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-gray-700 rounded-lg transition-colors"
+                  >
+                    {!collapsed && "Logout"}
+                  </Sidebar.Item>
+                </div>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </Sidebar>
